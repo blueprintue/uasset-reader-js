@@ -1,0 +1,11 @@
+{
+  "simple": {
+    "ue50": [
+      {
+        "name": "BP_Actor_Simple",
+        "input": "uassets/ue50/BP_Actor_Simple.uasset",
+        "expected": "uassets/ue50/BP_Actor_Simple.json"
+      }
+    ]
+  }
+}

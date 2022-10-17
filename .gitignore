@@ -1,0 +1,18 @@
+# IntelliJ
+.idea
+*.iml
+
+# Node modules
+node_modules
+
+# System files
+.DS_Store
+
+# Jest
+coverage
+
+# JSDoc
+jsdoc
+
+# eslint
+eslint_out.html

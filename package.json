@@ -1,0 +1,44 @@
+{
+  "name": "uasset-reader-js",
+  "version": "1.0.0",
+  "description": "Read .uasset files from Unreal Engine in javascript",
+  "main": "main.js",
+  "scripts": {
+    "test": "npx jest --coverage --runTestsByPath ./tests/*.js",
+    "jsdoc": "jsdoc -c jsdoc.conf.json",
+    "eslint": "npx eslint src/js/**/*.js src/js/*.js",
+    "eslint-export": "npx eslint src/js/**/*.js src/js/*.js -f html > eslint_out.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/blueprintue/uasset-reader-js.git"
+  },
+  "author": "Sébastien Rancoud <contact@blueprintue.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/blueprintue/uasset-reader-js/issues"
+  },
+  "homepage": "https://github.com/blueprintue/uasset-reader-js#readme",
+  "devDependencies": {
+    "eslint": "8.14.0",
+    "eslint-plugin-jsdoc": "39.2.9",
+    "gulp": "4.0.2",
+    "gulp-concat": "2.6.1",
+    "gulp-iife": "0.4.0",
+    "gulp-rm-lines": "0.0.10",
+    "gulp-strip-debug": "4.0.0",
+    "gulp-uglify": "3.0.2",
+    "jest": "27.5.1"
+  },
+  "engines": {
+    "npm": ">=7.0.0",
+    "node": ">=14.0.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "coverageReporters": [
+      "html",
+      "text"
+    ]
+  }
+}

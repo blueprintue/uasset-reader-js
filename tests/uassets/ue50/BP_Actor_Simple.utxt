@@ -1,0 +1,709 @@
+{
+	"GatherableTextData": [
+		{
+			"NamespaceName": "SCS",
+			"SourceData": {
+				"SourceString": "Default",
+				"SourceStringMetaData": {
+					"ValueCount": 0,
+					"Values": []
+				}
+			},
+			"SourceSiteContexts": [
+				{
+					"KeyName": "Default",
+					"SiteDescription": "/Game/BP_Actor_Simple.BP_Actor_Simple_C:SimpleConstructionScript_0.SCS_Node_0.CategoryName",
+					"IsEditorOnly": true,
+					"IsOptional": false,
+					"InfoMetaData": {
+						"ValueCount": 0,
+						"Values": []
+					},
+					"KeyMetaData": {
+						"ValueCount": 0,
+						"Values": []
+					}
+				}
+			]
+		}
+	],
+	"Thumbnails": {
+		"Thumbnails": [
+			{
+				"ImageWidth": 0,
+				"ImageHeight": 0,
+				"CompressedImageData": "Base64:"
+			},
+			{
+				"ImageWidth": 0,
+				"ImageHeight": 0,
+				"CompressedImageData": "Base64:"
+			}
+		],
+		"Index": [
+			{
+				"ObjectClassName": "Blueprint",
+				"ObjectPathWithoutPackageName": "BP_Actor_Simple",
+				"FileOffset": 0
+			},
+			{
+				"ObjectClassName": "BlueprintGeneratedClass",
+				"ObjectPathWithoutPackageName": "BP_Actor_Simple_C",
+				"FileOffset": 0
+			}
+		]
+	},
+	"Exports": {
+		"BP_Actor_Simple": {
+			"__Class": "Class /Script/Engine.Blueprint",
+			"__ObjectFlags": 11,
+			"__bNotForClient": true,
+			"__bNotForServer": true,
+			"__bIsAsset": true,
+			"__Value": {
+				"BaseClassAutoGen": {
+					"Data": {
+						"Digest": "10372b3ba5db31ccfc7b581c21f43b10037f0083",
+						"Base64": [
+							"AAAAAAEAAAAEAAAAAAAAAAAAAAAAAgAAAAMAAAAEAAAAAAAAAAACAAAABAAAAAEAAAAEAAAAAAAAAAABAAAABQAAAAYAAAAIAAAAAAAAAAEAAAAAAQAAAAIA",
+							"AAAHAAAABgAAAAgAAAAAAAAAAQAAAAABAAAAAwAAAAgAAAAGAAAAjgEAAAAAAAAJAAAAAAMAAAAIAAAACQAAAGUBAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAA",
+							"AAAACwAAAAkAAAAEAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAANAAAACQAAABAAAAAAAAAADgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+							"AAAAAAAAAA8AAAAQAAAABAAAAAAAAAAAAACAvxEAAAALAAAACQAAAAQAAAAAAAAADAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAA0AAAAJAAAAEAAAAAAAAAAO",
+							"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADwAAABAAAAAEAAAAAAAAAAAAAIC/EQAAAAsAAAAJAAAABAAAAAAAAAAMAAAAAAAAAAAAAAAA",
+							"AAAAAAAAAAACAAAADQAAAAkAAAAQAAAAAAAAAA4AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAPAAAAEAAAAAQAAAAAAAAAAAAAgL8RAAAA",
+							"EgAAAAEAAAAEAAAAAAAAAAAEAAAAEwAAAAEAAAAEAAAAAAAAAAAFAAAAFAAAABUAAAAAAAAAAAAAAAAAFgAAAAkAAAAQAAAAAAAAABcAAAAAAAAAAAAAAAAA",
+							"AAAAAAAAAA/J7U/Ev9RHmOOY0CDtAukRAAAAAAAAAA=="
+						]
+					},
+					"Objects": [
+						"Object:/Script/CoreUObject.Class /Script/Engine.Actor",
+						"Object:/Script/Engine.SimpleConstructionScript /Game/BP_Actor_Simple.BP_Actor_Simple_C:SimpleConstructionScript_0",
+						"Object:/Script/Engine.EdGraph /Game/BP_Actor_Simple.BP_Actor_Simple:EventGraph",
+						"Object:/Script/Engine.EdGraph /Game/BP_Actor_Simple.BP_Actor_Simple:UserConstructionScript",
+						"Object:/Script/UnrealEd.SceneThumbnailInfo /Game/BP_Actor_Simple.BP_Actor_Simple:SceneThumbnailInfo_0",
+						"Object:/Script/Engine.BlueprintGeneratedClass /Game/BP_Actor_Simple.BP_Actor_Simple_C"
+					],
+					"Names": [
+						"ParentClass",
+						"ObjectProperty",
+						"BlueprintSystemVersion",
+						"IntProperty",
+						"SimpleConstructionScript",
+						"UbergraphPages",
+						"ArrayProperty",
+						"FunctionGraphs",
+						"LastEditedDocuments",
+						"StructProperty",
+						"EditedDocumentInfo",
+						"EditedObjectPath",
+						"SoftObjectPath",
+						"SavedViewOffset",
+						"Vector2D",
+						"SavedZoomAmount",
+						"FloatProperty",
+						"None",
+						"ThumbnailInfo",
+						"GeneratedClass",
+						"bLegacyNeedToPurgeSkelRefs",
+						"BoolProperty",
+						"BlueprintGuid",
+						"Guid"
+					],
+					"SoftObjectPaths": [
+						"Object:/Game/BP_Actor_Simple.BP_Actor_Simple_C:SimpleConstructionScript_0",
+						"Object:/Game/BP_Actor_Simple.BP_Actor_Simple:UserConstructionScript",
+						"Object:/Game/BP_Actor_Simple.BP_Actor_Simple:EventGraph"
+					]
+				}
+			}
+		},
+		"BP_Actor_Simple_C": {
+			"__Class": "Class /Script/Engine.BlueprintGeneratedClass",
+			"__SuperStruct": "Class /Script/Engine.Actor",
+			"__ObjectFlags": 9,
+			"__bIsAsset": true,
+			"__Value": {
+				"Data": {
+					"Digest": "7c90b254dc8ce36d9252e841b03533c9882d3412",
+					"Base64": [
+						"AAAAAAEAAAAEAAAAAAAAAAAAAAAAAgAAAAAAAAABAAAAAAAAAAEAAAABAAAAAwAAAAEAIAABAAAAAQAAAAQAAAAIAAAARGVmYXVsdAABAAAACAAAAAQACAAE",
+						"AAAAAAACAAAAAAIAAAAAAAAAAAAAAAAAAAAECIQAAwAAAAUAAAAEAAAAAAAAAAAAAAACAAAAAAAAAAUAAAA="
+					]
+				},
+				"Objects": [
+					"Object:/Script/Engine.SimpleConstructionScript /Game/BP_Actor_Simple.BP_Actor_Simple_C:SimpleConstructionScript_0",
+					"Object:/Script/CoreUObject.Class /Script/Engine.Actor",
+					"Object:/Script/CoreUObject.Class /Script/Engine.SceneComponent",
+					"Object:/Script/CoreUObject.Class /Script/CoreUObject.Object",
+					"Object:/Script/Engine.Blueprint /Game/BP_Actor_Simple.BP_Actor_Simple",
+					"Object:/Game/BP_Actor_Simple.BP_Actor_Simple_C /Game/BP_Actor_Simple.Default__BP_Actor_Simple_C"
+				],
+				"Names": [
+					"SimpleConstructionScript",
+					"ObjectProperty",
+					"None",
+					"DefaultSceneRoot",
+					"Category",
+					"Engine"
+				]
+			}
+		},
+		"Default__BP_Actor_Simple_C": {
+			"__Class": "BlueprintGeneratedClass /Game/BP_Actor_Simple.BP_Actor_Simple_C",
+			"__ObjectFlags": 49,
+			"__Value": {
+				"Data": "Base64:AAAAAAAAAAA=",
+				"Objects": [
+					null
+				],
+				"Names": [
+					"None"
+				]
+			}
+		},
+		"BP_Actor_Simple:EventGraph": {
+			"__Class": "Class /Script/Engine.EdGraph",
+			"__Outer": "Blueprint /Game/BP_Actor_Simple.BP_Actor_Simple",
+			"__ObjectFlags": 8,
+			"__Value": {
+				"Properties": {
+					"Schema": {
+						"__Type": "ObjectProperty",
+						"__Value": "Object:/Script/CoreUObject.Class /Script/BlueprintGraph.EdGraphSchema_K2"
+					},
+					"Nodes": {
+						"__Type": "ArrayProperty",
+						"__InnerType": "ObjectProperty",
+						"__Value": [
+							"Object:/Script/BlueprintGraph.K2Node_Event /Game/BP_Actor_Simple.BP_Actor_Simple:EventGraph.K2Node_Event_0",
+							"Object:/Script/BlueprintGraph.K2Node_Event /Game/BP_Actor_Simple.BP_Actor_Simple:EventGraph.K2Node_Event_1",
+							"Object:/Script/BlueprintGraph.K2Node_Event /Game/BP_Actor_Simple.BP_Actor_Simple:EventGraph.K2Node_Event_2"
+						]
+					},
+					"bAllowDeletion": {
+						"__Type": "BoolProperty",
+						"__Value": 0
+					},
+					"GraphGuid": {
+						"__Type": "StructProperty",
+						"__StructName": "Guid",
+						"__Value": "80D7644A4C053D71DC2DD3957E802C71"
+					}
+				}
+			}
+		},
+		"BP_Actor_Simple:UserConstructionScript": {
+			"__Class": "Class /Script/Engine.EdGraph",
+			"__Outer": "Blueprint /Game/BP_Actor_Simple.BP_Actor_Simple",
+			"__ObjectFlags": 8,
+			"__Value": {
+				"Properties": {
+					"Schema": {
+						"__Type": "ObjectProperty",
+						"__Value": "Object:/Script/CoreUObject.Class /Script/BlueprintGraph.EdGraphSchema_K2"
+					},
+					"Nodes": {
+						"__Type": "ArrayProperty",
+						"__InnerType": "ObjectProperty",
+						"__Value": [
+							"Object:/Script/BlueprintGraph.K2Node_FunctionEntry /Game/BP_Actor_Simple.BP_Actor_Simple:UserConstructionScript.K2Node_FunctionEntry_0"
+						]
+					},
+					"bAllowDeletion": {
+						"__Type": "BoolProperty",
+						"__Value": 0
+					},
+					"GraphGuid": {
+						"__Type": "StructProperty",
+						"__StructName": "Guid",
+						"__Value": "62BB7F164F284D40007185972DF6D63F"
+					}
+				}
+			}
+		},
+		"BP_Actor_Simple:EventGraph.K2Node_Event_0": {
+			"__Class": "Class /Script/BlueprintGraph.K2Node_Event",
+			"__Outer": "EdGraph /Game/BP_Actor_Simple.BP_Actor_Simple:EventGraph",
+			"__ObjectFlags": 8,
+			"__Value": {
+				"BaseClassAutoGen": {
+					"Data": {
+						"Digest": "3010a4471c0269a54720aaae696bc4e0f0ae324a",
+						"Base64": [
+							"AAAAAAEAAAAuAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAEAAAABAAAAAAAAAAAAAAAAAUAAAAGAAAABAAAAAAAAAAABwAAAAgAAAAJAAAACgAA",
+							"AAAAAAAAAAAAAQALAAAADAAAAAQAAAAAAAAADQAAAAAOAAAADwAAAAoAAAAAAAAAAAAAAAEAEAAAAAoAAAAAAAAAAAAAAAEAEQAAABIAAABYAAAAAAAAAABU",
+							"AAAAVGhpcyBub2RlIGlzIGRpc2FibGVkIGFuZCB3aWxsIG5vdCBiZSBjYWxsZWQuCkRyYWcgb2ZmIHBpbnMgdG8gYnVpbGQgZnVuY3Rpb25hbGl0eS4AEwAA",
+							"AAEAAAAQAAAAAAAAABQAAAAAAAAAAAAAAAAAAAAAAAAAAErEMMhye4dDkwlWjvBkyBsIAAAAAAAAAAIAAAAAAAAAAQAAAOt2CaTCkRFIk6vV5P/B4rQBAAAA",
+							"63YJpMKREUiTq9Xk/8HitBUAAAAAAAAA/wAAAAD/////AAAAAAEWAAAACAAAAAIAAAAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+							"AAAAAAAAAAAAAAAAAAIAAAAAAAAA/wAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAB5FgZWkOSFDtXa0O68Lx/gBAAAA",
+							"HkWBlaQ5IUO1drQ7rwvH+BcAAAAAAAAA/wAAAAD/////AAAAAAEYAAAACAAAAAIAAAAAAAAAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+							"AAAAAAAAAAAAAAAAAAIAAAAAAAAA/wAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+						]
+					},
+					"Objects": [
+						"Object:/Script/CoreUObject.Class /Script/Engine.Actor",
+						"Object:/Script/BlueprintGraph.K2Node_Event /Game/BP_Actor_Simple.BP_Actor_Simple:EventGraph.K2Node_Event_0",
+						null
+					],
+					"Names": [
+						"EventReference",
+						"StructProperty",
+						"MemberReference",
+						"MemberParent",
+						"ObjectProperty",
+						"MemberName",
+						"NameProperty",
+						"ReceiveBeginPlay",
+						"None",
+						"bOverrideFunction",
+						"BoolProperty",
+						"EnabledState",
+						"EnumProperty",
+						"ENodeEnabledState",
+						"ENodeEnabledState::Disabled",
+						"bCommentBubblePinned",
+						"bCommentBubbleVisible",
+						"NodeComment",
+						"StrProperty",
+						"NodeGuid",
+						"Guid",
+						"OutputDelegate",
+						"delegate",
+						"then",
+						"exec"
+					]
+				}
+			}
+		},
+		"BP_Actor_Simple:EventGraph.K2Node_Event_1": {
+			"__Class": "Class /Script/BlueprintGraph.K2Node_Event",
+			"__Outer": "EdGraph /Game/BP_Actor_Simple.BP_Actor_Simple:EventGraph",
+			"__ObjectFlags": 8,
+			"__Value": {
+				"BaseClassAutoGen": {
+					"Data": {
+						"Digest": "e3b3b9cc96a99308ee01d552146996c4337522bf",
+						"Base64": [
+							"AAAAAAEAAAAuAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAEAAAABAAAAAAAAAAAAAAAAAUAAAAGAAAABAAAAAAAAAAABwAAAAgAAAAJAAAACgAA",
+							"AAAAAAAAAAAAAQALAAAADAAAAAQAAAAAAAAAANAAAAANAAAADgAAAAQAAAAAAAAADwAAAAAQAAAAEQAAAAoAAAAAAAAAAAAAAAEAEgAAAAoAAAAAAAAAAAAA",
+							"AAEAEwAAABQAAABYAAAAAAAAAABUAAAAVGhpcyBub2RlIGlzIGRpc2FibGVkIGFuZCB3aWxsIG5vdCBiZSBjYWxsZWQuCkRyYWcgb2ZmIHBpbnMgdG8gYnVp",
+							"bGQgZnVuY3Rpb25hbGl0eS4AFQAAAAEAAAAQAAAAAAAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAFrQJUwFeA5Ou5uMIryPUq0IAAAAAAAAAAMAAAAAAAAAAQAA",
+							"ABCQu7JBkuxGu4hOZYadL6MBAAAAEJC7skGS7Ea7iE5lhp0voxcAAAAAAAAA/wAAAAD/////AAAAAAEYAAAACAAAAAIAAAAAAAAAAAAAAAAAAAAABwAAAAAA",
+							"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA/wAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA",
+							"ACQpWe2xfPRDmqFkTo897woBAAAAJClZ7bF89EOaoWROjz3vChkAAAAAAAAA/wAAAAD/////AAAAAAEaAAAACAAAAAIAAAAAAAAAAAAAAAACAAAACAAAAAAA",
+							"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA/wAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA",
+							"AFDKR5O36itDhQXpXBnWB3MBAAAAUMpHk7fqK0OFBelcGdYHcxsAAAAAAAAA/wAAAAD/////IwAAAE90aGVyIEFjdG9yCkFjdG9yIE9iamVjdCBSZWZlcmVu",
+							"Y2UAARwAAAAIAAAAAAAAAAAAAAAAAAAAAAIAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAD/AAAAAAAAAAAAAAAA",
+							"AQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+						]
+					},
+					"Objects": [
+						"Object:/Script/CoreUObject.Class /Script/Engine.Actor",
+						"Object:/Script/BlueprintGraph.K2Node_Event /Game/BP_Actor_Simple.BP_Actor_Simple:EventGraph.K2Node_Event_1",
+						null
+					],
+					"Names": [
+						"EventReference",
+						"StructProperty",
+						"MemberReference",
+						"MemberParent",
+						"ObjectProperty",
+						"MemberName",
+						"NameProperty",
+						"ReceiveActorBeginOverlap",
+						"None",
+						"bOverrideFunction",
+						"BoolProperty",
+						"NodePosY",
+						"IntProperty",
+						"EnabledState",
+						"EnumProperty",
+						"ENodeEnabledState",
+						"ENodeEnabledState::Disabled",
+						"bCommentBubblePinned",
+						"bCommentBubbleVisible",
+						"NodeComment",
+						"StrProperty",
+						"NodeGuid",
+						"Guid",
+						"OutputDelegate",
+						"delegate",
+						"then",
+						"exec",
+						"OtherActor",
+						"object"
+					]
+				}
+			}
+		},
+		"BP_Actor_Simple:EventGraph.K2Node_Event_2": {
+			"__Class": "Class /Script/BlueprintGraph.K2Node_Event",
+			"__Outer": "EdGraph /Game/BP_Actor_Simple.BP_Actor_Simple:EventGraph",
+			"__ObjectFlags": 8,
+			"__Value": {
+				"BaseClassAutoGen": {
+					"Data": {
+						"Digest": "98daf35e4938c7a8412e6067ffab274146e7924e",
+						"Base64": [
+							"AAAAAAEAAAAuAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAEAAAABAAAAAAAAAAAAAAAAAUAAAAGAAAABAAAAAAAAAAABwAAAAgAAAAJAAAACgAA",
+							"AAAAAAAAAAAAAQALAAAADAAAAAQAAAAAAAAAAKABAAANAAAADgAAAAQAAAAAAAAADwAAAAAQAAAAEQAAAAoAAAAAAAAAAAAAAAEAEgAAAAoAAAAAAAAAAAAA",
+							"AAEAEwAAABQAAABYAAAAAAAAAABUAAAAVGhpcyBub2RlIGlzIGRpc2FibGVkIGFuZCB3aWxsIG5vdCBiZSBjYWxsZWQuCkRyYWcgb2ZmIHBpbnMgdG8gYnVp",
+							"bGQgZnVuY3Rpb25hbGl0eS4AFQAAAAEAAAAQAAAAAAAAABYAAAAAAAAAAAAAAAAAAAAAAAAAAE5UY/6qyqNMrmjiWuqwZQYIAAAAAAAAAAMAAAAAAAAAAQAA",
+							"AJqvoqoJhsRDm8XX4xLF6IcBAAAAmq+iqgmGxEObxdfjEsXohxcAAAAAAAAA/wAAAAD/////AAAAAAEYAAAACAAAAAIAAAAAAAAAAAAAAAAAAAAABwAAAAAA",
+							"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA/wAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA",
+							"AMxc37R4qyFEn2iBanIz59ABAAAAzFzftHirIUSfaIFqcjPn0BkAAAAAAAAA/wAAAAD/////AAAAAAEaAAAACAAAAAIAAAAAAAAAAAAAAAACAAAACAAAAAAA",
+							"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAA/wAAAAAAAAAAAAAAAAEAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA",
+							"AGY5Q/lkzOBChxv07QHqyxUBAAAAZjlD+WTM4EKHG/TtAerLFRsAAAAAAAAA/wAAAAD/////JwAAAERlbHRhIFNlY29uZHMKRmxvYXQgKHNpbmdsZS1wcmVj",
+							"aXNpb24pAAEcAAAAHQAAAAIAAAAAAAAAAAAAAAACAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAMC4wAAQAAAAwLjAAAgAAAAAAAAD/",
+							"AAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+						]
+					},
+					"Objects": [
+						"Object:/Script/CoreUObject.Class /Script/Engine.Actor",
+						"Object:/Script/BlueprintGraph.K2Node_Event /Game/BP_Actor_Simple.BP_Actor_Simple:EventGraph.K2Node_Event_2",
+						null
+					],
+					"Names": [
+						"EventReference",
+						"StructProperty",
+						"MemberReference",
+						"MemberParent",
+						"ObjectProperty",
+						"MemberName",
+						"NameProperty",
+						"ReceiveTick",
+						"None",
+						"bOverrideFunction",
+						"BoolProperty",
+						"NodePosY",
+						"IntProperty",
+						"EnabledState",
+						"EnumProperty",
+						"ENodeEnabledState",
+						"ENodeEnabledState::Disabled",
+						"bCommentBubblePinned",
+						"bCommentBubbleVisible",
+						"NodeComment",
+						"StrProperty",
+						"NodeGuid",
+						"Guid",
+						"OutputDelegate",
+						"delegate",
+						"then",
+						"exec",
+						"DeltaSeconds",
+						"real",
+						"float"
+					]
+				}
+			}
+		},
+		"BP_Actor_Simple:UserConstructionScript.K2Node_FunctionEntry_0": {
+			"__Class": "Class /Script/BlueprintGraph.K2Node_FunctionEntry",
+			"__Outer": "EdGraph /Game/BP_Actor_Simple.BP_Actor_Simple:UserConstructionScript",
+			"__ObjectFlags": 8,
+			"__Value": {
+				"BaseClassAutoGen": {
+					"Data": {
+						"Digest": "da857612cee7916519bd235beb4b8d02da47ae57",
+						"Base64": [
+							"AAAAAAEAAAAuAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAMAAAAEAAAABAAAAAAAAAAAAAAAAAUAAAAGAAAABAAAAAAAAAAABwAAAAgAAAAJAAAAAQAA",
+							"ABAAAAAAAAAACgAAAAAAAAAAAAAAAAAAAAAAAAAAcDt3wFpStUekfzhJGpRyHAgAAAAAAAAAAQAAAAAAAAABAAAA81AWZG2BT0Wh6ad7uJPjaQEAAADzUBZk",
+							"bYFPRaHpp3u4k+NpCwAAAAAAAAD/AAAAAP////8AAAAAAQwAAAAIAAAAAgAAAAAAAAAAAAAAAAIAAAAIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+							"AAAAAAAAAAAAAgAAAAAAAAD/AAAAAAAAAAAAAAAAAQAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+						]
+					},
+					"Objects": [
+						"Object:/Script/CoreUObject.Class /Script/Engine.Actor",
+						"Object:/Script/BlueprintGraph.K2Node_FunctionEntry /Game/BP_Actor_Simple.BP_Actor_Simple:UserConstructionScript.K2Node_FunctionEntry_0",
+						null
+					],
+					"Names": [
+						"FunctionReference",
+						"StructProperty",
+						"MemberReference",
+						"MemberParent",
+						"ObjectProperty",
+						"MemberName",
+						"NameProperty",
+						"UserConstructionScript",
+						"None",
+						"NodeGuid",
+						"Guid",
+						"then",
+						"exec"
+					]
+				}
+			}
+		},
+		"PackageMetaData": {
+			"__Class": "Class /Script/CoreUObject.MetaData",
+			"__ObjectFlags": 2,
+			"__bNotForClient": true,
+			"__bNotForServer": true,
+			"__Value": {
+				"Properties": {},
+				"ObjectMetaDataMap": [
+					[
+						"Object:/Script/BlueprintGraph.K2Node_FunctionEntry /Game/BP_Actor_Simple.BP_Actor_Simple:UserConstructionScript.K2Node_FunctionEntry_0",
+						[
+							[
+								"DefaultGraphNode",
+								"true"
+							]
+						]
+					],
+					[
+						null,
+						[
+							[
+								"BlueprintInternalUseOnly",
+								"true"
+							],
+							[
+								"Comment",
+								"/**\n\t * Construction script, the place to spawn components and do other setup.\n\t * @note Name used in CreateBlueprint function\n\t */"
+							],
+							[
+								"DisplayName",
+								"Construction Script"
+							],
+							[
+								"ModuleRelativePath",
+								"Classes/GameFramework/Actor.h"
+							],
+							[
+								"ToolTip",
+								"Construction script, the place to spawn components and do other setup.\n@note Name used in CreateBlueprint function"
+							]
+						]
+					],
+					[
+						null,
+						[
+							[
+								"BlueprintType",
+								"true"
+							]
+						]
+					],
+					[
+						"Object:/Script/Engine.BlueprintGeneratedClass /Game/BP_Actor_Simple.BP_Actor_Simple_C",
+						[
+							[
+								"BlueprintType",
+								"true"
+							]
+						]
+					],
+					[
+						"Object:/Script/BlueprintGraph.K2Node_Event /Game/BP_Actor_Simple.BP_Actor_Simple:EventGraph.K2Node_Event_0",
+						[
+							[
+								"DefaultGraphNode",
+								"true"
+							]
+						]
+					],
+					[
+						"Object:/Script/BlueprintGraph.K2Node_Event /Game/BP_Actor_Simple.BP_Actor_Simple:EventGraph.K2Node_Event_1",
+						[
+							[
+								"DefaultGraphNode",
+								"true"
+							]
+						]
+					],
+					[
+						"Object:/Script/BlueprintGraph.K2Node_Event /Game/BP_Actor_Simple.BP_Actor_Simple:EventGraph.K2Node_Event_2",
+						[
+							[
+								"DefaultGraphNode",
+								"true"
+							]
+						]
+					]
+				],
+				"RootMetaDataMap": [
+					[
+						"PackageLocalizationNamespace",
+						"50B4947A4816F182AF72CC889D9D0EB8"
+					]
+				]
+			}
+		},
+		"BP_Actor_Simple_C:DefaultSceneRoot_GEN_VARIABLE": {
+			"__Class": "Class /Script/Engine.SceneComponent",
+			"__Outer": "BlueprintGeneratedClass /Game/BP_Actor_Simple.BP_Actor_Simple_C",
+			"__ObjectFlags": 41,
+			"__Value": {
+				"BaseClassAutoGen": {
+					"Data": "Base64:AAAAAAEAAAAAAAAAAAAAAAEAAgAAAAAAAAA=",
+					"Names": [
+						"bVisualizeComponent",
+						"BoolProperty",
+						"None"
+					]
+				}
+			}
+		},
+		"BP_Actor_Simple:SceneThumbnailInfo_0": {
+			"__Class": "Class /Script/UnrealEd.SceneThumbnailInfo",
+			"__Outer": "Blueprint /Game/BP_Actor_Simple.BP_Actor_Simple",
+			"__ObjectFlags": 8,
+			"__Value": {
+				"BaseClassAutoGen": {
+					"Data": "Base64:AAAAAAAAAAA=",
+					"Names": [
+						"None"
+					]
+				}
+			}
+		},
+		"BP_Actor_Simple_C:SimpleConstructionScript_0.SCS_Node_0": {
+			"__Class": "Class /Script/Engine.SCS_Node",
+			"__Outer": "SimpleConstructionScript /Game/BP_Actor_Simple.BP_Actor_Simple_C:SimpleConstructionScript_0",
+			"__ObjectFlags": 8,
+			"__Value": {
+				"BaseClassAutoGen": {
+					"Data": {
+						"Digest": "09e3221fe1e01809393718552a21d9282757908c",
+						"Base64": [
+							"AAAAAAEAAAAEAAAAAAAAAAAAAAAAAgAAAAEAAAAEAAAAAAAAAAABAAAAAwAAAAQAAAAlAAAAAAAAAAAIAAAAAAQAAABTQ1MACAAAAERlZmF1bHQACAAAAERl",
+							"ZmF1bHQABQAAAAYAAAAQAAAAAAAAAAcAAAAAAAAAAAAAAAAAAAAAAAAAAOFU8+m//pdCrS+eS124x/wIAAAACQAAAAQAAAAAAAAAAAoAAAALAAAAAAAAAA=="
+						]
+					},
+					"Objects": [
+						"Object:/Script/CoreUObject.Class /Script/Engine.SceneComponent",
+						"Object:/Script/Engine.SceneComponent /Game/BP_Actor_Simple.BP_Actor_Simple_C:DefaultSceneRoot_GEN_VARIABLE"
+					],
+					"Names": [
+						"ComponentClass",
+						"ObjectProperty",
+						"ComponentTemplate",
+						"CategoryName",
+						"TextProperty",
+						"VariableGuid",
+						"StructProperty",
+						"Guid",
+						"InternalVariableName",
+						"NameProperty",
+						"DefaultSceneRoot",
+						"None"
+					]
+				}
+			}
+		},
+		"BP_Actor_Simple_C:SimpleConstructionScript_0": {
+			"__Class": "Class /Script/Engine.SimpleConstructionScript",
+			"__Outer": "BlueprintGeneratedClass /Game/BP_Actor_Simple.BP_Actor_Simple_C",
+			"__ObjectFlags": 8,
+			"__Value": {
+				"BaseClassAutoGen": {
+					"Data": "Base64:AAAAAAEAAAAIAAAAAAAAAAIAAAAAAQAAAAAAAAADAAAAAQAAAAgAAAAAAAAAAgAAAAABAAAAAAAAAAQAAAACAAAABAAAAAAAAAAAAAAAAAUAAAAAAAAA",
+					"Objects": [
+						"Object:/Script/Engine.SCS_Node /Game/BP_Actor_Simple.BP_Actor_Simple_C:SimpleConstructionScript_0.SCS_Node_0"
+					],
+					"Names": [
+						"RootNodes",
+						"ArrayProperty",
+						"ObjectProperty",
+						"AllNodes",
+						"DefaultSceneRootNode",
+						"None"
+					]
+				}
+			}
+		}
+	},
+	"Summary": {
+		"Tag": -1641380927,
+		"LegacyFileVersion": -8,
+		"LegacyUE3Version": 864,
+		"FileVersionUE4": 522,
+		"FileVersionUE5": 1004,
+		"FileVersionLicenseeUE4": 0,
+		"CustomVersions": [
+			{
+				"Key": "29E575DDE0A346279D10D276232CDCEA",
+				"Version": 17
+			},
+			{
+				"Key": "375EC13C06E448FBB50084F0262A717E",
+				"Version": 4
+			},
+			{
+				"Key": "59DA5D5212324948B878597870B8E98B",
+				"Version": 8
+			},
+			{
+				"Key": "601D1886AC644F84AA16D3DE0DEAC7D6",
+				"Version": 59
+			},
+			{
+				"Key": "697DD581E64F41ABAA4A51ECBEB7B628",
+				"Version": 59
+			},
+			{
+				"Key": "9C54D522A8264FBE9421074661B482D0",
+				"Version": 44
+			},
+			{
+				"Key": "B0D832E41F894F0DACCF7EB736FD4AA2",
+				"Version": 10
+			},
+			{
+				"Key": "CFFC743F43B04480939114DF171D2073",
+				"Version": 37
+			},
+			{
+				"Key": "D89B5E4224BD4D468412ACA8DF641779",
+				"Version": 36
+			},
+			{
+				"Key": "E4B068EDF49442E9A231DA0B2E46BB41",
+				"Version": 40
+			}
+		],
+		"TotalHeaderSize": 0,
+		"FolderName": "None",
+		"PackageFlags": 1024,
+		"NameCount": 107,
+		"NameOffset": 0,
+		"LocalizationId": "50B4947A4816F182AF72CC889D9D0EB8",
+		"GatherableTextDataCount": 1,
+		"GatherableTextDataOffset": 0,
+		"ExportCount": 14,
+		"ExportOffset": 0,
+		"ImportCount": 18,
+		"ImportOffset": 0,
+		"DependsOffset": 0,
+		"SoftPackageReferencesCount": 0,
+		"SoftPackageReferencesOffset": 0,
+		"SearchableNamesOffset": 0,
+		"ThumbnailTableOffset": 0,
+		"Guid": "A4C929A946BF2ED15058CBB53ECABC7B",
+		"PersistentGuid": "46AA6F4949616DB6D6933C9DC1622787",
+		"GenerationCount": 1,
+		"Generations": [
+			{
+				"ExportCount": 14,
+				"NameCount": 107
+			}
+		],
+		"SavedByEngineVersion": "5.0.3-20979098+++UE5+Release-5.0",
+		"CompatibleWithEngineVersion": "5.0.0-19505902+++UE5+Release-5.0",
+		"CompressionFlags": 0,
+		"CompressedChunks": [],
+		"PackageSource": 81731590,
+		"AdditionalPackagesToCook": [],
+		"AssetRegistryDataOffset": 0,
+		"BulkDataStartOffset": 0,
+		"WorldTileInfoDataOffset": 0,
+		"ChunkIDs": [],
+		"PreloadDependencyCount": 0,
+		"PreloadDependencyOffset": 0,
+		"NamesReferencedFromExportDataCount": 81,
+		"PayloadTocOffset": -1
+	}
+}

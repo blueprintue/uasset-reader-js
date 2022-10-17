@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Read .uasset dev file from Unreal Engine 5 in javascript</title>
+    <style>
+        body {
+            background-color: black;
+            color: lightgrey;
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0 20px;
+        }
+
+        .drag-and-drop-area {
+            border: 5px dotted grey;
+            border-radius: 10px;
+            min-height: 100px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .drag-and-drop-area.highlight {
+            border-color: #048000;
+        }
+
+        .error-container {
+            border: 5px dotted red;
+            border-radius: 10px;
+            margin-top: 25px;
+            min-height: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .loading-container {
+            border: 5px dotted blue;
+            border-radius: 10px;
+            margin-top: 25px;
+            min-height: 20px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .viewer {
+            display: flex;
+        }
+
+        .uasset-hex-values-container {
+            flex: 1;
+            padding-right: 10px;
+        }
+
+        .uasset-explorer-container {
+            flex: 1;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .uasset-hex-values {
+            font-family: monospace;
+            line-height: 18px;
+            white-space: pre;
+        }
+
+        .uasset-explorer {
+            font-family: monospace;
+            white-space: pre;
+        }
+
+        .tooltip {
+            position: absolute;
+            padding: 5px;
+            background: grey;
+            border: 1px solid dimgrey;
+            pointer-events: none;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .legend div {
+            padding: 0 10px 5px 0;
+        }
+
+        .legend span {
+            display: inline-block;
+            font-family: monospace;
+            line-height: 18px;
+            white-space: pre;
+        }
+
+        .uint16 {
+            background-color: #006F65;
+            color: #fff;
+            outline: 1px solid grey;
+        }
+
+        .uint16:hover {
+            outline: 1px solid red;
+        }
+
+        .int16 {
+            background-color: #00af9f;
+            color: #000;
+            outline: 1px solid grey;
+        }
+
+        .int16:hover {
+            outline: 1px solid red;
+        }
+
+        .int32 {
+            background-color: #1FE3AF;
+            color: #000;
+            outline: 1px solid grey;
+        }
+
+        .int32:hover {
+            outline: 1px solid red;
+        }
+
+        .uint32 {
+            background-color: #1FE300;
+            color: #000;
+            outline: 1px solid grey;
+        }
+
+        .uint32:hover {
+            outline: 1px solid red;
+        }
+
+        .int64 {
+            background-color: #ACE3AF;
+            color: #000;
+            outline: 1px solid grey;
+        }
+
+        .int64:hover {
+            outline: 1px solid red;
+        }
+
+        .uint64 {
+            background-color: #dcf6dd;
+            color: #000;
+            outline: 1px solid grey;
+        }
+
+        .uint64:hover {
+            outline: 1px solid red;
+        }
+
+        .fguidSlot {
+            background-color: #e799b5;
+            color: #000;
+            outline: 1px solid grey;
+        }
+
+        .fguidSlot:hover {
+            outline: 1px solid red;
+        }
+
+        .fguidString {
+            background-color: #E77CAA;
+            color: #000;
+            outline: 1px solid grey;
+        }
+
+        .fguidString:hover {
+            outline: 1px solid red;
+        }
+
+        .fstring {
+            background-color: #FF00D4;
+            color: #000;
+            outline: 1px solid grey;
+        }
+
+        .fstring:hover {
+            outline: 1px solid red;
+        }
+
+        .data {
+            background-color: #48003b;
+            color: #ffffff;
+            outline: 1px solid grey;
+        }
+
+        .data:hover {
+            outline: 1px solid red;
+        }
+    </style>
+</head>
+<body>
+    <h1>.uasset reader dev file from Unreal Engine 5</h1>
+    <div class="drag-and-drop-area" id="drag-and-drop-area">
+        <p>Drop your .uasset dev file from Unreal Engine 5 here or click on the input file below.</p>
+        <input type="file" id="file-input">
+    </div>
+
+    <div class="error-container hidden" id="error-container">ERROR: <span id="error-message"></span></div>
+
+    <div class="loading-container hidden" id="loading-container">LOADING</div>
+
+    <div class="" id="legend-container">
+        <h3>Legend</h3>
+        <div class="legend">
+            <div><span class="uint16"> 00 </span> uint16</div>
+            <div><span class="int16"> 00 </span> int16</div>
+            <div><span class="uint32"> 00 </span> uint32</div>
+            <div><span class="int32"> 00 </span> int32</div>
+            <div><span class="int64"> 00 </span> int64</div>
+            <div><span class="uint64"> 00 </span> uint64</div>
+            <div><span class="fguidSlot"> 00 </span> fguidSlot</div>
+            <div><span class="fguidString"> 00 </span> fguidString</div>
+            <div><span class="fstring"> 00 </span> fstring</div>
+            <div><span class="data"> 00 </span> data</div>
+        </div>
+    </div>
+
+    <div class="viewer hidden" id="viewer-container">
+        <div class="uasset-hex-values-container">
+            <h2>.uasset hex values</h2>
+            <div class="uasset-hex-values" id="uasset-hex-values"></div>
+        </div>
+        <div class="uasset-explorer-container">
+            <h2>.uasset explorer</h2>
+            <div class="uasset-explorer" id="uasset-explorer"></div>
+            <h2>.uasset resources</h2>
+            <div id="uasset-resources"></div>
+        </div>
+    </div>
+
+    <script src="../dist/uasset-reader.js"></script>
+    <script>
+        (function() {
+            // region helpers
+            function readBinaryFile(file) {
+                hideError();
+                hideViewer();
+
+                showLoading();
+
+                setTimeout(function(){
+                    file.arrayBuffer().then(function(buffer){
+                        hideLoading();
+
+                        const bytes = new Uint8Array(buffer);
+                        const out = new window.blueprintUE.uasset.ReaderUasset().analyze(bytes, true);
+
+                        if (out instanceof Error) {
+                            showError(out.message);
+                            return;
+                        }
+
+                        showViewer();
+
+                        fillUassetHexValues(bytes, out.hexView);
+                        fillUassetExplorer(out);
+                        fillUassetRessources(out);
+                    });
+                }, 500);
+            }
+
+            function addImage(imageData, imageFormat, imageWidth, imageHeight) {
+                var blob = null;
+                var url = null;
+                var elem = null;
+                var format = {'type': 'image/jpg'}
+                if (imageFormat === "PNG") {
+                    format = {'type': 'image/png'}
+                }
+
+                blob = new Blob([new Uint8Array(imageData)], format);
+                url = URL.createObjectURL(blob);
+                elem = document.createElement('img');
+
+                elem.width = imageWidth;
+                elem.height = imageHeight;
+                elem.setAttribute("src", url);
+
+                document.getElementById("uasset-resources").appendChild(elem);
+            }
+            // endregion
+
+            // region loading
+            const loadingContainer = document.getElementById("loading-container");
+
+            function showLoading() {
+                loadingContainer.classList.remove("hidden");
+            }
+
+            function hideLoading() {
+                loadingContainer.classList.add("hidden");
+            }
+            // endregion
+
+            // region error
+            const errorContainer = document.getElementById("error-container");
+            const errorMessage = document.getElementById("error-message");
+
+            function showError(message) {
+                errorContainer.classList.remove("hidden");
+                errorMessage.appendChild(document.createTextNode(message));
+            }
+
+            function hideError() {
+                errorContainer.classList.add("hidden");
+                while (errorMessage.firstChild) {
+                    errorMessage.removeChild(errorMessage.firstChild);
+                }
+            }
+            // endregion
+
+            // region viewer
+            const viewerContainer = document.getElementById("viewer-container");
+            const uassetHexValues = document.getElementById("uasset-hex-values");
+            const uassetExplorer = document.getElementById("uasset-explorer");
+            const uassetResources = document.getElementById("uasset-resources");
+
+            function showViewer() {
+                viewerContainer.classList.remove("hidden");
+            }
+
+            function hideViewer() {
+                viewerContainer.classList.add("hidden");
+            }
+
+            function fillUassetHexValues(bytes, hexView) {
+                let idxHexView = 0;
+                let lenghtHexView = hexView.length;
+
+                const fragment = document.createDocumentFragment();
+
+                while (uassetHexValues.firstChild) {
+                    uassetHexValues.removeChild(uassetHexValues.firstChild);
+                }
+
+                let element = null;
+                let elements = [];
+                let isInRange = false;
+
+                bytes.forEach((byte, index) => {
+                    const hex = byte.toString(16).padStart(2, "0");
+
+                    isInRange = idxHexView < lenghtHexView && hexView[idxHexView].start <= index && hexView[idxHexView].stop > index;
+
+                    if (isInRange) {
+                        if (hexView[idxHexView].start === index) {
+                            if (element !== null) {
+                                elements.push(element);
+                            }
+
+                            element = document.createElement("span");
+                            element.setAttribute("data-tooltip", "");
+                            element.setAttribute("data-tooltip-text", hexView[idxHexView].key + ": " + hexView[idxHexView].value + " (" + hexView[idxHexView].type + ")");
+                            element.setAttribute("class", hexView[idxHexView].type);
+
+                            element.appendChild(document.createTextNode(" " + hex + " "));
+
+                            if (index % 16 === 15) {
+                                element.appendChild(document.createElement("br"))
+                            }
+                        } else {
+                            element.appendChild(document.createTextNode(" " + hex + " "));
+
+                            if (index % 16 === 15) {
+                                element.appendChild(document.createElement("br"))
+                            }
+                        }
+                    } else if (idxHexView < lenghtHexView && hexView[idxHexView].stop === index) {
+                        element.appendChild(document.createTextNode(" " + hex + " "));
+
+                        if (index % 16 === 15) {
+                            element.appendChild(document.createElement("br"))
+                        }
+
+                        ++idxHexView;
+                        elements.push(element);
+                        element = null;
+                    } else {
+                        if (element === null) {
+                            element = document.createElement("span");
+                        }
+                        element.appendChild(document.createTextNode(" " + hex + " "));
+
+                        if (index % 16 === 15) {
+                            element.appendChild(document.createElement("br"))
+                        }
+                    }
+                });
+
+                if (element !== null) {
+                    elements.push(element);
+                }
+
+                for (let idxElements = 0; idxElements < elements.length; ++idxElements) {
+                    fragment.appendChild(elements[idxElements]);
+                }
+
+                uassetHexValues.appendChild(fragment);
+            }
+
+            function fillUassetExplorer(uasset) {
+                let str = "";
+
+                for (var prop in uasset) {
+                    if (prop === "hexView") {
+                        continue;
+                    }
+
+                    str+= prop + ":\n" + deepInspect(uasset[prop], 1).join("\n") + "\n\n";
+                }
+
+                while (uassetExplorer.firstChild) {
+                    uassetExplorer.removeChild(uassetExplorer.firstChild);
+                }
+
+                uassetExplorer.appendChild(document.createTextNode(str));
+            }
+
+            function deepInspect(obj, depth) {
+                let lines = [];
+                const indent = "".padStart(depth, " ");
+
+                for (let prop in obj) {
+                    if (typeof obj[prop] === "object") {
+                        lines.push(indent + prop + ":");
+                        lines.push(...deepInspect(obj[prop], depth+2));
+                        continue;
+                    }
+
+                    lines.push(indent + prop + ": " + obj[prop]);
+                }
+
+                return lines;
+            }
+
+            function fillUassetRessources(uasset) {
+                var idx = 0;
+                var count = 0;
+                var tmp = null;
+
+                while (uassetResources.firstChild) {
+                    uassetResources.removeChild(uassetResources.firstChild);
+                }
+
+                for (count = uasset.thumbnails.Thumbnails.length; idx < count; ++idx) {
+                    tmp = uasset.thumbnails.Thumbnails[idx];
+                    addImage(tmp.ImageData, tmp.ImageFormat, tmp.ImageWidth, tmp.ImageHeight);
+                }
+            }
+            // endregion
+
+            // region drag and drop
+            const dragAndDropArea = document.getElementById("drag-and-drop-area");
+
+            function handleDrop(event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                if (event.type === "dragenter" || event.type === "dragover") {
+                    dragAndDropArea.classList.add("highlight");
+                }
+
+                if (event.type === "dragleave") {
+                    dragAndDropArea.classList.remove("highlight");
+                }
+
+                if (event.type !== "drop") {
+                    return;
+                }
+
+                dragAndDropArea.classList.remove("highlight");
+
+                if (event.dataTransfer.files.length === 0) {
+                    return;
+                }
+
+                readBinaryFile(event.dataTransfer.files[0]);
+            }
+
+            dragAndDropArea.addEventListener("dragenter", handleDrop, false);
+            dragAndDropArea.addEventListener("dragover", handleDrop, false);
+            dragAndDropArea.addEventListener("dragleave", handleDrop, false);
+            dragAndDropArea.addEventListener("drop", handleDrop, false);
+            // endregion
+
+            // region input file
+            const fileInput = document.getElementById("file-input");
+
+            function handleFileChange(event) {
+                event.preventDefault();
+                event.stopPropagation();
+
+                if (fileInput.files.length === 0) {
+                    return;
+                }
+
+                readBinaryFile(fileInput.files[0]);
+            }
+
+            fileInput.addEventListener("change", handleFileChange, false);
+            // endregion
+
+            // region popin
+            viewerContainer.addEventListener("mouseover", function(event) {
+                if (!event.target.hasAttribute("data-tooltip")) {
+                    return;
+                }
+
+                const tooltip = document.createElement("div");
+                tooltip.classList.add("tooltip");
+                tooltip.appendChild(document.createTextNode(event.target.getAttribute("data-tooltip-text")));
+
+                document.body.appendChild(tooltip);
+                event.target.onpointermove = function(event) {
+                    if (event.target !== event.currentTarget) {
+                        return;
+                    }
+
+                    const rect = event.target.getBoundingClientRect();
+                    const x = event.pageX ;
+                    const y = (rect.top + window.scrollY) - 30;
+
+                    tooltip.style.left = x + "px";
+                    tooltip.style.top = y + "px";
+                }
+            });
+
+            viewerContainer.addEventListener("mouseout", function(event) {
+                if (!event.target.hasAttribute("data-tooltip")) {
+                    return;
+                }
+
+                document.body.removeChild(document.querySelector(".tooltip"));
+            });
+            // endregion
+        }());
+</script>
+</body>
+</html>
