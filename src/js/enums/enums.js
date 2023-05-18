@@ -323,8 +323,13 @@ var EUnrealEngineObjectUE5Version = {
     VER_UE5_PAYLOAD_TOC: {value: 1002, comment: "Added a payload table of contents to the package summary"},
     VER_UE5_OPTIONAL_RESOURCES: {value: 1003, comment: "Added data to identify references from and to optional package"},
     VER_UE5_LARGE_WORLD_COORDINATES: {value: 1004, comment: "Large world coordinates converts a number of core types to double components by default."},
-    VER_UE5_AUTOMATIC_VERSION_PLUS_ONE: {value: 1005, comment: "Last version +1"},
-    VER_UE5_AUTOMATIC_VERSION: {value: 1004, comment: "Large world coordinates converts a number of core types to double components by default."}
+    VER_UE5_REMOVE_OBJECT_EXPORT_PACKAGE_GUID: {value: 1005, comment: "Remove package GUID from FObjectExport"},
+	VER_UE5_TRACK_OBJECT_EXPORT_IS_INHERITED: {value: 1006, comment: "Add IsInherited to the FObjectExport entry"},
+	VER_UE5_FSOFTOBJECTPATH_REMOVE_ASSET_PATH_FNAMES: {value: 1007, comment: "Replace FName asset path in FSoftObjectPath with (package name, asset name) pair FTopLevelAssetPath"},
+	VER_UE5_ADD_SOFTOBJECTPATH_LIST: {value: 1008, comment: "Add a soft object path list to the package summary for fast remap"},
+	VER_UE5_DATA_RESOURCES: {value: 1009, comment: "Added bulk/data resource table"},
+    VER_UE5_AUTOMATIC_VERSION_PLUS_ONE: {value: 1010, comment: "Last version +1"},
+    VER_UE5_AUTOMATIC_VERSION: {value: 1009, comment: "Large world coordinates converts a number of core types to double components by default."}
 };
 
 /* eslint-disable */
