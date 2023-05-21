@@ -390,7 +390,7 @@ ReaderUasset.prototype.readHeader = function readHeader() {
         this.uasset.header.SoftObjectPathsCount = this.uint32("SoftObjectPathsCount");
         this.uasset.header.SoftObjectPathsOffset = this.uint32("SoftObjectPathsOffset");
     }
-    
+
     if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_ADDED_PACKAGE_SUMMARY_LOCALIZATION_ID.value) {
         this.uasset.header.LocalizationId = this.fstring("LocalizationId");
     }
@@ -515,7 +515,7 @@ ReaderUasset.prototype.readHeader = function readHeader() {
     } else {
         this.uasset.header.PayloadTocOffset = -1;
     }
-    
+
     if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_DATA_RESOURCES.value) {
         this.uasset.header.DataResourceOffset = this.int32("DataResourceOffset");
     }
