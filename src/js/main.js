@@ -312,7 +312,7 @@ ReaderUasset.prototype.resolveFName = function resolveFName(idx) {
  * @function ReaderUasset#readHeader
  * @private
  * @see {@link https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/CoreUObject/Private/UObject/PackageFileSummary.cpp#L48}
- * @returns {(Error|undefined)}
+ * @returns {Error|undefined}
  */
 ReaderUasset.prototype.readHeader = function readHeader() {
     var idx = 0;
@@ -555,7 +555,7 @@ ReaderUasset.prototype.readNames = function readNames() {
  * @function ReaderUasset#readGatherableTextData
  * @private
  * @see {@link https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/Core/Private/Internationalization/GatherableTextData.cpp}
- * @returns {(Error|undefined)}
+ * @returns {Error|undefined}
  */
 ReaderUasset.prototype.readGatherableTextData = function readGatherableTextData() {
     /** @type {GatherableTextData} */
