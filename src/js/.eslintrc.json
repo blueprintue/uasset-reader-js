@@ -5,7 +5,7 @@
     "globals": {
         "Promise": "off"
     },
-    "extends": "eslint:all",
+    "extends": ["eslint:all"],
     "parserOptions": {
         "ecmaVersion": 5
     },
@@ -30,7 +30,7 @@
         "init-declarations": ["error", "always"],
         "key-spacing": ["error", {"beforeColon": false, "afterColon": true, "mode": "minimum"}],
         "keyword-spacing": ["error", {"before": true, "after": true}],
-        "line-comment-position": ["error", {"ignorePattern": "GULP REMOVE LINE|GULP PROD REMOVE LINE"}],
+        "line-comment-position": ["error", {"ignorePattern": "BUILD REMOVE LINE"}],
         "lines-around-comment": ["error",
             {
                 "beforeBlockComment": true,
@@ -57,13 +57,13 @@
         "multiline-comment-style": ["error", "starred-block"],
         "newline-per-chained-call": ["error", {"ignoreChainWithDepth": 5}],
         "no-bitwise":  ["error", {"allow": [">>"], "int32Hint": true}],
-        "no-console": "off", // gulp js --prod remove it
+        "no-console": "off",
         "no-continue": "off",
-        "no-debugger": "off", // gulp js --prod remove it
+        "no-debugger": "off",
         "no-else-return": ["error"],
         "no-empty-function": "error",
         "no-extra-parens": "error",
-        "no-inline-comments": ["error", {"ignorePattern": "GULP REMOVE LINE|GULP PROD REMOVE LINE"}],
+        "no-inline-comments": ["error", {"ignorePattern": "BUILD REMOVE LINE"}],
         "no-implicit-globals": "off",
         "no-magic-numbers": ["off"],
         "no-multi-assign": "error",
@@ -76,7 +76,7 @@
         "no-undefined": "off",
         "no-unused-vars": "error",
         "no-useless-concat": "error",
-        "no-use-before-define": ["error", {"functions": true, "classes": true, "variables": true}],
+        "no-use-before-define": ["error", {"functions": false, "classes": true, "variables": true}],
         "no-var": "off",
         "object-property-newline": ["error", {"allowAllPropertiesOnSameLine": true}],
         "object-shorthand": "off",
@@ -120,7 +120,6 @@
         "jsdoc/match-description": "error",
         "jsdoc/match-name": "off",
         "jsdoc/multiline-blocks": "error",
-        "jsdoc/newline-after-description": "error",
         "jsdoc/no-bad-blocks": "error",
         "jsdoc/no-defaults": "error",
         "jsdoc/no-missing-syntax": "off",
@@ -150,7 +149,7 @@
         "jsdoc/require-throws": "error",
         "jsdoc/require-yields": "error",
         "jsdoc/require-yields-check": "error",
-        "jsdoc/tag-lines": "error",
+        "jsdoc/tag-lines": ["error", "any", {"startLines": 1}],
         "jsdoc/valid-types": "off"
     }
 }

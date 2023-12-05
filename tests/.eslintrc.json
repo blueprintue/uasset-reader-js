@@ -1,0 +1,17 @@
+{
+    "env": {
+        "browser": true,
+        "jest": true,
+        "es6": true
+    },
+    "globals": {
+        "Promise": "off"
+    },
+    "extends": ["eslint:recommended", "plugin:jest/recommended"],
+    "parserOptions": {
+        "ecmaVersion": "latest"
+    },
+    "plugins": [
+        "jest"
+    ]
+}

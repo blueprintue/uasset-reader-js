@@ -370,7 +370,7 @@ var PackageFlags = {
 };
 /* eslint-enable */
 
-window.EPackageFileTag = EPackageFileTag; // GULP REMOVE LINE
-window.EUnrealEngineObjectUE4Version = EUnrealEngineObjectUE4Version; // GULP REMOVE LINE
-window.EUnrealEngineObjectUE5Version = EUnrealEngineObjectUE5Version; // GULP REMOVE LINE
-window.PackageFlags = PackageFlags; // GULP REMOVE LINE
+window.EPackageFileTag = EPackageFileTag; // BUILD REMOVE LINE
+window.EUnrealEngineObjectUE4Version = EUnrealEngineObjectUE4Version; // BUILD REMOVE LINE
+window.EUnrealEngineObjectUE5Version = EUnrealEngineObjectUE5Version; // BUILD REMOVE LINE
+window.PackageFlags = PackageFlags; // BUILD REMOVE LINE
