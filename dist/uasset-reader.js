@@ -123,7 +123,7 @@
    *
    * @typedef GatherableTextDataMetadata
    * @property {number} ValueCount - to fill
-   * @property {*[]}    Values     - to fill
+   * @property {any[]}  Values     - to fill
    */
   // endregion
 
@@ -551,7 +551,7 @@
       depends: {},
       softPackageReferences: {},
       searchableNames: {},
-      thumbnails: {},
+      thumbnails: { Index: [], Thumbnails: [] },
       assetRegistryData: {},
       preloadDependency: {},
       bulkDataStart: {}
@@ -843,7 +843,7 @@
    *
    * @function ReaderUasset#readHeader
    * @private
-   * @see {@link https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/CoreUObject/Private/UObject/PackageFileSummary.cpp#L48}
+   * @see https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/CoreUObject/Private/UObject/PackageFileSummary.cpp#L48
    * @returns {Error|undefined}
    */
   ReaderUasset.prototype.readHeader = function readHeader() {
@@ -1058,7 +1058,7 @@
    *
    * @function ReaderUasset#readNames
    * @private
-   * @see {@link https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/Core/Private/UObject/UnrealNames.cpp#L2736}
+   * @see https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/Core/Private/UObject/UnrealNames.cpp#L2736
    * @returns {undefined}
    */
   ReaderUasset.prototype.readNames = function readNames() {
@@ -1086,7 +1086,7 @@
    *
    * @function ReaderUasset#readGatherableTextData
    * @private
-   * @see {@link https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/Core/Private/Internationalization/GatherableTextData.cpp}
+   * @see https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/Core/Private/Internationalization/GatherableTextData.cpp
    * @returns {Error|undefined}
    */
   ReaderUasset.prototype.readGatherableTextData = function readGatherableTextData() {
@@ -1159,7 +1159,7 @@
    *
    * @function ReaderUasset#readImports
    * @private
-   * @see {@link https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/CoreUObject/Private/UObject/ObjectResource.cpp#L302}
+   * @see https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/CoreUObject/Private/UObject/ObjectResource.cpp#L302
    * @returns {undefined}
    */
   ReaderUasset.prototype.readImports = function readImports() {
@@ -1204,7 +1204,7 @@
    *
    * @function ReaderUasset#readExports
    * @private
-   * @see {@link https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/CoreUObject/Private/UObject/ObjectResource.cpp#L113}
+   * @see https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/CoreUObject/Private/UObject/ObjectResource.cpp#L113
    * @returns {undefined}
    */
   ReaderUasset.prototype.readExports = function readExports() {
@@ -1380,7 +1380,7 @@
    *
    * @function ReaderUasset#readThumbnails
    * @private
-   * @see {@link https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/Core/Private/Misc/ObjectThumbnail.cpp#L42}
+   * @see https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/Core/Private/Misc/ObjectThumbnail.cpp#L42
    * @returns {undefined}
    */
   ReaderUasset.prototype.readThumbnails = function readThumbnails() {
