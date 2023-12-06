@@ -21,7 +21,7 @@
   "homepage": "https://github.com/blueprintue/uasset-reader-js",
   "devDependencies": {
     "@babel/core": "^7.23.5",
-    "@types/jest": "^29.5.10",
+    "@types/jest": "^29.5.11",
     "eslint": "^8.55.0",
     "eslint-plugin-jest": "^27.4.0",
     "eslint-plugin-jsdoc": "^46.8.1",
