@@ -94,7 +94,7 @@ if (window.blueprintUE.uasset === undefined) {
  *
  * @typedef GatherableTextDataMetadata
  * @property {number} ValueCount - to fill
- * @property {*[]}    Values     - to fill
+ * @property {any[]}  Values     - to fill
  */
 // endregion
 

@@ -1,3 +1,4 @@
+/* global __dirname, BigInt */
 require("../src/js/_namespace_");
 require("../src/js/enums/enums");
 require("../src/js/main");
@@ -16,17 +17,16 @@ function parseBigIntPayload(key, value) {
 
 describe("main", function(){
     // region constructor
-    it("should be defined", function(done) {
+    it("should be defined", () => {
         expect(window.blueprintUE.uasset.ReaderUasset).toBeDefined();
-
-        done();
     });
     // endregion
 
     describe("datacases", function(){
         describe("simple", function(){
             describe("UE 5.0", function(){
-                it.each(datacases.simple.ue50)('$name', function ({name, input, expected}, done) {
+                /* eslint-disable-next-line no-unused-vars */
+                it.each(datacases.simple.ue50)('$name', ({name, input, expected}) => {
                     const bytesInput = new Uint8Array(fs.readFileSync(path.resolve(__dirname, input)));
                     const bytesOutput = JSON.parse(fs.readFileSync(path.resolve(__dirname, expected)).toString(), parseBigIntPayload);
 
@@ -35,8 +35,6 @@ describe("main", function(){
                     expect(uasset.header).toStrictEqual(bytesOutput.header);
                     expect(uasset.names).toStrictEqual(bytesOutput.names);
                     expect(uasset.gatherableTextData).toStrictEqual(bytesOutput.gatherableTextData);
-
-                    done();
                 });
             });
         });
