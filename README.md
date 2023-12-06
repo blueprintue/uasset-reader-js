@@ -15,60 +15,9 @@ new window.blueprintUE.uasset.ReaderUasset().analyze(bytes);
 #### analyze([bytes: Uint8Array]): Uasset
 This method read each byte to extract data from current `.uasset` file.
 
-## How to dev
-### Requirements
-Currently using:
-* node v14.19.1
-* npm 8.6.0
-
-### First run
-Install [Gulp](https://gulpjs.com/) & packages
-
-```bash
-npm install --global gulp-cli
-npm install
-```
-
-Then run:
-
-```bash
-gulp
-```
-
-It will create in `dist` folder:
-* `uasset-reader-min.js`: js file to put online 
-
-At the end, gulp watch is launched for js files.
-
-The demos files is for explaing how works uasset-reader.
-
-### Other Gulp Commands
-* `gulp js`: generate js file for dev and prod
-
-### Tests
-Run tests
-```bash
-npm test
-```
-
-### JSDoc
-First you have to install jsdoc.
-```bash
-npm install -g jsdoc
-```
-Then you can generate the documentation.
-```bash
-npm run jsdoc
-```
-The output folder is jsdoc located at the root of the project.
-
-### ESlint
-Output in terminal
-```bash
-npm run eslint
-```
-
-Output in `eslint_out.html`
-```bash
-npm run eslint-export
-```
+## How to Dev
+`npm test` or `docker buildx bake test` to test and coverage  
+`npm run build` or `docker buildx bake build` to create dist js file minified  
+`npm run jsdoc` or `docker buildx bake jsdoc` to generate documentation  
+`npm run eslint` or `docker buildx bake lint` to run eslint  
+`npm run eslint:fix` to run eslint and fix files
