@@ -19,7 +19,6 @@
       "dist",
       "demo",
       "tests",
-      "tests_e2e",
       "coverage"
     ]
   },
