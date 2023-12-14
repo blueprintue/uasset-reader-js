@@ -35,10 +35,6 @@
     "node": ">=20.6.1"
   },
   "jest": {
-    "testEnvironment": "jsdom",
-    "coverageReporters": [
-      "html",
-      "text"
-    ]
+    "testEnvironment": "jsdom"
   }
 }
