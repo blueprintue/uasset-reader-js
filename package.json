@@ -1,6 +1,6 @@
 {
   "name": "uasset-reader-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Read .uasset files from Unreal Engine in javascript",
   "scripts": {
     "test": "jest --coverage --coverageDirectory=./coverage -- tests/main.test.js",
