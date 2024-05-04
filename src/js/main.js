@@ -974,8 +974,8 @@ ReaderUasset.prototype.readBulkDataStart = function readBulkDataStart() {
  *
  * @function ReaderUasset#analyze
  * @public
- * @param {number[]} bytes       - bytes read from file
- * @param {boolean}  saveHexView - if true save all informations to debug
+ * @param {Uint8Array} bytes       - bytes read from file
+ * @param {boolean}    saveHexView - if true save all informations to debug
  * @returns {Uasset}
  */
 ReaderUasset.prototype.analyze = function analyze(bytes, saveHexView) {

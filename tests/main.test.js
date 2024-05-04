@@ -3,7 +3,7 @@ require("../src/js/_namespace_");
 require("../src/js/enums/enums");
 require("../src/js/main");
 const fs = require("fs");
-const path = require('path');
+const path = require("path");
 const datacases = require("./datacases.json");
 
 function parseBigIntPayload(key, value) {
@@ -30,7 +30,7 @@ describe("main", function(){
                     const bytesInput = new Uint8Array(fs.readFileSync(path.resolve(__dirname, input)));
                     const bytesOutput = JSON.parse(fs.readFileSync(path.resolve(__dirname, expected)).toString(), parseBigIntPayload);
 
-                    const uasset = new window.blueprintUE.uasset.ReaderUasset().analyze(bytesInput);
+                    const uasset = new window.blueprintUE.uasset.ReaderUasset().analyze(bytesInput, false);
 
                     expect(uasset.header).toStrictEqual(bytesOutput.header);
                     expect(uasset.names).toStrictEqual(bytesOutput.names);

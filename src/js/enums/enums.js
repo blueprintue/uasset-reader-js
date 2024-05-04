@@ -332,8 +332,9 @@ var EUnrealEngineObjectUE5Version = {
     VER_UE5_DATA_RESOURCES: {value: 1009, comment: "Added bulk/data resource table"},
     VER_UE5_SCRIPT_SERIALIZATION_OFFSET: {value: 1010, comment: "Added script property serialization offset to export table entries for saved, versioned packages"},
     VER_UE5_PROPERTY_TAG_EXTENSION_AND_OVERRIDABLE_SERIALIZATION: {value: 1011, comment: "Adding property tag extension, Support for overridable serialization on UObject, Support for overridable logic in containers"},
-    VER_UE5_AUTOMATIC_VERSION_PLUS_ONE: {value: 1012, comment: "Last version +1"},
-    VER_UE5_AUTOMATIC_VERSION: {value: 1011, comment: "Large world coordinates converts a number of core types to double components by default."}
+    VER_UE5_PROPERTY_TAG_COMPLETE_TYPE_NAME: {value: 1012, comment: "Added property tag complete type name and serialization type"},
+    VER_UE5_AUTOMATIC_VERSION_PLUS_ONE: {value: 1013, comment: "Last version +1"},
+    VER_UE5_AUTOMATIC_VERSION: {value: 1012, comment: "AUTOMATIC_VERSION_PLUS_ONE - 1"}
 };
 
 /* eslint-disable */
