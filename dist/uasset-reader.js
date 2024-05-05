@@ -577,7 +577,7 @@
     var val = "";
     var bytes = this.readCountBytes(2);
 
-    val = new DataView(new Uint8Array(bytes).buffer).getUint16(0, true);
+    val = new DataView(new Uint8Array(bytes).buffer).getUint16(0, this.useLittleEndian);
 
     this.addHexView(key, "uint16", val, this.currentIdx - 2, this.currentIdx - 1);
 
@@ -596,7 +596,7 @@
     var val = "";
     var bytes = this.readCountBytes(4);
 
-    val = new DataView(new Uint8Array(bytes).buffer).getInt32(0, true);
+    val = new DataView(new Uint8Array(bytes).buffer).getInt32(0, this.useLittleEndian);
 
     this.addHexView(key, "int32", val, this.currentIdx - 4, this.currentIdx - 1);
 
@@ -615,7 +615,7 @@
     var val = "";
     var bytes = this.readCountBytes(4);
 
-    val = new DataView(new Uint8Array(bytes).buffer).getUint32(0, true);
+    val = new DataView(new Uint8Array(bytes).buffer).getUint32(0, this.useLittleEndian);
 
     this.addHexView(key, "uint32", val, this.currentIdx - 4, this.currentIdx - 1);
 
@@ -634,7 +634,7 @@
     var val = "";
     var bytes = this.readCountBytes(8);
 
-    val = new DataView(new Uint8Array(bytes).buffer).getBigInt64(0, true);
+    val = new DataView(new Uint8Array(bytes).buffer).getBigInt64(0, this.useLittleEndian);
 
     this.addHexView(key, "int64", val, this.currentIdx - 8, this.currentIdx - 1);
 
@@ -653,7 +653,7 @@
     var val = "";
     var bytes = this.readCountBytes(8);
 
-    val = new DataView(new Uint8Array(bytes).buffer).getBigUint64(0, true);
+    val = new DataView(new Uint8Array(bytes).buffer).getBigUint64(0, this.useLittleEndian);
 
     this.addHexView(key, "uint64", val, this.currentIdx - 8, this.currentIdx - 1);
 
@@ -859,10 +859,12 @@
     // Check file is uasset
     this.uasset.header.EPackageFileTag = this.uint32("EPackageFileTag");
     if (this.uasset.header.EPackageFileTag === EPackageFileTag.PACKAGE_FILE_TAG_SWAPPED) {
-      return new Error("invalid uasset: the package has been stored in a separate endianness");
+      // The package has been stored in a separate endianness
+      this.useLittleEndian = false;
     }
 
-    if (this.uasset.header.EPackageFileTag !== EPackageFileTag.PACKAGE_FILE_TAG) {
+    if (this.uasset.header.EPackageFileTag !== EPackageFileTag.PACKAGE_FILE_TAG &&
+    this.uasset.header.EPackageFileTag !== EPackageFileTag.PACKAGE_FILE_TAG_SWAPPED) {
       return new Error("invalid uasset");
     }
 
@@ -1522,6 +1524,7 @@
     this.currentIdx = 0;
     this.bytes = bytes;
     this.saveHexView = saveHexView || false;
+    this.useLittleEndian = true;
 
     err = this.readHeader();
     if (err !== undefined) {
