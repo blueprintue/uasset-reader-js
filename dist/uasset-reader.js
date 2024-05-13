@@ -1,5 +1,5 @@
 /**
- * uasset-reader-js (v1.1.0)
+ * uasset-reader-js (v1.1.1)
  * https://github.com/blueprintue/uasset-reader-js
  * 
  * MIT License
@@ -27,7 +27,6 @@
 (function () {
   "use strict";
 
-  /* eslint-disable-next-line no-unused-vars */
   /* istanbul ignore else */
   if (window.blueprintUE === undefined) {
     /**
@@ -569,12 +568,14 @@
    * Read 2 bytes, save in hex view and return value as uint16 en littleEndian.
    *
    * @function ReaderUasset#uint16
-   * @private
    * @param {string} key - name of what we read
    * @returns {number}
+   * @private
    */
   ReaderUasset.prototype.uint16 = function uint16(key) {
-    var val = "";
+    /** @type {number} */
+    var val;
+    /** @type {number[]} */
     var bytes = this.readCountBytes(2);
 
     val = new DataView(new Uint8Array(bytes).buffer).getUint16(0, this.useLittleEndian);
@@ -588,12 +589,14 @@
    * Read 4 bytes, save in hex view and return value as int32 en littleEndian.
    *
    * @function ReaderUasset#int32
-   * @private
    * @param {string} key - name of what we read
    * @returns {number}
+   * @private
    */
   ReaderUasset.prototype.int32 = function int32(key) {
-    var val = "";
+    /** @type {number} */
+    var val;
+    /** @type {number[]} */
     var bytes = this.readCountBytes(4);
 
     val = new DataView(new Uint8Array(bytes).buffer).getInt32(0, this.useLittleEndian);
@@ -607,12 +610,14 @@
    * Read 4 bytes, save in hex view and return value as uint32 en littleEndian.
    *
    * @function ReaderUasset#uint32
-   * @private
    * @param {string} key - name of what we read
    * @returns {number}
+   * @private
    */
   ReaderUasset.prototype.uint32 = function uint32(key) {
-    var val = "";
+    /** @type {number} */
+    var val;
+    /** @type {number[]} */
     var bytes = this.readCountBytes(4);
 
     val = new DataView(new Uint8Array(bytes).buffer).getUint32(0, this.useLittleEndian);
@@ -626,12 +631,14 @@
    * Read 8 bytes, save in hex view and return value as int64 en littleEndian.
    *
    * @function ReaderUasset#int64
-   * @private
    * @param {string} key - name of what we read
    * @returns {number}
+   * @private
    */
   ReaderUasset.prototype.int64 = function int64(key) {
-    var val = "";
+    /** @type {bigint} */
+    var val;
+    /** @type {number[]} */
     var bytes = this.readCountBytes(8);
 
     val = new DataView(new Uint8Array(bytes).buffer).getBigInt64(0, this.useLittleEndian);
@@ -645,12 +652,14 @@
    * Read 8 bytes, save in hex view and return value as uint64 en littleEndian.
    *
    * @function ReaderUasset#uint64
-   * @private
    * @param {string} key - name of what we read
    * @returns {number}
+   * @private
    */
   ReaderUasset.prototype.uint64 = function uint64(key) {
-    var val = "";
+    /** @type {bigint} */
+    var val;
+    /** @type {number[]} */
     var bytes = this.readCountBytes(8);
 
     val = new DataView(new Uint8Array(bytes).buffer).getBigUint64(0, this.useLittleEndian);
@@ -664,24 +673,31 @@
    * Read 16 bytes, save in hex view and return value as string.
    *
    * @function ReaderUasset#fguidSlot
-   * @private
    * @param {string} key - name of what we read
    * @returns {string}
+   * @private
    */
   ReaderUasset.prototype.fguidSlot = function fguidSlot(key) {
-    var val = "";
+    /** @type {string} */
+    var val;
+    /** @type {string} */
     var str1 = "";
+    /** @type {string} */
     var str2 = "";
+    /** @type {string} */
     var str3 = "";
+    /** @type {string} */
     var str4 = "";
+    /** @type {number} */
     var idx = 3;
+    /** @type {number[]} */
     var bytes = this.readCountBytes(16);
 
     for (; idx >= 0; --idx) {
-      str1 += bytes[idx].toString(16).padStart(2, "0");
-      str2 += bytes[idx + 4].toString(16).padStart(2, "0");
-      str3 += bytes[idx + 8].toString(16).padStart(2, "0");
-      str4 += bytes[idx + 12].toString(16).padStart(2, "0");
+      str1 = str1 + bytes[idx].toString(16).padStart(2, "0");
+      str2 = str2 + bytes[idx + 4].toString(16).padStart(2, "0");
+      str3 = str3 + bytes[idx + 8].toString(16).padStart(2, "0");
+      str4 = str4 + bytes[idx + 12].toString(16).padStart(2, "0");
     }
 
     val = (str1 + str2 + str3 + str4).toUpperCase();
@@ -695,18 +711,22 @@
    * Read 16 bytes, save in hex view and return value as string.
    *
    * @function ReaderUasset#fguidString
-   * @private
    * @param {string} key - name of what we read
    * @returns {string}
+   * @private
    */
   ReaderUasset.prototype.fguidString = function fguidString(key) {
-    var val = "";
+    /** @type {string} */
+    var val;
+    /** @type {string} */
     var str = "";
+    /** @type {number} */
     var idx = 0;
+    /** @type {number[]} */
     var bytes = this.readCountBytes(16);
 
     for (; idx < 16; ++idx) {
-      str += bytes[idx].toString(16).padStart(2, "0");
+      str = str + bytes[idx].toString(16).padStart(2, "0");
     }
 
     val = str.toUpperCase();
@@ -720,20 +740,29 @@
    * Read 16 bytes, save in hex view and return value as string.
    *
    * @function ReaderUasset#fstring
-   * @private
    * @param {string} key - name of what we read
    * @returns {string}
+   * @private
    */
   ReaderUasset.prototype.fstring = function fstring(key) {
-    var val = "";
-    var bytes = [];
+    /** @type {string} */
+    var val;
+    /** @type {number[]} */
+    var bytes;
+    /** @type {string} */
     var str = "";
+    /** @type {number} */
     var counter = 0;
+    /** @type {number[]} */
     var output = [];
-    var value = "";
-    var extra = "";
-    var idx = 0;
-    var startPosition = this.currentIdx;
+    /** @type {string} */
+    var value;
+    /** @type {string} */
+    var extra;
+    /** @type {number} */
+    var idx;
+    /** @type {number} */
+    var startPosition;
 
     var length = this.int32(key + " (fstring length)");
     if (length === 0) {
@@ -745,7 +774,7 @@
     if (length > 0) {
       bytes = this.readCountBytes(length);
       for (idx = 0; idx < bytes.length - 1; ++idx) {
-        str += String.fromCharCode(bytes[idx]);
+        str = str + String.fromCharCode(bytes[idx]);
       }
 
       val = str;
@@ -785,9 +814,9 @@
    * Read n bytes.
    *
    * @function ReaderUasset#readCountBytes
-   * @private
    * @param {number} count - number of bytes to read.
    * @returns {number[]}
+   * @private
    */
   ReaderUasset.prototype.readCountBytes = function readCountBytes(count) {
     var bytes = [];
@@ -795,7 +824,7 @@
 
     for (; idx < count; ++idx) {
       bytes.push(this.bytes[this.currentIdx]);
-      this.currentIdx += 1;
+      this.currentIdx = this.currentIdx + 1;
     }
 
     return bytes;
@@ -805,13 +834,13 @@
    * Add informations in HexView struct.
    *
    * @function ReaderUasset#addHexView
-   * @private
    * @param {string} key           - name of what we read
    * @param {string} type          - type name of what we read (int16, int32, etc...)
    * @param {string} value         - value read
    * @param {number} startPosition - start position in the file
    * @param {number} stopPosition  - stop position in the file
    * @returns {undefined}
+   * @private
    */
   ReaderUasset.prototype.addHexView = function addHexView(key, type, value, startPosition, stopPosition) {/* eslint-disable-line max-params */
     if (this.saveHexView === false) {
@@ -831,9 +860,9 @@
    * Resolve FName.
    *
    * @function ReaderUasset#resolveFName
-   * @private
    * @param {number} idx - name of what we read
    * @returns {string}
+   * @private
    */
   ReaderUasset.prototype.resolveFName = function resolveFName(idx) {
     if (this.uasset.names[idx]) {
@@ -848,13 +877,16 @@
    * Read Header.
    *
    * @function ReaderUasset#readHeader
+   * @returns {(Error|undefined)}
    * @private
    * @see https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/CoreUObject/Private/UObject/PackageFileSummary.cpp#L48
-   * @returns {Error|undefined}
    */
+  /* eslint-disable-next-line max-lines-per-function,max-statements,complexity */
   ReaderUasset.prototype.readHeader = function readHeader() {
-    var idx = 0;
-    var count = 0;
+    /** @type {number} */
+    var idx;
+    /** @type {number} */
+    var count;
 
     // Check file is uasset
     this.uasset.header.EPackageFileTag = this.uint32("EPackageFileTag");
@@ -885,6 +917,7 @@
      * -8 indicates that the UE5 version has been added to the summary
      */
     this.uasset.header.LegacyFileVersion = this.int32("LegacyFileVersion");
+    /* eslint-disable-next-line no-magic-numbers */
     if (this.uasset.header.LegacyFileVersion !== -6 && this.uasset.header.LegacyFileVersion !== -7 && this.uasset.header.LegacyFileVersion !== -8) {
       return new Error("unsupported version");
     }
@@ -899,6 +932,7 @@
     this.uasset.header.FileVersionUE4 = this.int32("FileVersionUE4");
 
     // Check valid UE5
+    /* eslint-disable-next-line no-magic-numbers */
     if (this.uasset.header.LegacyFileVersion <= -8) {
       this.uasset.header.FileVersionUE5 = this.int32("FileVersionUE5");
     }
@@ -984,20 +1018,20 @@
 
     if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_ENGINE_VERSION_OBJECT.value) {
       this.uasset.header.SavedByEngineVersion = String(this.uint16("SavedByEngineVersion Major"));
-      this.uasset.header.SavedByEngineVersion += "." + this.uint16("SavedByEngineVersion Minor");
-      this.uasset.header.SavedByEngineVersion += "." + this.uint16("SavedByEngineVersion Patch");
-      this.uasset.header.SavedByEngineVersion += "-" + this.uint32("SavedByEngineVersion Changelist");
-      this.uasset.header.SavedByEngineVersion += "+" + this.fstring("SavedByEngineVersion Branch");
+      this.uasset.header.SavedByEngineVersion = this.uasset.header.SavedByEngineVersion + "." + this.uint16("SavedByEngineVersion Minor");
+      this.uasset.header.SavedByEngineVersion = this.uasset.header.SavedByEngineVersion + "." + this.uint16("SavedByEngineVersion Patch");
+      this.uasset.header.SavedByEngineVersion = this.uasset.header.SavedByEngineVersion + "-" + this.uint32("SavedByEngineVersion Changelist");
+      this.uasset.header.SavedByEngineVersion = this.uasset.header.SavedByEngineVersion + "+" + this.fstring("SavedByEngineVersion Branch");
     } else {
       this.uasset.header.EngineChangelist = this.int32("EngineChangelist");
     }
 
     if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_PACKAGE_SUMMARY_HAS_COMPATIBLE_ENGINE_VERSION.value) {
       this.uasset.header.CompatibleWithEngineVersion = String(this.uint16("CompatibleWithEngineVersion Major"));
-      this.uasset.header.CompatibleWithEngineVersion += "." + this.uint16("CompatibleWithEngineVersion Minor");
-      this.uasset.header.CompatibleWithEngineVersion += "." + this.uint16("CompatibleWithEngineVersion Patch");
-      this.uasset.header.CompatibleWithEngineVersion += "-" + this.uint32("CompatibleWithEngineVersion Changelist");
-      this.uasset.header.CompatibleWithEngineVersion += "+" + this.fstring("CompatibleWithEngineVersion Branch");
+      this.uasset.header.CompatibleWithEngineVersion = this.uasset.header.CompatibleWithEngineVersion + "." + this.uint16("CompatibleWithEngineVersion Minor");
+      this.uasset.header.CompatibleWithEngineVersion = this.uasset.header.CompatibleWithEngineVersion + "." + this.uint16("CompatibleWithEngineVersion Patch");
+      this.uasset.header.CompatibleWithEngineVersion = this.uasset.header.CompatibleWithEngineVersion + "-" + this.uint32("CompatibleWithEngineVersion Changelist");
+      this.uasset.header.CompatibleWithEngineVersion = this.uasset.header.CompatibleWithEngineVersion + "+" + this.fstring("CompatibleWithEngineVersion Branch");
     } else {
       this.uasset.header.CompatibleWithEngineVersion = this.uasset.header.SavedByEngineVersion;
     }
@@ -1017,6 +1051,7 @@
       return new Error("AdditionalPackagesToCook has items");
     }
 
+    /* eslint-disable-next-line no-magic-numbers */
     if (this.uasset.header.LegacyFileVersion > -7) {
       this.uasset.header.NumTextureAllocations = this.int32("NumTextureAllocations");
     }
@@ -1059,15 +1094,17 @@
     if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_DATA_RESOURCES.value) {
       this.uasset.header.DataResourceOffset = this.int32("DataResourceOffset");
     }
+
+    return undefined;
   };
 
   /**
    * Read Names.
    *
    * @function ReaderUasset#readNames
+   * @returns {undefined}
    * @private
    * @see https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/Core/Private/UObject/UnrealNames.cpp#L2736
-   * @returns {undefined}
    */
   ReaderUasset.prototype.readNames = function readNames() {
     var idx = 0;
@@ -1093,22 +1130,24 @@
    * Read Gatherable Text Data.
    *
    * @function ReaderUasset#readGatherableTextData
+   * @returns {Error|undefined}
    * @private
    * @see https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/Core/Private/Internationalization/GatherableTextData.cpp
-   * @returns {Error|undefined}
    */
   ReaderUasset.prototype.readGatherableTextData = function readGatherableTextData() {
     /** @type {GatherableTextData} */
-    var gatherableTextData = {};
-
+    var gatherableTextData;
     /** @type {SourceSiteContexts} */
-    var sourceSiteContexts = {};
-
-    var countSourceSiteContexts = 0;
-    var idxSourceSiteContexts = 0;
-
+    var sourceSiteContexts;
+    /** @type {number} */
+    var countSourceSiteContexts;
+    /** @type {number} */
+    var idxSourceSiteContexts;
+    /** @type {number} */
     var idx = 0;
+    /** @type {number} */
     var count = this.uasset.header.GatherableTextDataCount;
+
     this.currentIdx = this.uasset.header.GatherableTextDataOffset;
 
     this.uasset.gatherableTextData = [];
@@ -1132,6 +1171,7 @@
       gatherableTextData.SourceSiteContexts = [];
       countSourceSiteContexts = this.int32("GatherableTextData #" + (idx + 1) + ": CountSourceSiteContexts");
       for (idxSourceSiteContexts = 0; idxSourceSiteContexts < countSourceSiteContexts; ++idxSourceSiteContexts) {
+        sourceSiteContexts = {};
         sourceSiteContexts.KeyName = this.fstring("GatherableTextData #" + (idx + 1) + " - SourceSiteContexts #" + (idxSourceSiteContexts + 1) + ": KeyName");
         sourceSiteContexts.SiteDescription = this.fstring("GatherableTextData #" + (idx + 1) + " - SourceSiteContexts #" + (idxSourceSiteContexts + 1) + ": SiteDescription");
         sourceSiteContexts.IsEditorOnly = this.uint32("GatherableTextData #" + (idx + 1) + " - SourceSiteContexts #" + (idxSourceSiteContexts + 1) + ": IsEditorOnly");
@@ -1160,25 +1200,35 @@
 
       this.uasset.gatherableTextData.push(gatherableTextData);
     }
+
+    return undefined;
   };
 
   /**
    * Read Imports.
    *
    * @function ReaderUasset#readImports
+   * @returns {undefined}
    * @private
    * @see https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/CoreUObject/Private/UObject/ObjectResource.cpp#L302
-   * @returns {undefined}
    */
   ReaderUasset.prototype.readImports = function readImports() {
     var idx = 0;
-    var classPackage = "";
-    var className = "";
-    var outerIndex = "";
-    var objectName = "";
-    var packageName = "";
+    /** @type {number} */
+    var classPackage;
+    /** @type {number} */
+    var className;
+    /** @type {number} */
+    var outerIndex;
+    /** @type {number} */
+    var objectName;
+    /** @type {number} */
+    var packageName = 0;
+    /** @type {number} */
     var bImportOptional = 0;
+    /** @type {number} */
     var count = this.uasset.header.ImportCount;
+
     this.currentIdx = this.uasset.header.ImportOffset;
 
     this.uasset.imports.Imports = [];
@@ -1211,34 +1261,60 @@
    * Read Exports.
    *
    * @function ReaderUasset#readExports
+   * @returns {undefined}
    * @private
    * @see https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/CoreUObject/Private/UObject/ObjectResource.cpp#L113
-   * @returns {undefined}
+   * @todo Data are HERE, need to find how to read that
    */
+  /* eslint-disable-next-line max-statements */
   ReaderUasset.prototype.readExports = function readExports() {
+    /** @type {number} */
     var idx = 0;
-    var count = 0;
-    var nodeNameRef = 0;
-    var classIndex = 0;
-    var superIndex = 0;
+    /** @type {number} */
+    var count;
+    /** @type {number} */
+    var nodeNameRef;
+    /** @type {number} */
+    var classIndex;
+    /** @type {number} */
+    var superIndex;
+    /** @type {number} */
     var templateIndex = 0;
-    var outerIndex = 0;
-    var objectName = "";
-    var objectFlags = 0;
-    var serialSize = 0;
-    var serialOffset = 0;
-    var bForcedExport = 0;
-    var bNotForClient = 0;
-    var bNotForServer = 0;
-    var packageGuid = "";
-    var packageFlags = 0;
+    /** @type {number} */
+    var outerIndex;
+    /** @type {number} */
+    var objectName;
+    /** @type {number} */
+    var objectFlags;
+    /** @type {number} */
+    var serialSize;
+    /** @type {number} */
+    var serialOffset;
+    /** @type {number} */
+    var bForcedExport;
+    /** @type {number} */
+    var bNotForClient;
+    /** @type {number} */
+    var bNotForServer;
+    /** @type {string} */
+    var packageGuid;
+    /** @type {number} */
+    var packageFlags;
+    /** @type {number} */
     var bNotAlwaysLoadedForEditorGame = 0;
+    /** @type {number} */
     var bIsAsset = 0;
+    /** @type {number} */
     var bGeneratePublicHash = 0;
+    /** @type {number} */
     var firstExportDependency = 0;
+    /** @type {number} */
     var serializationBeforeSerializationDependencies = 0;
+    /** @type {number} */
     var createBeforeSerializationDependencies = 0;
+    /** @type {number} */
     var serializationBeforeCreateDependencies = 0;
+    /** @type {number} */
     var createBeforeCreateDependencies = 0;
 
     this.currentIdx = this.uasset.header.ExportOffset;
@@ -1329,12 +1405,15 @@
    * Read Depends.
    *
    * @function ReaderUasset#readDepends
-   * @private
    * @returns {undefined}
+   * @private
    */
   ReaderUasset.prototype.readDepends = function readDepends() {
+    /** @type {number} */
     var idx = 0;
-    var count = 0;
+    /** @type {number} */
+    var count;
+
     this.currentIdx = this.uasset.header.DependsOffset;
 
     count = this.int32("Depends Count");
@@ -1350,13 +1429,17 @@
    * Read Soft Package References.
    *
    * @function ReaderUasset#readSoftPackageReferences
-   * @private
    * @returns {undefined}
+   * @private
    */
   ReaderUasset.prototype.readSoftPackageReferences = function readSoftPackageReferences() {
-    var nameIndex = 0;
+    /** @type {number} */
+    var nameIndex;
+    /** @type {number} */
     var idx = 0;
-    var count = 0;
+    /** @type {number} */
+    var count;
+
     this.currentIdx = this.uasset.header.SoftPackageReferencesOffset;
 
     count = this.uasset.header.SoftPackageReferencesCount;
@@ -1373,8 +1456,8 @@
    * Read Searchable Names.
    *
    * @function ReaderUasset#readSearchableNames
-   * @private
    * @returns {undefined}
+   * @private
    */
   ReaderUasset.prototype.readSearchableNames = function readSearchableNames() {
     this.currentIdx = this.uasset.header.SearchableNamesOffset;
@@ -1387,19 +1470,27 @@
    * Read Thumbnails.
    *
    * @function ReaderUasset#readThumbnails
+   * @returns {undefined}
    * @private
    * @see https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/Core/Private/Misc/ObjectThumbnail.cpp#L42
-   * @returns {undefined}
    */
   ReaderUasset.prototype.readThumbnails = function readThumbnails() {
-    var pos = 0;
+    /** @type {number} */
+    var pos;
+    /** @type {number} */
     var idx = 0;
-    var count = 0;
-    var imageWidth = 0;
-    var imageHeight = 0;
-    var imageFormat = "JPEG";
-    var imageSizeData = 0;
-    var imageData = "";
+    /** @type {number} */
+    var count;
+    /** @type {number} */
+    var imageWidth;
+    /** @type {number} */
+    var imageHeight;
+    /** @type {string} */
+    var imageFormat;
+    /** @type {number} */
+    var imageSizeData;
+    /** @type {number[]} */
+    var imageData;
 
     this.currentIdx = this.uasset.header.ThumbnailTableOffset;
 
@@ -1423,10 +1514,10 @@
 
       if (imageHeight < 0) {
         imageFormat = "JPEG";
-        imageHeight *= -1;
+        imageHeight = imageHeight * -1;
       }
 
-      imageData = "";
+      imageData = [];
       imageSizeData = this.int32("Thumbnails #" + (idx + 1) + ": imageSizeData");
       if (imageSizeData > 0) {
         pos = this.currentIdx;
@@ -1448,14 +1539,19 @@
    * Read Asset Registry Data.
    *
    * @function ReaderUasset#readAssetRegistryData
-   * @private
    * @returns {undefined}
+   * @private
    */
   ReaderUasset.prototype.readAssetRegistryData = function readAssetRegistryData() {
-    var idx = 0;
-    var count = 0;
-    var idxTag = 0;
-    var countTag = 0;
+    /** @type {number} */
+    var idx;
+    /** @type {number} */
+    var count;
+    /** @type {number} */
+    var idxTag;
+    /** @type {number} */
+    var countTag;
+    /** @type {number} */
     var nextOffset = this.uasset.header.TotalHeaderSize;
 
     this.currentIdx = this.uasset.header.AssetRegistryDataOffset;
@@ -1491,8 +1587,8 @@
    * Read Preload Dependency.
    *
    * @function ReaderUasset#readPreloadDependency
-   * @private
    * @returns {undefined}
+   * @private
    */
   ReaderUasset.prototype.readPreloadDependency = function readPreloadDependency() {
     this.currentIdx = this.uasset.header.PreloadDependencyOffset;
@@ -1502,8 +1598,8 @@
    * Read Bulk Data Start.
    *
    * @function ReaderUasset#readBulkDataStart
-   * @private
    * @returns {undefined}
+   * @private
    */
   ReaderUasset.prototype.readBulkDataStart = function readBulkDataStart() {
     this.currentIdx = Number(this.uasset.header.BulkDataStartOffset);
@@ -1513,13 +1609,14 @@
    * Analyze Uasset.
    *
    * @function ReaderUasset#analyze
-   * @public
    * @param {Uint8Array} bytes       - bytes read from file
    * @param {boolean}    saveHexView - if true save all informations to debug
-   * @returns {Uasset}
+   * @returns {(Error|Uasset)}
+   * @public
    */
   ReaderUasset.prototype.analyze = function analyze(bytes, saveHexView) {
-    var err = null;
+    /** @type {(Error|undefined)} */
+    var err;
 
     this.currentIdx = 0;
     this.bytes = bytes;

@@ -1,4 +1,3 @@
-/* global __dirname, BigInt */
 require("../src/js/_namespace_");
 require("../src/js/enums/enums");
 require("../src/js/main");

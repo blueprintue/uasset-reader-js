@@ -1,4 +1,3 @@
-/* eslint-disable-next-line no-unused-vars */
 /* istanbul ignore else */
 if (window.blueprintUE === undefined) {
     /**
