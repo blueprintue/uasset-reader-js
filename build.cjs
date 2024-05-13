@@ -1,34 +1,36 @@
-const fs = require('fs');
-const path = require('path');
-const babel = require('@babel/core');
+const fs = require("fs");
+const path = require("path");
+const babel = require("@babel/core");
 
-// list of JS files to concat
-const inputJSFiles = [
-    path.join(__dirname, 'src/js/_namespace_.js'),
-    path.join(__dirname, 'src/js/enums/enums.js'),
-    path.join(__dirname, 'src/js/main.js')
-];
+// region JS
 
-// output JS file
-const outputJSFilename = 'dist/uasset-reader.js';
+function generateJS() {
+    // list of JS files to concat
+    const inputJSFiles = [
+        path.join(__dirname, 'src/js/_namespace_.js'),
+        path.join(__dirname, 'src/js/enums/enums.js'),
+        path.join(__dirname, 'src/js/main.js')
+    ];
 
-let outputJSFileContent = concatJSFiles(inputJSFiles);
-outputJSFileContent = removeLines(outputJSFileContent);
-outputJSFileContent = removeDebug(outputJSFileContent);
-outputJSFileContent = addHeaderAndLicense(outputJSFileContent);
-saveFile(outputJSFilename, outputJSFileContent);
+    // output JS file
+    const outputJSFilename = "dist/uasset-reader.js";
 
-// functions below
+    let outputJSFileContent = concatJSFiles(inputJSFiles);
+    outputJSFileContent = removeLines(outputJSFileContent);
+    outputJSFileContent = removeDebug(outputJSFileContent);
+    outputJSFileContent = addHeaderAndLicense(outputJSFileContent);
+    saveFile(outputJSFilename, outputJSFileContent);
+}
 
 function concatJSFiles(files) {
-    let outputFileContent = ['(function () {'];
+    let outputFileContent = ["(function () {"];
     outputFileContent.push('"use strict";' + "\n");
 
     for(let idxFiles = 0, maxFiles = files.length; idxFiles < maxFiles; ++idxFiles) {
-        outputFileContent.push(fs.readFileSync(files[idxFiles]).toString('utf8'));
+        outputFileContent.push(fs.readFileSync(files[idxFiles]).toString("utf8"));
     }
 
-    outputFileContent.push('})();');
+    outputFileContent.push("})();");
 
     return outputFileContent.join("\n");
 }
@@ -40,22 +42,22 @@ function removeLines(content) {
     let newLines = [];
 
     for (; idxLines < maxLines; ++idxLines) {
-        if (lines[idxLines].match('BUILD REMOVE LINE')) {
+        if (lines[idxLines].match("BUILD REMOVE LINE")) {
             continue;
         }
 
         newLines.push(lines[idxLines]);
     }
 
-    return newLines.join('\n');
+    return newLines.join("\n");
 }
 
 function removeDebug(content) {
     function getNode(node) {
         if (node.isMemberExpression()) {
-            const object = node.get('object');
-            if (object.isIdentifier() && node.has('property')) {
-                return node.get('property');
+            const object = node.get("object");
+            if (object.isIdentifier() && node.has("property")) {
+                return node.get("property");
             }
         }
 
@@ -63,17 +65,17 @@ function removeDebug(content) {
     }
 
     function isConsole(nodePath) {
-        const callee = nodePath.get('callee');
+        const callee = nodePath.get("callee");
 
         if (!callee.isMemberExpression()) {
             return;
         }
 
-        return getNode(callee.get('object')).isIdentifier({name: 'console'}) && callee.has('property');
+        return getNode(callee.get("object")).isIdentifier({name: "console"}) && callee.has("property");
     }
 
     function isAlert(nodePath) {
-        return getNode(nodePath.get('callee')).isIdentifier({name: 'alert'});
+        return getNode(nodePath.get("callee")).isIdentifier({name: "alert"});
     }
 
     return babel.transformSync(content, {
@@ -93,9 +95,13 @@ function removeDebug(content) {
     }).code;
 }
 
+generateJS();
+
+// endregion
+
 function addHeaderAndLicense(content) {
-    const license = fs.readFileSync('./LICENSE', 'utf8');
-    const pkg = require('./package.json');
+    const license = fs.readFileSync("./LICENSE", "utf8");
+    const pkg = require("./package.json");
 
     let header = pkg.name + " (v" + pkg.version + ")\n" + pkg.homepage + "\n\n" + license;
 
