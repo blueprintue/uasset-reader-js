@@ -466,7 +466,7 @@ ReaderUasset.prototype.readHeader = function readHeader() {
         this.uasset.header.PersistentGuid = this.fguidString("PersistentGuid");
     }
 
-    /* eslint-disable-next-line stylistic/max-len */
+    // eslint-disable-next-line stylistic/max-len
     if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_ADDED_PACKAGE_OWNER.value && this.uasset.header.FileVersionUE4 < EUnrealEngineObjectUE4Version.VER_UE4_NON_OUTER_PACKAGE_IMPORT.value) {
         this.uasset.header.OwnerPersistentGuid = this.fguidString("OwnerPersistentGuid");
     }
