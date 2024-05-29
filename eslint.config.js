@@ -1,6 +1,7 @@
 import globals from "globals";
 import jsdoc from "eslint-plugin-jsdoc";
 import jest from "eslint-plugin-jest";
+import stylistic from '@stylistic/eslint-plugin';
 
 export default [
     {
@@ -15,6 +16,7 @@ export default [
         },
         plugins: {
             jsdoc: jsdoc,
+            stylistic: stylistic,
         },
         rules: {
             // eslint:all
@@ -215,6 +217,134 @@ export default [
             "valid-typeof": "error",
             "vars-on-top": "error",
             "yoda": "error",
+            // eslint-stylistic:all
+            "stylistic/array-bracket-newline": ["error", "consistent"],
+            "stylistic/array-bracket-spacing": ["error", "never"],
+            "stylistic/array-element-newline": ["error", "consistent"],
+            "stylistic/arrow-parens": ["error", "always"],
+            "stylistic/arrow-spacing": ["error", {"before": true, "after": true}],
+            "stylistic/block-spacing": ["error", "always"],
+            "stylistic/brace-style": ["error", "1tbs", {"allowSingleLine": false}],
+            "stylistic/comma-dangle": ["error", "never"],
+            "stylistic/comma-spacing": ["error", {"before": false, "after": true}],
+            "stylistic/comma-style": ["error", "last"],
+            "stylistic/computed-property-spacing": ["error", "never"],
+            "stylistic/dot-location": ["error", "object"],
+            "stylistic/eol-last": ["error", "always"],
+            "stylistic/function-call-argument-newline": ["error", "consistent"],
+            "stylistic/function-call-spacing": ["error", "never"],
+            "stylistic/function-paren-newline": ["error", "consistent"],
+            "stylistic/generator-star-spacing": ["error",
+                {
+                    "before": false,
+                    "after": true,
+                    "anonymous": {"before": false, "after": true},
+                    "method": {"before": true, "after": false}
+                }
+            ],
+            "stylistic/implicit-arrow-linebreak": ["error", "beside"],
+            "stylistic/indent": ["error", 4],
+            "stylistic/indent-binary-ops": ["error", 4],
+            "stylistic/key-spacing": ["error",
+                {
+                    "beforeColon": false,
+                    "afterColon": true,
+                    "mode": "minimum",
+                    align: {
+                        "beforeColon": false,
+                        "afterColon": true,
+                        "on": "colon",
+                        "mode": "minimum"
+                    }
+                }
+            ],
+            "stylistic/keyword-spacing": ["error", {"before": true, "after": true}],
+            "stylistic/line-comment-position": ["error", {"position": "above", "ignorePattern": "BUILD REMOVE LINE"}],
+            "stylistic/linebreak-style": ["error", "unix"],
+            "stylistic/lines-around-comment": ["error",
+                {
+                    "beforeBlockComment": true,
+                    "afterBlockComment": false,
+                    "beforeLineComment": true,
+                    "afterLineComment": false,
+                    "allowBlockStart": true,
+                    "allowBlockEnd": false,
+                    "allowClassStart": true,
+                    "allowClassEnd": false,
+                    "allowObjectStart": true,
+                    "allowObjectEnd": false,
+                    "allowArrayStart": true,
+                    "allowArrayEnd": false,
+                    "ignorePattern": "region|endregion|type"
+                }
+            ],
+            "stylistic/lines-between-class-members": ["error", "always"],
+            "stylistic/max-len": ["error",
+                {
+                    "code": 180,
+                    "comments": 180,
+                    "ignorePattern": "global",
+                    "ignoreRegExpLiterals": true,
+                    "ignoreStrings": true,
+                    "ignoreTemplateLiterals": true,
+                    "ignoreTrailingComments": true,
+                    "ignoreUrls": true
+                }
+            ],
+            "stylistic/max-statements-per-line": ["error", {"max": 1}],
+            "stylistic/member-delimiter-style": ["error",
+                {
+                    "multiline": {
+                        "delimiter": "comma",
+                        "requireLast": false
+                    },
+                    "singleline": {
+                        "delimiter": "comma",
+                        "requireLast": false
+                    },
+                }
+            ],
+            "stylistic/multiline-comment-style": ["error", "starred-block"],
+            "stylistic/multiline-ternary": ["error", "always-multiline"],
+            "stylistic/new-parens": ["error", "always"],
+            "stylistic/newline-per-chained-call": ["error", {"ignoreChainWithDepth": 5}],
+            "stylistic/no-confusing-arrow": ["error", {"allowParens": false, "onlyOneSimpleParam": false}],
+            "stylistic/no-extra-parens": "off",
+            "stylistic/no-extra-semi": "error",
+            "stylistic/no-floating-decimal": "error",
+            "stylistic/no-mixed-operators": ["error", {"allowSamePrecedence": false}],
+            "stylistic/no-mixed-spaces-and-tabs": "error",
+            "stylistic/no-multi-spaces": ["error", {"ignoreEOLComments": false, "exceptions": {"Property": true}}],
+            "stylistic/no-multiple-empty-lines": ["error", {"max": 1, "maxBOF": 0, "maxEOF": 1}],
+            "stylistic/no-tabs": ["error", {"allowIndentationTabs": false}],
+            "stylistic/no-trailing-spaces": ["error", {"ignoreComments": false, "skipBlankLines": false}],
+            "stylistic/no-whitespace-before-property": "error",
+            "stylistic/nonblock-statement-body-position": ["error", "below"],
+            "stylistic/object-curly-newline": ["error", {"consistent": true}],
+            "stylistic/object-curly-spacing": ["error", "never"],
+            "stylistic/object-property-newline": ["error", {"allowAllPropertiesOnSameLine": true}],
+            "stylistic/one-var-declaration-per-line": ["error", "always"],
+            "stylistic/operator-linebreak": ["error", "after"],
+            "stylistic/padded-blocks": ["error", "never"],
+            "stylistic/padding-line-between-statements": ["error"],
+            "stylistic/quote-props": ["error", "consistent-as-needed", {"keywords": true, "numbers": true}],
+            "stylistic/quotes": ["error", "double"],
+            "stylistic/rest-spread-spacing": ["error", "never"],
+            "stylistic/semi": ["error", "always"],
+            "stylistic/semi-spacing": ["error", {"before": false, "after": true}],
+            "stylistic/semi-style": ["error", "last"],
+            "stylistic/space-before-blocks": ["error"],
+            "stylistic/space-before-function-paren": ["error", "never"],
+            "stylistic/space-in-parens": ["error", "never"],
+            "stylistic/space-infix-ops": ["error", {"int32Hint": false}],
+            "stylistic/space-unary-ops": ["error"],
+            "stylistic/spaced-comment": ["error", "always"],
+            "stylistic/switch-colon-spacing": ["error", {"after": true, "before": false}],
+            "stylistic/template-curly-spacing": ["error", "never"],
+            "stylistic/template-tag-spacing": ["error", "never"],
+            "stylistic/wrap-iife": ["error", "outside"],
+            "stylistic/wrap-regex": "error",
+            "stylistic/yield-star-spacing": ["error", {"before": false, "after": true}],
             // jsdoc:all
             "jsdoc/check-access": "error",
             "jsdoc/check-alignment": "error",
@@ -440,6 +570,7 @@ export default [
         },
         plugins: {
             jest: jest,
+            stylistic: stylistic,
         },
         rules: {
             // eslint:recommended
@@ -504,6 +635,77 @@ export default [
             "require-yield": "error",
             "use-isnan": "error",
             "valid-typeof": "error",
+            // eslint-stylistic:recommended
+            "stylistic/array-bracket-spacing": ["error", "never"],
+            "stylistic/arrow-parens": ["error", "always"],
+            "stylistic/arrow-spacing": ["error", {"before": true, "after": true}],
+            "stylistic/block-spacing": ["error", "always"],
+            "stylistic/brace-style": ["error", "1tbs", {"allowSingleLine": true}],
+            "stylistic/comma-dangle": ["error", "never"],
+            "stylistic/comma-spacing": ["error", {"before": false, "after": true}],
+            "stylistic/comma-style": ["error", "last"],
+            "stylistic/computed-property-spacing": ["error", "never"],
+            "stylistic/dot-location": ["error", "object"],
+            "stylistic/eol-last": ["error", "always"],
+            "stylistic/indent": ["error", 4],
+            "stylistic/indent-binary-ops": ["error", 4],
+            "stylistic/key-spacing": ["error",
+                {
+                    "beforeColon": false,
+                    "afterColon": true,
+                    "mode": "minimum",
+                    align: {
+                        "beforeColon": false,
+                        "afterColon": true,
+                        "on": "colon",
+                        "mode": "minimum"
+                    }
+                }
+            ],
+            "stylistic/keyword-spacing": ["error", {"before": true, "after": true}],
+            "stylistic/lines-between-class-members": ["error", "always"],
+            "stylistic/max-statements-per-line": ["error", {"max": 1}],
+            "stylistic/member-delimiter-style": ["error",
+                {
+                    "multiline": {
+                        "delimiter": "comma",
+                        "requireLast": false
+                    },
+                    "singleline": {
+                        "delimiter": "comma",
+                        "requireLast": false
+                    },
+                }
+            ],
+            "stylistic/multiline-ternary": ["error", "always-multiline"],
+            "stylistic/new-parens": ["error", "always"],
+            "stylistic/no-extra-parens": "off",
+            "stylistic/no-floating-decimal": "error",
+            "stylistic/no-mixed-operators": ["error", {"allowSamePrecedence": false}],
+            "stylistic/no-mixed-spaces-and-tabs": "error",
+            "stylistic/no-multi-spaces": ["error", {"ignoreEOLComments": false, "exceptions": {"Property": true}}],
+            "stylistic/no-multiple-empty-lines": ["error", {"max": 1, "maxBOF": 0, "maxEOF": 1}],
+            "stylistic/no-tabs": ["error", {"allowIndentationTabs": false}],
+            "stylistic/no-trailing-spaces": ["error", {"ignoreComments": false, "skipBlankLines": false}],
+            "stylistic/no-whitespace-before-property": "error",
+            "stylistic/object-curly-spacing": ["error", "never"],
+            "stylistic/operator-linebreak": ["error", "after"],
+            "stylistic/padded-blocks": ["error", "never"],
+            "stylistic/quote-props": ["error", "consistent-as-needed", {"keywords": true, "numbers": true}],
+            "stylistic/quotes": ["error", "double", {"allowTemplateLiterals": true}],
+            "stylistic/rest-spread-spacing": ["error", "never"],
+            "stylistic/semi": ["error", "always"],
+            "stylistic/semi-spacing": ["error", {"before": false, "after": true}],
+            "stylistic/space-before-blocks": ["error"],
+            "stylistic/space-before-function-paren": ["error", "never"],
+            "stylistic/space-in-parens": ["error", "never"],
+            "stylistic/space-infix-ops": ["error", {"int32Hint": false}],
+            "stylistic/space-unary-ops": ["error"],
+            "stylistic/spaced-comment": ["error", "always"],
+            "stylistic/template-curly-spacing": ["error", "never"],
+            "stylistic/template-tag-spacing": ["error", "never"],
+            "stylistic/wrap-iife": ["error", "outside"],
+            "stylistic/yield-star-spacing": ["error", {"before": false, "after": true}],
             // jest:recommended
             "jest/expect-expect": "warn",
             "jest/no-alias-methods": "error",

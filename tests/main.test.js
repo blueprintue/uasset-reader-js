@@ -14,18 +14,18 @@ function parseBigIntPayload(key, value) {
     return value;
 }
 
-describe("main", function(){
+describe("main", function() {
     // region constructor
     it("should be defined", () => {
         expect(window.blueprintUE.uasset.ReaderUasset).toBeDefined();
     });
     // endregion
 
-    describe("datacases", function(){
-        describe("simple", function(){
-            describe("UE 5.0", function(){
+    describe("datacases", function() {
+        describe("simple", function() {
+            describe("UE 5.0", function() {
                 /* eslint-disable-next-line no-unused-vars */
-                it.each(datacases.simple.ue50)('$name', ({name, input, expected}) => {
+                it.each(datacases.simple.ue50)(`$name`, ({name, input, expected}) => {
                     const bytesInput = new Uint8Array(fs.readFileSync(path.resolve(__dirname, input)));
                     const bytesOutput = JSON.parse(fs.readFileSync(path.resolve(__dirname, expected)).toString(), parseBigIntPayload);
 

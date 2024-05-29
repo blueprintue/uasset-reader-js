@@ -10,19 +10,19 @@ function ReaderUasset() {
 
     /** @type {Uasset} */
     this.uasset = {
-        hexView: [],
-        header: {},
-        names: [],
-        gatherableTextData: [],
-        imports: {},
-        exports: [],
-        depends: {},
+        hexView              : [],
+        header               : {},
+        names                : [],
+        gatherableTextData   : [],
+        imports              : {},
+        exports              : [],
+        depends              : {},
         softPackageReferences: {},
-        searchableNames: {},
-        thumbnails: {Index: [], Thumbnails: []},
-        assetRegistryData: {},
-        preloadDependency: {},
-        bulkDataStart: {}
+        searchableNames      : {},
+        thumbnails           : {Index: [], Thumbnails: []},
+        assetRegistryData    : {},
+        preloadDependency    : {},
+        bulkDataStart        : {}
     };
 }
 
@@ -311,11 +311,11 @@ ReaderUasset.prototype.addHexView = function addHexView(key, type, value, startP
     }
 
     this.uasset.hexView.push({
-        key: key,
-        type: type,
+        key  : key,
+        type : type,
         value: value,
         start: startPosition,
-        stop: stopPosition
+        stop : stopPosition
     });
 };
 
@@ -409,7 +409,7 @@ ReaderUasset.prototype.readHeader = function readHeader() {
     this.uasset.header.CustomVersions = [];
     for (idx = 0; idx < count; ++idx) {
         this.uasset.header.CustomVersions.push({
-            key: this.fguidSlot("CustomVersions #" + idx + ": key"),
+            key    : this.fguidSlot("CustomVersions #" + idx + ": key"),
             version: this.int32("CustomVersions #" + idx + ": version")
         });
     }
@@ -466,6 +466,7 @@ ReaderUasset.prototype.readHeader = function readHeader() {
         this.uasset.header.PersistentGuid = this.fguidString("PersistentGuid");
     }
 
+    /* eslint-disable-next-line stylistic/max-len */
     if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_ADDED_PACKAGE_OWNER.value && this.uasset.header.FileVersionUE4 < EUnrealEngineObjectUE4Version.VER_UE4_NON_OUTER_PACKAGE_IMPORT.value) {
         this.uasset.header.OwnerPersistentGuid = this.fguidString("OwnerPersistentGuid");
     }
@@ -475,7 +476,7 @@ ReaderUasset.prototype.readHeader = function readHeader() {
     for (idx = 0; idx < count; ++idx) {
         this.uasset.header.Generations.push({
             exportCount: this.int32("Generations #" + idx + ": export count"),
-            nameCount: this.int32("Generations #" + idx + ": name count)")
+            nameCount  : this.int32("Generations #" + idx + ": name count)")
         });
     }
 
@@ -582,9 +583,9 @@ ReaderUasset.prototype.readNames = function readNames() {
 
     for (; idx < count; ++idx) {
         this.uasset.names.push({
-            Name: this.fstring("Name #" + (idx + 1) + ": string"),
+            Name                 : this.fstring("Name #" + (idx + 1) + ": string"),
             NonCasePreservingHash: this.uint16("Name #" + (idx + 1) + ": NonCasePreservingHash"),
-            CasePreservingHash: this.uint16("Name #" + (idx + 1) + ": CasePreservingHash")
+            CasePreservingHash   : this.uint16("Name #" + (idx + 1) + ": CasePreservingHash")
         });
     }
 };
@@ -620,10 +621,10 @@ ReaderUasset.prototype.readGatherableTextData = function readGatherableTextData(
         gatherableTextData.NamespaceName = this.fstring("GatherableTextData #" + (idx + 1) + ": NamespaceName");
 
         gatherableTextData.SourceData = {
-            SourceString: this.fstring("GatherableTextData #" + (idx + 1) + ": SourceData.SourceString"),
+            SourceString        : this.fstring("GatherableTextData #" + (idx + 1) + ": SourceData.SourceString"),
             SourceStringMetaData: {
                 ValueCount: this.int32("GatherableTextData #" + (idx + 1) + ": SourceData.CountSourceStringMetaData"),
-                Values: []
+                Values    : []
             }
         };
 
@@ -642,7 +643,7 @@ ReaderUasset.prototype.readGatherableTextData = function readGatherableTextData(
 
             sourceSiteContexts.InfoMetaData = {
                 ValueCount: this.int32("GatherableTextData #" + (idx + 1) + " - SourceSiteContexts #" + (idxSourceSiteContexts + 1) + ": CountInfoMetaData"),
-                Values: []
+                Values    : []
             };
 
             if (sourceSiteContexts.InfoMetaData.ValueCount > 0) {
@@ -651,7 +652,7 @@ ReaderUasset.prototype.readGatherableTextData = function readGatherableTextData(
 
             sourceSiteContexts.KeyMetaData = {
                 ValueCount: this.int32("GatherableTextData #" + (idx + 1) + " - SourceSiteContexts #" + (idxSourceSiteContexts + 1) + ": CountKeyMetaData"),
-                Values: []
+                Values    : []
             };
 
             if (sourceSiteContexts.KeyMetaData.ValueCount > 0) {
@@ -710,11 +711,11 @@ ReaderUasset.prototype.readImports = function readImports() {
         }
 
         this.uasset.imports.Imports.push({
-            classPackage: this.resolveFName(classPackage),
-            className: this.resolveFName(className),
-            outerIndex: outerIndex,
-            objectName: this.resolveFName(objectName),
-            packageName: this.resolveFName(packageName),
+            classPackage   : this.resolveFName(classPackage),
+            className      : this.resolveFName(className),
+            outerIndex     : outerIndex,
+            objectName     : this.resolveFName(objectName),
+            packageName    : this.resolveFName(packageName),
             bImportOptional: bImportOptional
         });
     }
@@ -824,28 +825,28 @@ ReaderUasset.prototype.readExports = function readExports() {
         }
 
         this.uasset.exports.push({
-            classIndex: classIndex,
-            superIndex: superIndex,
-            templateIndex: templateIndex,
-            outerIndex: outerIndex,
-            objectName: this.resolveFName(objectName),
-            objectFlags: objectFlags,
-            serialSize: serialSize,
-            serialOffset: serialOffset,
-            bForcedExport: bForcedExport,
-            bNotForClient: bNotForClient,
-            bNotForServer: bNotForServer,
-            packageGuid: packageGuid,
-            packageFlags: packageFlags,
-            bNotAlwaysLoadedForEditorGame: bNotAlwaysLoadedForEditorGame,
-            bIsAsset: bIsAsset,
-            bGeneratePublicHash: bGeneratePublicHash,
-            firstExportDependency: firstExportDependency,
+            classIndex                                  : classIndex,
+            superIndex                                  : superIndex,
+            templateIndex                               : templateIndex,
+            outerIndex                                  : outerIndex,
+            objectName                                  : this.resolveFName(objectName),
+            objectFlags                                 : objectFlags,
+            serialSize                                  : serialSize,
+            serialOffset                                : serialOffset,
+            bForcedExport                               : bForcedExport,
+            bNotForClient                               : bNotForClient,
+            bNotForServer                               : bNotForServer,
+            packageGuid                                 : packageGuid,
+            packageFlags                                : packageFlags,
+            bNotAlwaysLoadedForEditorGame               : bNotAlwaysLoadedForEditorGame,
+            bIsAsset                                    : bIsAsset,
+            bGeneratePublicHash                         : bGeneratePublicHash,
+            firstExportDependency                       : firstExportDependency,
             serializationBeforeSerializationDependencies: serializationBeforeSerializationDependencies,
-            createBeforeSerializationDependencies: createBeforeSerializationDependencies,
-            serializationBeforeCreateDependencies: serializationBeforeCreateDependencies,
-            createBeforeCreateDependencies: createBeforeCreateDependencies,
-            data: []
+            createBeforeSerializationDependencies       : createBeforeSerializationDependencies,
+            serializationBeforeCreateDependencies       : serializationBeforeCreateDependencies,
+            createBeforeCreateDependencies              : createBeforeCreateDependencies,
+            data                                        : []
         });
     }
 
@@ -962,9 +963,9 @@ ReaderUasset.prototype.readThumbnails = function readThumbnails() {
     this.uasset.thumbnails.Thumbnails = [];
     for (; idx < count; ++idx) {
         this.uasset.thumbnails.Index.push({
-            AssetClassName: this.fstring("Thumbnails #" + (idx + 1) + ": assetClassName"),
+            AssetClassName              : this.fstring("Thumbnails #" + (idx + 1) + ": assetClassName"),
             ObjectPathWithoutPackageName: this.fstring("Thumbnails #" + (idx + 1) + ": objectPathWithoutPackageName"),
-            FileOffset: this.int32("Thumbnails #" + (idx + 1) + ": fileOffset")
+            FileOffset                  : this.int32("Thumbnails #" + (idx + 1) + ": fileOffset")
         });
     }
 
@@ -989,11 +990,11 @@ ReaderUasset.prototype.readThumbnails = function readThumbnails() {
         }
 
         this.uasset.thumbnails.Thumbnails.push({
-            ImageWidth: imageWidth,
-            ImageHeight: imageHeight,
-            ImageFormat: imageFormat,
+            ImageWidth   : imageWidth,
+            ImageHeight  : imageHeight,
+            ImageFormat  : imageFormat,
             ImageSizeData: imageSizeData,
-            ImageData: imageData
+            ImageData    : imageData
         });
     }
 };
@@ -1031,15 +1032,15 @@ ReaderUasset.prototype.readAssetRegistryData = function readAssetRegistryData() 
     count = this.int32("AssetRegistryData Count");
     for (idx = 0; idx < count; ++idx) {
         this.uasset.assetRegistryData.data.push({
-            ObjectPath: this.fstring("ObjectPath"),
+            ObjectPath     : this.fstring("ObjectPath"),
             ObjectClassName: this.fstring("ObjectClassName"),
-            Tags: []
+            Tags           : []
         });
 
         countTag = this.int32("AssetRegistryData Tag Count");
         for (idxTag = 0; idxTag < countTag; ++idxTag) {
             this.uasset.assetRegistryData.data[idx].Tags.push({
-                Key: this.fstring("key"),
+                Key  : this.fstring("key"),
                 Value: this.fstring("value")
             });
         }
