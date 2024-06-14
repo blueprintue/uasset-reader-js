@@ -4,7 +4,7 @@
   "description": "Read .uasset files from Unreal Engine in javascript",
   "scripts": {
     "test": "jest --coverage --coverageDirectory=./coverage -- tests/main.test.js",
-    "build": "node build.cjs && uglifyjs dist/uasset-reader.js --mangle --webkit --compress \"drop_console=true,passes=5\" --comments \"/MIT License/\" -o dist/uasset-reader.min.js && jest",
+    "build": "node build.cjs && uglifyjs dist/uasset-reader.js --mangle --webkit --compress \"drop_console=true,module=false,passes=5\" --comments \"/MIT License/\" -o dist/uasset-reader.min.js && jest",
     "jsdoc": "jsdoc -c jsdoc.conf.json",
     "eslint": "eslint --max-warnings=0 src/**/*.js tests/*.js",
     "eslint:fix": "eslint --fix src/**/*.js tests/*.js"
