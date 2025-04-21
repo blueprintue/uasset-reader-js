@@ -41,4 +41,5 @@ jobs:
         name: Validate
         uses: docker/bake-action@v6
         with:
+          source: .
           targets: ${{ matrix.target }}
