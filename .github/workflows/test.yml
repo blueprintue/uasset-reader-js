@@ -1,5 +1,8 @@
 name: test
 
+permissions:
+  contents: read
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -27,6 +30,5 @@ jobs:
         name: Upload coverage
         uses: codecov/codecov-action@v5
         with:
-          file: ./coverage/lcov.info
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/lcov.info
+          token: ${{ secrets.CODECOV_TOKEN }}
