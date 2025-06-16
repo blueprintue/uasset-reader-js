@@ -23,7 +23,7 @@
     "@babel/core": "^7.27.4",
     "@stylistic/eslint-plugin": "^4.4.1",
     "@types/jest": "^29.5.14",
-    "eslint": "^9.28.0",
+    "eslint": "^9.29.0",
     "eslint-plugin-jest": "^28.13.5",
     "eslint-plugin-jsdoc": "^51.0.1",
     "globals": "^16.2.0",
