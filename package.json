@@ -22,7 +22,7 @@
   "devDependencies": {
     "@babel/core": "^7.27.4",
     "@stylistic/eslint-plugin": "^4.4.1",
-    "@types/jest": "^29.5.14",
+    "@types/jest": "^30.0.0",
     "eslint": "^9.29.0",
     "eslint-plugin-jest": "^28.14.0",
     "eslint-plugin-jsdoc": "^51.0.1",
