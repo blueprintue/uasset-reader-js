@@ -28,7 +28,7 @@
     "eslint-plugin-jsdoc": "^51.3.3",
     "globals": "^16.3.0",
     "jest": "^30.0.4",
-    "jest-environment-jsdom": "^30.0.2",
+    "jest-environment-jsdom": "^30.0.4",
     "jsdoc": "^4.0.4",
     "uglify-js": "^3.19.3"
   },
