@@ -334,8 +334,12 @@ var EUnrealEngineObjectUE5Version = {
     VER_UE5_PROPERTY_TAG_EXTENSION_AND_OVERRIDABLE_SERIALIZATION: {value: 1011, comment: "Adding property tag extension, Support for overridable serialization on UObject, Support for overridable logic in containers"},
     VER_UE5_PROPERTY_TAG_COMPLETE_TYPE_NAME: {value: 1012, comment: "Added property tag complete type name and serialization type"},
     VER_UE5_ASSETREGISTRY_PACKAGEBUILDDEPENDENCIES: {value: 1013, comment: "Changed UE::AssetRegistry::WritePackageData to include PackageBuildDependencies"},
-    VER_UE5_AUTOMATIC_VERSION_PLUS_ONE: {value: 1014, comment: "Last version +1"},
-    VER_UE5_AUTOMATIC_VERSION: {value: 1013, comment: "AUTOMATIC_VERSION_PLUS_ONE - 1"}
+    VER_UE5_METADATA_SERIALIZATION_OFFSET: {value: 1014, comment: "Added meta data serialization offset to for saved, versioned packages"},
+    VER_UE5_VERSE_CELLS: {value: 1015, comment: "Added VCells to the object graph"},
+    VER_UE5_PACKAGE_SAVED_HASH: {value: 1016, comment: "Changed PackageFileSummary to write FIoHash PackageSavedHash instead of FGuid Guid"},
+    VER_UE5_OS_SUB_OBJECT_SHADOW_SERIALIZATION: {value: 1017, comment: "OS shadow serialization of subobjects"},
+    VER_UE5_AUTOMATIC_VERSION_PLUS_ONE: {value: 1018, comment: "Last version +1"},
+    VER_UE5_AUTOMATIC_VERSION: {value: 1017, comment: "AUTOMATIC_VERSION_PLUS_ONE - 1"}
 };
 
 /* eslint-disable */
