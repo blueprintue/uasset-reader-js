@@ -1,5 +1,5 @@
 /**
- * uasset-reader-js (v1.1.2)
+ * uasset-reader-js (v1.2.0)
  * https://github.com/blueprintue/uasset-reader-js
  * 
  * MIT License
@@ -496,8 +496,9 @@
     VER_UE5_VERSE_CELLS: { value: 1015, comment: "Added VCells to the object graph" },
     VER_UE5_PACKAGE_SAVED_HASH: { value: 1016, comment: "Changed PackageFileSummary to write FIoHash PackageSavedHash instead of FGuid Guid" },
     VER_UE5_OS_SUB_OBJECT_SHADOW_SERIALIZATION: { value: 1017, comment: "OS shadow serialization of subobjects" },
-    VER_UE5_AUTOMATIC_VERSION_PLUS_ONE: { value: 1018, comment: "Last version +1" },
-    VER_UE5_AUTOMATIC_VERSION: { value: 1017, comment: "AUTOMATIC_VERSION_PLUS_ONE - 1" }
+    VER_UE5_IMPORT_TYPE_HIERARCHIES: { value: 1018, comment: "Adds a table of hierarchical type information for imports in a package" },
+    VER_UE5_AUTOMATIC_VERSION_PLUS_ONE: { value: 1019, comment: "Last version +1" },
+    VER_UE5_AUTOMATIC_VERSION: { value: 1018, comment: "AUTOMATIC_VERSION_PLUS_ONE - 1" }
   };
 
   /* eslint-disable */
@@ -920,10 +921,19 @@
      * -6 indicates optimizations to how custom versions are being serialized<br>
      * -7 indicates the texture allocation info has been removed from the summary<br>
      * -8 indicates that the UE5 version has been added to the summary
+     * -9 indicates a contractual change in when early exits are required based on FileVersionTooNew. At or
+     * after this LegacyFileVersion, we support changing the PackageFileSummary serialization format for
+     * all bytes serialized after FileVersionLicensee, and that format change can be conditional on any
+     * of the versions parsed before that point. All packageloaders that understand the -9
+     * legacyfileformat are required to early exit without further serialization at that point if
+     * FileVersionTooNew is true.
      */
     this.uasset.header.LegacyFileVersion = this.int32("LegacyFileVersion");
     /* eslint-disable-next-line no-magic-numbers */
-    if (this.uasset.header.LegacyFileVersion !== -6 && this.uasset.header.LegacyFileVersion !== -7 && this.uasset.header.LegacyFileVersion !== -8) {
+    if (this.uasset.header.LegacyFileVersion !== -6 && this.uasset.header.LegacyFileVersion !== -7 && this.uasset.header.LegacyFileVersion !== -8 &&
+    /* eslint-disable-next-line no-magic-numbers */
+    this.uasset.header.LegacyFileVersion !== -9)
+    {
       return new Error("unsupported version");
     }
 
@@ -947,6 +957,14 @@
       return new Error("asset unversioned");
     }
 
+    if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_PACKAGE_SAVED_HASH.value) {
+      /* eslint-disable-next-line no-magic-numbers */
+      this.uasset.header.SavedPackageHash = this.readCountBytes(20).map(function iter(byte) {
+        return byte.toString(16).padStart(2, "0");
+      }).join("");
+      this.uasset.header.TotalHeaderSize = this.int32("TotalHeaderSize");
+    }
+
     count = this.int32("CustomVersions Count");
     this.uasset.header.CustomVersions = [];
     for (idx = 0; idx < count; ++idx) {
@@ -956,7 +974,9 @@
       });
     }
 
-    this.uasset.header.TotalHeaderSize = this.int32("TotalHeaderSize");
+    if (this.uasset.header.FileVersionUE5 < EUnrealEngineObjectUE5Version.VER_UE5_PACKAGE_SAVED_HASH.value) {
+      this.uasset.header.TotalHeaderSize = this.int32("TotalHeaderSize");
+    }
 
     this.uasset.header.FolderName = this.fstring("FolderName");
 
@@ -985,6 +1005,10 @@
     this.uasset.header.ImportCount = this.int32("ImportCount");
     this.uasset.header.ImportOffset = this.int32("ImportOffset");
 
+    if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_METADATA_SERIALIZATION_OFFSET.value) {
+      this.uasset.header.MetadataOffset = this.int32("MetadataOffset");
+    }
+
     this.uasset.header.DependsOffset = this.int32("DependsOffset");
 
     if (this.uasset.header.FileVersionUE4 < EUnrealEngineObjectUE4Version.VER_UE4_OLDEST_LOADABLE_PACKAGE.value) {
@@ -1001,6 +1025,11 @@
     }
 
     this.uasset.header.ThumbnailTableOffset = this.int32("ThumbnailTableOffset");
+
+    if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_IMPORT_TYPE_HIERARCHIES) {
+      this.uasset.header.ImportTypeHierarchiesCount = this.int32("ImportTypeHierarchiesCount");
+      this.uasset.header.ImportTypeHierarchiesOffset = this.int32("ImportTypeHierarchiesOffset");
+    }
 
     this.uasset.header.Guid = this.fguidString("Guid");
 
