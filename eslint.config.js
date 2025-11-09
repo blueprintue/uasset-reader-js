@@ -692,7 +692,7 @@ export default [
             "stylistic/operator-linebreak": ["error", "after"],
             "stylistic/padded-blocks": ["error", "never"],
             "stylistic/quote-props": ["error", "consistent-as-needed", {"keywords": true, "numbers": true}],
-            "stylistic/quotes": ["error", "double", {"allowTemplateLiterals": true}],
+            "stylistic/quotes": ["error", "double", {"allowTemplateLiterals": "always"}],
             "stylistic/rest-spread-spacing": ["error", "never"],
             "stylistic/semi": ["error", "always"],
             "stylistic/semi-spacing": ["error", {"before": false, "after": true}],
