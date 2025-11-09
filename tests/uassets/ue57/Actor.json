@@ -1,0 +1,294 @@
+{
+    "header": {
+        "EPackageFileTag": 2653586369,
+        "LegacyFileVersion": -9,
+        "LegacyUE3Version": 864,
+        "FileVersionUE4": 522,
+        "FileVersionUE5": 1017,
+        "FileVersionLicenseeUE4": 0,
+        "SavedPackageHash": "01468b3905044e4a9408da4730747fcca1e6815d",
+        "TotalHeaderSize": 3368,
+        "CustomVersions": [
+            {
+                "key": "12F88B9F88754AFCA67CD90C383ABD29",
+                "version": 49
+            },
+            {
+                "key": "59DA5D5212324948B878597870B8E98B",
+                "version": 9
+            },
+            {
+                "key": "5B4C06B724634AF8805BBF70CDF5D0DD",
+                "version": 13
+            },
+            {
+                "key": "601D1886AC644F84AA16D3DE0DEAC7D6",
+                "version": 207
+            },
+            {
+                "key": "697DD581E64F41ABAA4A51ECBEB7B628",
+                "version": 121
+            },
+            {
+                "key": "CFFC743F43B04480939114DF171D2073",
+                "version": 37
+            },
+            {
+                "key": "D89B5E4224BD4D468412ACA8DF641779",
+                "version": 55
+            },
+            {
+                "key": "E4B068EDF49442E9A231DA0B2E46BB41",
+                "version": 40
+            },
+            {
+                "key": "E70863686B234C5884391B7016265E91",
+                "version": 17
+            }
+        ],
+        "FolderName": "/Game/__ExternalActors__/ThirdPerson/Lvl_ThirdPerson/0/9R/UKIMD8EYGPZFS8OC6GX24A",
+        "PackageFlags": 16448,
+        "NameCount": 40,
+        "NameOffset": 590,
+        "SoftObjectPathsCount": 0,
+        "SoftObjectPathsOffset": 1586,
+        "LocalizationId": "8C358796963D8AB92270D8521BFDA14F",
+        "GatherableTextDataCount": 0,
+        "GatherableTextDataOffset": 1586,
+        "ExportCount": 2,
+        "ExportOffset": 2119,
+        "ImportCount": 12,
+        "ImportOffset": 1639,
+        "MetadataOffset": 0,
+        "DependsOffset": 2343,
+        "SoftPackageReferencesCount": 0,
+        "SoftPackageReferencesOffset": 2343,
+        "SearchableNamesOffset": 1586,
+        "ThumbnailTableOffset": 2343,
+        "Guid": "000000002F0900002F09000000000000",
+        "PersistentGuid": "47F38DAD3BF54F44B6BD50838C1B0353",
+        "Generations": [
+            {
+                "exportCount": 2,
+                "nameCount": 40
+            }
+        ],
+        "SavedByEngineVersion": "5.6.0-42823860+++UE5+Release-5.6",
+        "CompatibleWithEngineVersion": "5.6.0-42823860+++UE5+Release-5.6",
+        "CompressionFlags": 0,
+        "PackageSource": 3500518105,
+        "AdditionalPackagesToCook": [],
+        "AssetRegistryDataOffset": 2355,
+        "BulkDataStartOffset": "4613n",
+        "WorldTileInfoDataOffset": 0,
+        "ChunkIDs": [],
+        "PreloadDependencyCount": -1,
+        "PreloadDependencyOffset": 3368,
+        "NamesReferencedFromExportDataCount": 23,
+        "PayloadTocOffset": "4617n",
+        "DataResourceOffset": 0
+    },
+    "names": [
+        {
+            "Name": "/Script/CoreUObject",
+            "NonCasePreservingHash": 18936,
+            "CasePreservingHash": 15917
+        },
+        {
+            "Name": "ActorGuid",
+            "NonCasePreservingHash": 44359,
+            "CasePreservingHash": 19746
+        },
+        {
+            "Name": "ActorLabel",
+            "NonCasePreservingHash": 6055,
+            "CasePreservingHash": 24434
+        },
+        {
+            "Name": "ArrayProperty",
+            "NonCasePreservingHash": 45129,
+            "CasePreservingHash": 27107
+        },
+        {
+            "Name": "FolderGuid",
+            "NonCasePreservingHash": 25902,
+            "CasePreservingHash": 9127
+        },
+        {
+            "Name": "Guid",
+            "NonCasePreservingHash": 20547,
+            "CasePreservingHash": 26874
+        },
+        {
+            "Name": "IntProperty",
+            "NonCasePreservingHash": 54181,
+            "CasePreservingHash": 18998
+        },
+        {
+            "Name": "None",
+            "NonCasePreservingHash": 1012,
+            "CasePreservingHash": 3525
+        },
+        {
+            "Name": "ObjectProperty",
+            "NonCasePreservingHash": 56129,
+            "CasePreservingHash": 60083
+        },
+        {
+            "Name": "OverrideMaterials",
+            "NonCasePreservingHash": 46817,
+            "CasePreservingHash": 50139
+        },
+        {
+            "Name": "PackageLocalizationNamespace",
+            "NonCasePreservingHash": 29714,
+            "CasePreservingHash": 34937
+        },
+        {
+            "Name": "RelativeLocation",
+            "NonCasePreservingHash": 20616,
+            "CasePreservingHash": 11285
+        },
+        {
+            "Name": "RelativeRotation",
+            "NonCasePreservingHash": 48315,
+            "CasePreservingHash": 10717
+        },
+        {
+            "Name": "RelativeScale3D",
+            "NonCasePreservingHash": 17862,
+            "CasePreservingHash": 44085
+        },
+        {
+            "Name": "RootComponent",
+            "NonCasePreservingHash": 46868,
+            "CasePreservingHash": 39521
+        },
+        {
+            "Name": "Rotator",
+            "NonCasePreservingHash": 27018,
+            "CasePreservingHash": 55481
+        },
+        {
+            "Name": "StaticMesh",
+            "NonCasePreservingHash": 22802,
+            "CasePreservingHash": 21568
+        },
+        {
+            "Name": "StaticMeshComponent",
+            "NonCasePreservingHash": 61806,
+            "CasePreservingHash": 8773
+        },
+        {
+            "Name": "StaticMeshDerivedDataKey",
+            "NonCasePreservingHash": 54373,
+            "CasePreservingHash": 49259
+        },
+        {
+            "Name": "StaticMeshImportVersion",
+            "NonCasePreservingHash": 59414,
+            "CasePreservingHash": 32825
+        },
+        {
+            "Name": "StrProperty",
+            "NonCasePreservingHash": 49467,
+            "CasePreservingHash": 9330
+        },
+        {
+            "Name": "StructProperty",
+            "NonCasePreservingHash": 48,
+            "CasePreservingHash": 64668
+        },
+        {
+            "Name": "Vector",
+            "NonCasePreservingHash": 7334,
+            "CasePreservingHash": 25604
+        },
+        {
+            "Name": "/Game/LevelPrototyping/Meshes/SM_Cube",
+            "NonCasePreservingHash": 45153,
+            "CasePreservingHash": 48176
+        },
+        {
+            "Name": "/Game/ThirdPerson/Lvl_ThirdPerson",
+            "NonCasePreservingHash": 41522,
+            "CasePreservingHash": 3825
+        },
+        {
+            "Name": "/Game/ThirdPerson/MI_ThirdPersonColWay",
+            "NonCasePreservingHash": 47207,
+            "CasePreservingHash": 60212
+        },
+        {
+            "Name": "/Script/Engine",
+            "NonCasePreservingHash": 16518,
+            "CasePreservingHash": 18821
+        },
+        {
+            "Name": "Class",
+            "NonCasePreservingHash": 30580,
+            "CasePreservingHash": 37240
+        },
+        {
+            "Name": "Default__StaticMeshActor",
+            "NonCasePreservingHash": 16511,
+            "CasePreservingHash": 27167
+        },
+        {
+            "Name": "Level",
+            "NonCasePreservingHash": 11370,
+            "CasePreservingHash": 38033
+        },
+        {
+            "Name": "Lvl_ThirdPerson",
+            "NonCasePreservingHash": 14471,
+            "CasePreservingHash": 5757
+        },
+        {
+            "Name": "MaterialInstanceConstant",
+            "NonCasePreservingHash": 15108,
+            "CasePreservingHash": 44306
+        },
+        {
+            "Name": "MI_ThirdPersonColWay",
+            "NonCasePreservingHash": 47750,
+            "CasePreservingHash": 49107
+        },
+        {
+            "Name": "Package",
+            "NonCasePreservingHash": 18291,
+            "CasePreservingHash": 5512
+        },
+        {
+            "Name": "PersistentLevel",
+            "NonCasePreservingHash": 637,
+            "CasePreservingHash": 52258
+        },
+        {
+            "Name": "SM_Cube",
+            "NonCasePreservingHash": 62614,
+            "CasePreservingHash": 46116
+        },
+        {
+            "Name": "StaticMeshActor",
+            "NonCasePreservingHash": 892,
+            "CasePreservingHash": 51805
+        },
+        {
+            "Name": "StaticMeshActor_UAID_F4A475FF15A3736A02",
+            "NonCasePreservingHash": 7272,
+            "CasePreservingHash": 2415
+        },
+        {
+            "Name": "StaticMeshComponent0",
+            "NonCasePreservingHash": 43516,
+            "CasePreservingHash": 45911
+        },
+        {
+            "Name": "World",
+            "NonCasePreservingHash": 23841,
+            "CasePreservingHash": 5723
+        }
+    ],
+    "gatherableTextData": []
+}

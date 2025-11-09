@@ -6,6 +6,13 @@
         "input": "uassets/ue50/BP_Actor_Simple.uasset",
         "expected": "uassets/ue50/BP_Actor_Simple.json"
       }
+    ],
+    "ue57": [
+      {
+        "name": "Actor",
+        "input": "uassets/ue57/Actor.uasset",
+        "expected": "uassets/ue57/Actor.json"
+      }
     ]
   }
 }
