@@ -1,5 +1,5 @@
 /**
- * uasset-reader-js (v1.3.0)
+ * uasset-reader-js (v1.3.1)
  * https://github.com/blueprintue/uasset-reader-js
  * 
  * MIT License
