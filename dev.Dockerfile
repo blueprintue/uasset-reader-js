@@ -2,6 +2,7 @@
 
 FROM node:alpine AS base
 RUN apk add --no-cache cpio findutils git
+RUN npm install -g npm@11.7.0
 WORKDIR /src
 
 FROM base AS deps
