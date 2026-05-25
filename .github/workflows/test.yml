@@ -22,7 +22,7 @@ jobs:
         uses: actions/checkout@v6
       -
         name: Test
-        uses: docker/bake-action@v7
+        uses: docker/bake-action@v7.1.0
         with:
           source: .
           targets: test
