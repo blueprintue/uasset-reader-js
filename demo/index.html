@@ -350,7 +350,7 @@
                     isInRange = idxHexView < lenghtHexView && hexView[idxHexView].start <= index && hexView[idxHexView].stop > index;
 
                     if (isInRange) {
-                        if (hexView[idxHexView].start === index) {
+                        if (hexView[idxHexView].start === index || element === null) {
                             if (element !== null) {
                                 elements.push(element);
                             }
@@ -363,7 +363,7 @@
                             element.appendChild(document.createTextNode(" " + hex + " "));
 
                             if (index % 16 === 15) {
-                                element.appendChild(document.createElement("br"))
+                                element.appendChild(document.createElement("br"));
                             }
                         } else {
                             element.appendChild(document.createTextNode(" " + hex + " "));
@@ -373,10 +373,14 @@
                             }
                         }
                     } else if (idxHexView < lenghtHexView && hexView[idxHexView].stop === index) {
+                        if (element === null) {
+                            element = document.createElement("span");
+                        }
+
                         element.appendChild(document.createTextNode(" " + hex + " "));
 
                         if (index % 16 === 15) {
-                            element.appendChild(document.createElement("br"))
+                            element.appendChild(document.createElement("br"));
                         }
 
                         ++idxHexView;
@@ -386,10 +390,11 @@
                         if (element === null) {
                             element = document.createElement("span");
                         }
+
                         element.appendChild(document.createTextNode(" " + hex + " "));
 
                         if (index % 16 === 15) {
-                            element.appendChild(document.createElement("br"))
+                            element.appendChild(document.createElement("br"));
                         }
                     }
                 });
