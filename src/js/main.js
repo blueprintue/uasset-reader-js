@@ -1062,7 +1062,11 @@ ReaderUasset.prototype.readAssetRegistryData = function readAssetRegistryData() 
 
     this.uasset.assetRegistryData.size = nextOffset - this.uasset.header.AssetRegistryDataOffset;
 
-    this.uasset.assetRegistryData.DependencyDataOffset = this.int64("DependencyDataOffset");
+    if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_ASSETREGISTRY_DEPENDENCYFLAGS.value) {
+        this.uasset.assetRegistryData.DependencyDataOffset = this.int64("DependencyDataOffset");
+    } else {
+        this.uasset.assetRegistryData.DependencyDataOffset = 0;
+    }
 
     this.uasset.assetRegistryData.data = [];
     count = this.int32("AssetRegistryData Count");
