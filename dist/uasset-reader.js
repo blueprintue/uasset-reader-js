@@ -956,6 +956,8 @@
     /* eslint-disable-next-line no-magic-numbers */
     if (this.uasset.header.LegacyFileVersion <= -8) {
       this.uasset.header.FileVersionUE5 = this.int32("FileVersionUE5");
+    } else {
+      this.uasset.header.FileVersionUE5 = 0;
     }
 
     this.uasset.header.FileVersionLicenseeUE4 = this.int32("FileVersionLicenseeUE4");
@@ -1159,11 +1161,17 @@
      */
 
     for (; idx < count; ++idx) {
-      this.uasset.names.push({
-        Name: this.fstring("Name #" + (idx + 1) + ": string"),
-        NonCasePreservingHash: this.uint16("Name #" + (idx + 1) + ": NonCasePreservingHash"),
-        CasePreservingHash: this.uint16("Name #" + (idx + 1) + ": CasePreservingHash")
-      });
+      if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_NAME_HASHES_SERIALIZED.value) {
+        this.uasset.names.push({
+          Name: this.fstring("Name #" + (idx + 1) + ": string"),
+          NonCasePreservingHash: this.uint16("Name #" + (idx + 1) + ": NonCasePreservingHash"),
+          CasePreservingHash: this.uint16("Name #" + (idx + 1) + ": CasePreservingHash")
+        });
+      } else {
+        this.uasset.names.push({
+          Name: this.fstring("Name #" + (idx + 1) + ": string")
+        });
+      }
     }
   };
 
@@ -1603,7 +1611,11 @@
 
     this.uasset.assetRegistryData.size = nextOffset - this.uasset.header.AssetRegistryDataOffset;
 
-    this.uasset.assetRegistryData.DependencyDataOffset = this.int64("DependencyDataOffset");
+    if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_ASSETREGISTRY_DEPENDENCYFLAGS.value) {
+      this.uasset.assetRegistryData.DependencyDataOffset = this.int64("DependencyDataOffset");
+    } else {
+      this.uasset.assetRegistryData.DependencyDataOffset = 0;
+    }
 
     this.uasset.assetRegistryData.data = [];
     count = this.int32("AssetRegistryData Count");
