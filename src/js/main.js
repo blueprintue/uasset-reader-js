@@ -384,13 +384,19 @@ ReaderUasset.prototype.readHeader = function readHeader() {
      * of the versions parsed before that point. All packageloaders that understand the -9
      * legacyfileformat are required to early exit without further serialization at that point if
      * FileVersionTooNew is true.
+     *
+     * In reality:
+     * -3 is present from UE 4.0 to 4.6
+     * -4 do not exist
+     * -5 is present from UE 4.7 to 4.9
+     * -6 is present from UE 4.10 to 4.13
+     * -7 is present from UE 4.14 to 4.27
+     * -8 is present from UE 5.0 to 5.5
+     * -9 is present from UE 5.6 to 5.8
      */
     this.uasset.header.LegacyFileVersion = this.int32("LegacyFileVersion");
     /* eslint-disable-next-line no-magic-numbers */
-    if (this.uasset.header.LegacyFileVersion !== -6 && this.uasset.header.LegacyFileVersion !== -7 && this.uasset.header.LegacyFileVersion !== -8 &&
-        /* eslint-disable-next-line no-magic-numbers */
-        this.uasset.header.LegacyFileVersion !== -9
-    ) {
+    if (this.uasset.header.LegacyFileVersion === -4 || this.uasset.header.LegacyFileVersion > -3 || this.uasset.header.LegacyFileVersion < -9) {
         return new Error("unsupported version");
     }
 
