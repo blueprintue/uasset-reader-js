@@ -413,6 +413,8 @@ ReaderUasset.prototype.readHeader = function readHeader() {
     /* eslint-disable-next-line no-magic-numbers */
     if (this.uasset.header.LegacyFileVersion <= -8) {
         this.uasset.header.FileVersionUE5 = this.int32("FileVersionUE5");
+    } else {
+        this.uasset.header.FileVersionUE5 = 0;
     }
 
     this.uasset.header.FileVersionLicenseeUE4 = this.int32("FileVersionLicenseeUE4");
