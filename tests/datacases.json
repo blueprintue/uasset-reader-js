@@ -3,15 +3,15 @@
     "ue50": [
       {
         "name": "BP_Actor_Simple",
-        "input": "uassets/ue50/BP_Actor_Simple.uasset",
-        "expected": "uassets/ue50/BP_Actor_Simple.json"
+        "input": "uassets/ue5.0/BP_Actor_Simple.uasset",
+        "expected": "uassets/ue5.0/BP_Actor_Simple.json"
       }
     ],
     "ue57": [
       {
         "name": "Actor",
-        "input": "uassets/ue57/Actor.uasset",
-        "expected": "uassets/ue57/Actor.json"
+        "input": "uassets/ue5.7/Actor.uasset",
+        "expected": "uassets/ue5.7/Actor.json"
       }
     ]
   }
