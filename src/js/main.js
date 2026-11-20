@@ -618,11 +618,17 @@ ReaderUasset.prototype.readNames = function readNames() {
      */
 
     for (; idx < count; ++idx) {
-        this.uasset.names.push({
-            Name                 : this.fstring("Name #" + (idx + 1) + ": string"),
-            NonCasePreservingHash: this.uint16("Name #" + (idx + 1) + ": NonCasePreservingHash"),
-            CasePreservingHash   : this.uint16("Name #" + (idx + 1) + ": CasePreservingHash")
-        });
+        if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_NAME_HASHES_SERIALIZED.value) {
+            this.uasset.names.push({
+                Name                 : this.fstring("Name #" + (idx + 1) + ": string"),
+                NonCasePreservingHash: this.uint16("Name #" + (idx + 1) + ": NonCasePreservingHash"),
+                CasePreservingHash   : this.uint16("Name #" + (idx + 1) + ": CasePreservingHash")
+            });
+        } else {
+            this.uasset.names.push({
+                Name: this.fstring("Name #" + (idx + 1) + ": string")
+            });
+        }
     }
 };
 
