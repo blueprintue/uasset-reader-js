@@ -1024,6 +1024,17 @@ ReaderUasset.prototype.readSoftPackageReferences = function readSoftPackageRefer
  * @private
  */
 ReaderUasset.prototype.readSearchableNames = function readSearchableNames() {
+    /** @type {number} */
+    var idx = 0;
+    /** @type {number} */
+    var count;
+    /** @type {number} */
+    var collectionIndex;
+    /** @type {number} */
+    var countNames;
+    /** @type {number} */
+    var idxNames;
+
     this.uasset.searchableNames = [];
 
     if (this.uasset.header.FileVersionUE4 < EUnrealEngineObjectUE4Version.VER_UE4_ADDED_SEARCHABLE_NAMES.value) {
@@ -1032,7 +1043,21 @@ ReaderUasset.prototype.readSearchableNames = function readSearchableNames() {
 
     this.currentIdx = this.uasset.header.SearchableNamesOffset;
 
-    this.int32("CountSearchableNames");
+    count = this.int32("CountSearchableNames");
+
+    for (; idx < count; ++idx) {
+        collectionIndex = this.int32("SearchableNames #" + (idx + 1) + ": Collection Index");
+        countNames = this.int32("SearchableNames #" + (idx + 1) + ": Names Count");
+
+        this.uasset.searchableNames.push({
+            CollectionIndex: collectionIndex,
+            Names          : []
+        });
+
+        for (idxNames = 0; idxNames < countNames; ++idxNames) {
+            this.uasset.searchableNames[idx].Names.push(this.uint64("SearchableNames #" + (idx + 1) + ": Name #" + (idxNames + 1)));
+        }
+    }
 };
 
 /**
