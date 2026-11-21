@@ -646,6 +646,53 @@ ReaderUasset.prototype.readNames = function readNames() {
 };
 
 /**
+ * Read the package's soft object path table.
+ *
+ * @function readSoftObjectPaths
+ * @returns {undefined}
+ * @private
+ */
+ReaderUasset.prototype.readSoftObjectPaths = function readSoftObjectPaths() {
+    /** @type {number} */
+    var idx = 0;
+    /** @type {number} */
+    var count = this.uasset.header.SoftObjectPathsOffset || 0;
+    /** @type {number} */
+    var packageName;
+    /** @type {number} */
+    var assetName;
+    /** @type {number} */
+    var assetPathName;
+    /** @type {string} */
+    var subPathString;
+
+    this.uasset.softObjectPaths = [];
+    if (count <= 0) {
+        return;
+    }
+
+    this.currentIdx = this.uasset.header.SoftObjectPathsOffset;
+
+    for (; idx < count; ++idx) {
+        if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_FSOFTOBJECTPATH_REMOVE_ASSET_PATH_FNAMES.value) {
+            packageName = this.uint64("SoftObjectPaths #" + (idx + 1) + ": packageName");
+            assetName = this.uint64("SoftObjectPaths #" + (idx + 1) + ": assetName");
+        } else {
+            assetPathName = this.uint64("SoftObjectPaths #" + (idx + 1) + ": assetPathName");
+        }
+
+        subPathString = this.fstring("SoftObjectPaths #" + (idx + 1) + ": subPathString");
+
+        this.uasset.softObjectPaths.push({
+            assetPathName: assetPathName,
+            packageName  : packageName,
+            assetName    : assetName,
+            subPathString: subPathString
+        });
+    }
+};
+
+/**
  * Read Gatherable Text Data.
  *
  * @function ReaderUasset#readGatherableTextData
@@ -1235,6 +1282,7 @@ ReaderUasset.prototype.analyze = function analyze(bytes, saveHexView) {
     }
 
     this.readNames();
+    this.readSoftObjectPaths();
 
     err = this.readGatherableTextData();
     if (err !== undefined) {
