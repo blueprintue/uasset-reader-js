@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Read .uasset dev file from Unreal Engine 5 in javascript</title>
+    <title>Read .uasset dev file from Unreal Engine 4.0 to 5.8 in javascript</title>
     <style>
         body {
             background-color: black;
@@ -347,10 +347,14 @@
                 bytes.forEach((byte, index) => {
                     const hex = byte.toString(16).padStart(2, "0");
 
-                    isInRange = idxHexView < lenghtHexView && hexView[idxHexView].start <= index && hexView[idxHexView].stop > index;
+                    for (; idxHexView < lenghtHexView && hexView[idxHexView].stop < index; ++idxHexView) {
+                        // skip range already finished
+                    }
+
+                    isInRange = idxHexView < lenghtHexView && hexView[idxHexView].start <= index && hexView[idxHexView].stop >= index;
 
                     if (isInRange) {
-                        if (hexView[idxHexView].start === index) {
+                        if (hexView[idxHexView].start === index || element === null) {
                             if (element !== null) {
                                 elements.push(element);
                             }
@@ -363,7 +367,7 @@
                             element.appendChild(document.createTextNode(" " + hex + " "));
 
                             if (index % 16 === 15) {
-                                element.appendChild(document.createElement("br"))
+                                element.appendChild(document.createElement("br"));
                             }
                         } else {
                             element.appendChild(document.createTextNode(" " + hex + " "));
@@ -372,24 +376,21 @@
                                 element.appendChild(document.createElement("br"))
                             }
                         }
-                    } else if (idxHexView < lenghtHexView && hexView[idxHexView].stop === index) {
-                        element.appendChild(document.createTextNode(" " + hex + " "));
 
-                        if (index % 16 === 15) {
-                            element.appendChild(document.createElement("br"))
+                        if (hexView[idxHexView].stop === index) {
+                          ++idxHexView;
+                          elements.push(element);
+                          element = null;
                         }
-
-                        ++idxHexView;
-                        elements.push(element);
-                        element = null;
                     } else {
                         if (element === null) {
                             element = document.createElement("span");
                         }
+
                         element.appendChild(document.createTextNode(" " + hex + " "));
 
                         if (index % 16 === 15) {
-                            element.appendChild(document.createElement("br"))
+                            element.appendChild(document.createElement("br"));
                         }
                     }
                 });
