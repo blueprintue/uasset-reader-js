@@ -1067,6 +1067,14 @@ ReaderUasset.prototype.readAssetRegistryData = function readAssetRegistryData() 
     /** @type {number} */
     var nextOffset = this.uasset.header.TotalHeaderSize;
 
+    if (this.uasset.header.AssetRegistryDataOffset <= 0) {
+        this.uasset.assetRegistryData.DependencyDataOffset = 0;
+        this.uasset.assetRegistryData.size = 0;
+        this.uasset.assetRegistryData.data = [];
+
+        return;
+    }
+
     this.currentIdx = this.uasset.header.AssetRegistryDataOffset;
 
     if (this.uasset.header.WorldTileInfoDataOffset > 0) {
