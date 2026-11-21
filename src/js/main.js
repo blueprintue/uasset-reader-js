@@ -476,6 +476,13 @@ ReaderUasset.prototype.readHeader = function readHeader() {
     this.uasset.header.ImportCount = this.int32("ImportCount");
     this.uasset.header.ImportOffset = this.int32("ImportOffset");
 
+    if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_VERSE_CELLS.value) {
+        this.uasset.header.CellExportCount = this.int32("CellExportCount");
+        this.uasset.header.CellExportOffset = this.int32("CellExportOffset");
+        this.uasset.header.CellImportCount = this.int32("CellImportCount");
+        this.uasset.header.CellImportOffset = this.int32("CellImportOffset");
+    }
+
     if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_METADATA_SERIALIZATION_OFFSET.value) {
         this.uasset.header.MetadataOffset = this.int32("MetadataOffset");
     }
