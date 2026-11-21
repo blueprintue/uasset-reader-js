@@ -805,6 +805,8 @@ ReaderUasset.prototype.readExports = function readExports() {
     /** @type {string} */
     var packageGuid;
     /** @type {number} */
+    var bIsInherited;
+    /** @type {number} */
     var packageFlags;
     /** @type {number} */
     var bNotAlwaysLoadedForEditorGame = 0;
@@ -857,6 +859,10 @@ ReaderUasset.prototype.readExports = function readExports() {
             packageGuid = "";
         }
 
+        if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_TRACK_OBJECT_EXPORT_IS_INHERITED.value) {
+            bIsInherited = this.int32("Export #" + (idx + 1) + ": bIsInherited");
+        }
+
         packageFlags = this.uint32("Export #" + (idx + 1) + ": packageFlags");
 
         if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_LOAD_FOR_EDITOR_GAME.value) {
@@ -892,6 +898,7 @@ ReaderUasset.prototype.readExports = function readExports() {
             bNotForClient                               : bNotForClient,
             bNotForServer                               : bNotForServer,
             packageGuid                                 : packageGuid,
+            bIsInherited                                : bIsInherited,
             packageFlags                                : packageFlags,
             bNotAlwaysLoadedForEditorGame               : bNotAlwaysLoadedForEditorGame,
             bIsAsset                                    : bIsAsset,
