@@ -509,7 +509,9 @@ ReaderUasset.prototype.readHeader = function readHeader() {
         this.uasset.header.ImportTypeHierarchiesOffset = this.int32("ImportTypeHierarchiesOffset");
     }
 
-    this.uasset.header.Guid = this.fguidString("Guid");
+    if (this.uasset.header.FileVersionUE5 < EUnrealEngineObjectUE5Version.VER_UE5_PACKAGE_SAVED_HASH.value) {
+        this.uasset.header.Guid = this.fguidString("Guid");
+    }
 
     if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_ADDED_PACKAGE_OWNER.value) {
         this.uasset.header.PersistentGuid = this.fguidString("PersistentGuid");
