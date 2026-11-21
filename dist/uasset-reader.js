@@ -1315,7 +1315,7 @@
    * @see https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/CoreUObject/Private/UObject/ObjectResource.cpp#L113
    * @todo Data are HERE, need to find how to read that
    */
-  /* eslint-disable-next-line max-statements */
+  /* eslint-disable-next-line max-statements,max-lines-per-function */
   ReaderUasset.prototype.readExports = function readExports() {
     /** @type {number} */
     var idx = 0;
@@ -1348,6 +1348,8 @@
     /** @type {string} */
     var packageGuid;
     /** @type {number} */
+    var bIsInherited;
+    /** @type {number} */
     var packageFlags;
     /** @type {number} */
     var bNotAlwaysLoadedForEditorGame = 0;
@@ -1365,6 +1367,10 @@
     var serializationBeforeCreateDependencies = 0;
     /** @type {number} */
     var createBeforeCreateDependencies = 0;
+    /** @type {bigint} */
+    var scriptSerializationStartOffset = 0;
+    /** @type {bigint} */
+    var scriptSerializationStopOffset = 0;
 
     this.currentIdx = this.uasset.header.ExportOffset;
 
@@ -1393,7 +1399,17 @@
       bForcedExport = this.int32("Export #" + (idx + 1) + ": bForcedExport");
       bNotForClient = this.int32("Export #" + (idx + 1) + ": bNotForClient");
       bNotForServer = this.int32("Export #" + (idx + 1) + ": bNotForServer");
-      packageGuid = this.fguidString("Export #" + (idx + 1) + ": packageGuid");
+
+      if (this.uasset.header.FileVersionUE5 < EUnrealEngineObjectUE5Version.VER_UE5_REMOVE_OBJECT_EXPORT_PACKAGE_GUID.value) {
+        packageGuid = this.fguidString("Export #" + (idx + 1) + ": packageGuid");
+      } else {
+        packageGuid = "";
+      }
+
+      if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_TRACK_OBJECT_EXPORT_IS_INHERITED.value) {
+        bIsInherited = this.int32("Export #" + (idx + 1) + ": bIsInherited");
+      }
+
       packageFlags = this.uint32("Export #" + (idx + 1) + ": packageFlags");
 
       if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_LOAD_FOR_EDITOR_GAME.value) {
@@ -1416,6 +1432,11 @@
         createBeforeCreateDependencies = this.int32("Export #" + (idx + 1) + ": createBeforeCreateDependencies");
       }
 
+      if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_SCRIPT_SERIALIZATION_OFFSET.value) {
+        scriptSerializationStartOffset = this.int64("Export #" + (idx + 1) + ": scriptSerializationStartOffset");
+        scriptSerializationStopOffset = this.int64("Export #" + (idx + 1) + ": scriptSerializationStopOffset");
+      }
+
       this.uasset.exports.push({
         classIndex: classIndex,
         superIndex: superIndex,
@@ -1429,6 +1450,7 @@
         bNotForClient: bNotForClient,
         bNotForServer: bNotForServer,
         packageGuid: packageGuid,
+        bIsInherited: bIsInherited,
         packageFlags: packageFlags,
         bNotAlwaysLoadedForEditorGame: bNotAlwaysLoadedForEditorGame,
         bIsAsset: bIsAsset,
@@ -1438,6 +1460,8 @@
         createBeforeSerializationDependencies: createBeforeSerializationDependencies,
         serializationBeforeCreateDependencies: serializationBeforeCreateDependencies,
         createBeforeCreateDependencies: createBeforeCreateDependencies,
+        scriptSerializationStartOffset: scriptSerializationStartOffset,
+        scriptSerializationStopOffset: scriptSerializationStopOffset,
         data: []
       });
     }
@@ -1609,6 +1633,14 @@
     var countTag;
     /** @type {number} */
     var nextOffset = this.uasset.header.TotalHeaderSize;
+
+    if (this.uasset.header.AssetRegistryDataOffset <= 0) {
+      this.uasset.assetRegistryData.DependencyDataOffset = 0;
+      this.uasset.assetRegistryData.size = 0;
+      this.uasset.assetRegistryData.data = [];
+
+      return;
+    }
 
     this.currentIdx = this.uasset.header.AssetRegistryDataOffset;
 
