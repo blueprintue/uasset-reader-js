@@ -347,6 +347,10 @@
                 bytes.forEach((byte, index) => {
                     const hex = byte.toString(16).padStart(2, "0");
 
+                    for (; idxHexView < lenghtHexView && hexView[idxHexView].stop < index; ++idxHexView) {
+                        // skip range already finished
+                    }
+
                     isInRange = idxHexView < lenghtHexView && hexView[idxHexView].start <= index && hexView[idxHexView].stop > index;
 
                     if (isInRange) {
