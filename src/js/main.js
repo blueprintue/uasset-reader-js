@@ -772,7 +772,7 @@ ReaderUasset.prototype.readImports = function readImports() {
  * @see https://github.com/EpicGames/UnrealEngine/blob/5.0/Engine/Source/Runtime/CoreUObject/Private/UObject/ObjectResource.cpp#L113
  * @todo Data are HERE, need to find how to read that
  */
-/* eslint-disable-next-line max-statements */
+/* eslint-disable-next-line max-statements,max-lines-per-function */
 ReaderUasset.prototype.readExports = function readExports() {
     /** @type {number} */
     var idx = 0;
@@ -850,7 +850,13 @@ ReaderUasset.prototype.readExports = function readExports() {
         bForcedExport = this.int32("Export #" + (idx + 1) + ": bForcedExport");
         bNotForClient = this.int32("Export #" + (idx + 1) + ": bNotForClient");
         bNotForServer = this.int32("Export #" + (idx + 1) + ": bNotForServer");
-        packageGuid = this.fguidString("Export #" + (idx + 1) + ": packageGuid");
+
+        if (this.uasset.header.FileVersionUE5 < EUnrealEngineObjectUE5Version.VER_UE5_REMOVE_OBJECT_EXPORT_PACKAGE_GUID.value) {
+            packageGuid = this.fguidString("Export #" + (idx + 1) + ": packageGuid");
+        } else {
+            packageGuid = "";
+        }
+
         packageFlags = this.uint32("Export #" + (idx + 1) + ": packageFlags");
 
         if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_LOAD_FOR_EDITOR_GAME.value) {
