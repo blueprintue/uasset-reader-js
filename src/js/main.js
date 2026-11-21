@@ -997,10 +997,15 @@ ReaderUasset.prototype.readSoftPackageReferences = function readSoftPackageRefer
  * @private
  */
 ReaderUasset.prototype.readSearchableNames = function readSearchableNames() {
+    this.uasset.searchableNames = [];
+
+    if (this.uasset.header.FileVersionUE4 < EUnrealEngineObjectUE4Version.VER_UE4_ADDED_SEARCHABLE_NAMES.value) {
+        return;
+    }
+
     this.currentIdx = this.uasset.header.SearchableNamesOffset;
 
     this.int32("CountSearchableNames");
-    this.uasset.searchableNames = [];
 };
 
 /**
