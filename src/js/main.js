@@ -824,6 +824,10 @@ ReaderUasset.prototype.readExports = function readExports() {
     var serializationBeforeCreateDependencies = 0;
     /** @type {number} */
     var createBeforeCreateDependencies = 0;
+    /** @type {bigint} */
+    var scriptSerializationStartOffset = 0;
+    /** @type {bigint} */
+    var scriptSerializationStopOffset = 0;
 
     this.currentIdx = this.uasset.header.ExportOffset;
 
@@ -885,6 +889,11 @@ ReaderUasset.prototype.readExports = function readExports() {
             createBeforeCreateDependencies = this.int32("Export #" + (idx + 1) + ": createBeforeCreateDependencies");
         }
 
+        if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_SCRIPT_SERIALIZATION_OFFSET.value) {
+            scriptSerializationStartOffset = this.int64("Export #" + (idx + 1) + ": scriptSerializationStartOffset");
+            scriptSerializationStopOffset = this.int64("Export #" + (idx + 1) + ": scriptSerializationStopOffset");
+        }
+
         this.uasset.exports.push({
             classIndex                                  : classIndex,
             superIndex                                  : superIndex,
@@ -908,6 +917,8 @@ ReaderUasset.prototype.readExports = function readExports() {
             createBeforeSerializationDependencies       : createBeforeSerializationDependencies,
             serializationBeforeCreateDependencies       : serializationBeforeCreateDependencies,
             createBeforeCreateDependencies              : createBeforeCreateDependencies,
+            scriptSerializationStartOffset              : scriptSerializationStartOffset,
+            scriptSerializationStopOffset               : scriptSerializationStopOffset,
             data                                        : []
         });
     }
