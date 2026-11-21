@@ -953,18 +953,32 @@ ReaderUasset.prototype.readExports = function readExports() {
  */
 ReaderUasset.prototype.readDepends = function readDepends() {
     /** @type {number} */
-    var idx = 0;
+    var idxExport = 0;
     /** @type {number} */
-    var count;
+    var countExport;
+    /** @type {number} */
+    var idxDepends = 0;
+    /** @type {number} */
+    var countDepends;
+
+    this.uasset.depends.Depends = [];
+
+    if (this.uasset.header.DependsOffset <= 0) {
+        return;
+    }
 
     this.currentIdx = this.uasset.header.DependsOffset;
 
-    count = this.int32("Depends Count");
-    this.uasset.depends.Depends = [];
-    for (; idx < count; ++idx) {
-        this.uasset.depends.Depends.push({
-            FPackageIndex: this.int32("Depend #" + (idx + 1) + ": FPackageIndex")
-        });
+    countExport = this.uasset.header.ExportCount;
+
+    for (; idxExport < countExport; ++idxExport) {
+        countDepends = this.int32("Depends #" + (idxExport + 1) + ": Count");
+
+        for (; idxDepends < countDepends; ++idxDepends) {
+            this.uasset.depends.Depends.push({
+                FPackageIndex: this.int32("Depends #" + (idxExport + 1) + ": FPackageIndex #" + (idxDepends + 1))
+            });
+        }
     }
 };
 
