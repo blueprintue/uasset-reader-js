@@ -350,6 +350,8 @@ ReaderUasset.prototype.readHeader = function readHeader() {
     var idx;
     /** @type {number} */
     var count;
+    /** @type {number} */
+    var savedPackageHashStart;
 
     // Check file is uasset
     this.uasset.header.EPackageFileTag = this.uint32("EPackageFileTag");
@@ -423,10 +425,14 @@ ReaderUasset.prototype.readHeader = function readHeader() {
     }
 
     if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_PACKAGE_SAVED_HASH.value) {
+        savedPackageHashStart = this.currentIdx;
+
         /* eslint-disable-next-line no-magic-numbers */
         this.uasset.header.SavedPackageHash = this.readCountBytes(20).map(function iter(byte) {
             return byte.toString(16).padStart(2, "0");
         }).join("");
+        this.addHexView("SavedPackageHash", "data", this.uasset.header.SavedPackageHash, savedPackageHashStart, this.currentIdx - 1);
+
         this.uasset.header.TotalHeaderSize = this.int32("TotalHeaderSize");
     }
 
