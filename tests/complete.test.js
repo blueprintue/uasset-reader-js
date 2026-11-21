@@ -27,8 +27,7 @@ describe("complete", function() {
             continue;
         }
 
-        continue;
-
+        /* eslint-disable-next-line jest/valid-title */
         describe(ueVersionEntry.name, function() {
             const blueprintsEntries = fs.readdirSync(path.resolve(__dirname, "uassets", ueVersionEntry.name), {withFileTypes: true});
 
@@ -49,6 +48,7 @@ describe("complete", function() {
                 const uassetFilePath = path.resolve(__dirname, "uassets", ueVersionEntry.name, blueprintsEntry.name, uassetFile);
                 const expectedFilePath = path.resolve(__dirname, "uassets", ueVersionEntry.name, blueprintsEntry.name, expectedFile);
 
+                /* eslint-disable-next-line jest/valid-title */
                 it(blueprintsEntry.name, function() {
                     const bytesInput = new Uint8Array(fs.readFileSync(uassetFilePath));
                     const bytesOutput = JSON.parse(fs.readFileSync(expectedFilePath).toString(), parseBigIntPayload);
