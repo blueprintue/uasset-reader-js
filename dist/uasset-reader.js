@@ -893,6 +893,8 @@
     var idx;
     /** @type {number} */
     var count;
+    /** @type {number} */
+    var savedPackageHashStart;
 
     // Check file is uasset
     this.uasset.header.EPackageFileTag = this.uint32("EPackageFileTag");
@@ -966,10 +968,14 @@
     }
 
     if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_PACKAGE_SAVED_HASH.value) {
+      savedPackageHashStart = this.currentIdx;
+
       /* eslint-disable-next-line no-magic-numbers */
       this.uasset.header.SavedPackageHash = this.readCountBytes(20).map(function iter(byte) {
         return byte.toString(16).padStart(2, "0");
       }).join("");
+      this.addHexView("SavedPackageHash", "data", this.uasset.header.SavedPackageHash, savedPackageHashStart, this.currentIdx - 1);
+
       this.uasset.header.TotalHeaderSize = this.int32("TotalHeaderSize");
     }
 
@@ -1490,18 +1496,32 @@
    */
   ReaderUasset.prototype.readDepends = function readDepends() {
     /** @type {number} */
-    var idx = 0;
+    var idxExport = 0;
     /** @type {number} */
-    var count;
+    var countExport;
+    /** @type {number} */
+    var idxDepends = 0;
+    /** @type {number} */
+    var countDepends;
+
+    this.uasset.depends.Depends = [];
+
+    if (this.uasset.header.DependsOffset <= 0) {
+      return;
+    }
 
     this.currentIdx = this.uasset.header.DependsOffset;
 
-    count = this.int32("Depends Count");
-    this.uasset.depends.Depends = [];
-    for (; idx < count; ++idx) {
-      this.uasset.depends.Depends.push({
-        FPackageIndex: this.int32("Depend #" + (idx + 1) + ": FPackageIndex")
-      });
+    countExport = this.uasset.header.ExportCount;
+
+    for (; idxExport < countExport; ++idxExport) {
+      countDepends = this.int32("Depends #" + (idxExport + 1) + ": Count");
+
+      for (; idxDepends < countDepends; ++idxDepends) {
+        this.uasset.depends.Depends.push({
+          FPackageIndex: this.int32("Depends #" + (idxExport + 1) + ": FPackageIndex #" + (idxDepends + 1))
+        });
+      }
     }
   };
 
