@@ -504,7 +504,7 @@ ReaderUasset.prototype.readHeader = function readHeader() {
 
     this.uasset.header.ThumbnailTableOffset = this.int32("ThumbnailTableOffset");
 
-    if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_IMPORT_TYPE_HIERARCHIES) {
+    if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_IMPORT_TYPE_HIERARCHIES.value) {
         this.uasset.header.ImportTypeHierarchiesCount = this.int32("ImportTypeHierarchiesCount");
         this.uasset.header.ImportTypeHierarchiesOffset = this.int32("ImportTypeHierarchiesOffset");
     }
