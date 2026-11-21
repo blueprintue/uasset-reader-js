@@ -838,8 +838,15 @@ ReaderUasset.prototype.readExports = function readExports() {
         outerIndex = this.int32("Export #" + (idx + 1) + ": outerIndex");
         objectName = this.uint64("Export #" + (idx + 1) + ": objectName");
         objectFlags = this.uint32("Export #" + (idx + 1) + ": objectFlags");
-        serialSize = this.int64("Export #" + (idx + 1) + ": serialSize");
-        serialOffset = this.int64("Export #" + (idx + 1) + ": serialOffset");
+
+        if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_64BIT_EXPORTMAP_SERIALSIZES.value) {
+            serialSize = this.int64("Export #" + (idx + 1) + ": serialSize");
+            serialOffset = this.int64("Export #" + (idx + 1) + ": serialOffset");
+        } else {
+            serialSize = this.int32("Export #" + (idx + 1) + ": serialSize");
+            serialOffset = this.int32("Export #" + (idx + 1) + ": serialOffset");
+        }
+
         bForcedExport = this.int32("Export #" + (idx + 1) + ": bForcedExport");
         bNotForClient = this.int32("Export #" + (idx + 1) + ": bNotForClient");
         bNotForServer = this.int32("Export #" + (idx + 1) + ": bNotForServer");
