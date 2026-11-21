@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Read .uasset dev file from Unreal Engine 5 in javascript</title>
+    <title>Read .uasset dev file from Unreal Engine 4.0 to 5.8 in javascript</title>
     <style>
         body {
             background-color: black;
@@ -351,7 +351,7 @@
                         // skip range already finished
                     }
 
-                    isInRange = idxHexView < lenghtHexView && hexView[idxHexView].start <= index && hexView[idxHexView].stop > index;
+                    isInRange = idxHexView < lenghtHexView && hexView[idxHexView].start <= index && hexView[idxHexView].stop >= index;
 
                     if (isInRange) {
                         if (hexView[idxHexView].start === index || element === null) {
@@ -376,20 +376,12 @@
                                 element.appendChild(document.createElement("br"))
                             }
                         }
-                    } else if (idxHexView < lenghtHexView && hexView[idxHexView].stop === index) {
-                        if (element === null) {
-                            element = document.createElement("span");
+
+                        if (hexView[idxHexView].stop === index) {
+                          ++idxHexView;
+                          elements.push(element);
+                          element = null;
                         }
-
-                        element.appendChild(document.createTextNode(" " + hex + " "));
-
-                        if (index % 16 === 15) {
-                            element.appendChild(document.createElement("br"));
-                        }
-
-                        ++idxHexView;
-                        elements.push(element);
-                        element = null;
                     } else {
                         if (element === null) {
                             element = document.createElement("span");
