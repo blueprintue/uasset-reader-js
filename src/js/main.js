@@ -1239,6 +1239,68 @@ ReaderUasset.prototype.readAssetRegistryData = function readAssetRegistryData() 
 };
 
 /**
+ * Read Import Type Hierarchies.
+ *
+ * @function ReaderUasset#readImportTypeHierarchies
+ * @returns {undefined}
+ * @private
+ */
+ReaderUasset.prototype.readImportTypeHierarchies = function readImportTypeHierarchies() {
+    /** @type {number} */
+    var idx = 0;
+    /** @type {number} */
+    var idxType;
+    /** @type {number} */
+    var count;
+    /** @type {number} */
+    var superTypeCount;
+    /** @type {number} */
+    var packageIndex;
+    /** @type {Array} */
+    var superTypes;
+
+    this.uasset.importTypeHierarchies = [];
+
+    if (!Number.isInteger(this.uasset.header.ImportTypeHierarchiesOffset) || this.uasset.header.ImportTypeHierarchiesOffset <= 0) {
+        return;
+    }
+
+    this.currentIdx = this.uasset.header.ImportTypeHierarchiesOffset;
+
+    count = this.int32("ImportTypeHierarchiesCount");
+
+    if (count < 0 || count !== this.uasset.header.ImportTypeHierarchiesCount || count > this.uasset.header.ImportCount) {
+        return;
+    }
+
+    for (; idx < count; ++idx) {
+        packageIndex = this.int32("Import Type Hierarchy #" + (idx + 1) + ": package index");
+        superTypeCount = this.int32("Import Type Hierarchy #" + (idx + 1) + ": super type count");
+
+        /* eslint-disable-next-line no-magic-numbers */
+        if (superTypeCount < 0 || superTypeCount > Math.floor((this.bytes.length - this.currentIdx) / 32)) {
+            return;
+        }
+
+        superTypes = [];
+
+        for (idxType = 0; idxType < superTypeCount; ++idxType) {
+            superTypes.push({
+                ClassName       : this.uint64("Import Type Hierarchy #" + (idx + 1) + ": super type #" + (idxType + 1) + ": class name"),
+                ClassPackageName: this.uint64("Import Type Hierarchy #" + (idx + 1) + ": super type #" + (idxType + 1) + ": class package name"),
+                PackageName     : this.uint64("Import Type Hierarchy #" + (idx + 1) + ": super type #" + (idxType + 1) + ": package name"),
+                TypeName        : this.uint64("Import Type Hierarchy #" + (idx + 1) + ": super type #" + (idxType + 1) + ": type name")
+            });
+        }
+
+        this.uasset.importTypeHierarchies.push({
+            PackageIndex: packageIndex,
+            SuperTypes  : superTypes
+        });
+    }
+};
+
+/**
  * Read Preload Dependency.
  *
  * @function ReaderUasset#readPreloadDependency
@@ -1298,6 +1360,7 @@ ReaderUasset.prototype.analyze = function analyze(bytes, saveHexView) {
     this.readSearchableNames();
     this.readThumbnails();
     this.readAssetRegistryData();
+    this.readImportTypeHierarchies();
     this.readPreloadDependency();
     this.readBulkDataStart();
 
