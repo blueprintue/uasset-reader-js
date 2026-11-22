@@ -1238,6 +1238,69 @@
   };
 
   /**
+   * Read Metadata for the hexView.
+   *
+   * @function ReaderUasset#readMetadata
+   * @returns {undefined}
+   * @private
+   */
+  ReaderUasset.prototype.readMetadataForHexView = function readMetadataForHexView() {
+    /** @type {number} */
+    var start = this.uasset.header.MetadataOffset;
+    /** @type {number} */
+    var stop = this.bytes.length;
+    /** @type {Array} */
+    var offsets = [
+    this.uasset.header.NameOffset,
+    this.uasset.header.SoftObjectPathsOffset,
+    this.uasset.header.GatherableTextDataOffset,
+    this.uasset.header.ExportOffset,
+    this.uasset.header.ImportOffset,
+    this.uasset.header.DependsOffset,
+    this.uasset.header.SoftPackageReferencesOffset,
+    this.uasset.header.SearchableNamesOffset,
+    this.uasset.header.ThumbnailTableOffset,
+    this.uasset.header.AssetRegistryDataOffset,
+    this.uasset.header.PreloadDependencyOffset,
+    Number(this.uasset.header.BulkDataStartOffset)];
+
+    /** @type {number} */
+    var idx = 0;
+    /** @type {number} */
+    var count = offsets.length;
+    /** @type {number} */
+    var offset;
+
+    if (this.saveHexView === false) {
+      return;
+    }
+
+    if (!Number.isInteger(start) || start <= 0 || start >= this.bytes.length) {
+      return;
+    }
+
+    for (; idx < count; ++idx) {
+      offset = offsets[idx];
+      if (Number(offset) && offset > start && offset < stop) {
+        stop = offset;
+      }
+    }
+
+    if (stop > start) {
+      this.addHexView("Package metadata", "data", stop - start + " bytes", start, stop - 1);
+    }
+
+    /* eslint-disable-next-line no-magic-numbers */
+    if (start >= 4 && this.bytes[start - 4] === 0 && this.bytes[start - 3] === 0 && this.bytes[start - 2] === 0 && this.bytes[start - 1] === 0 &&
+    !this.uasset.hexView.some(function someHexView(entry) {
+      return entry.start <= start - 1 && entry.stop >= start - 4;
+    }))
+    {
+      this.addHexView("Package metadata alignment", "data", "4 bytes", start - 4, start - 1);
+    }
+  };
+
+  /**
    * Read Gatherable Text Data.
    *
    * @function ReaderUasset#readGatherableTextData
@@ -1931,6 +1994,7 @@
 
     this.readNames();
     this.readSoftObjectPaths();
+    this.readMetadataForHexView();
 
     err = this.readGatherableTextData();
     if (err !== undefined) {
