@@ -350,6 +350,8 @@ ReaderUasset.prototype.readHeader = function readHeader() {
     var idx;
     /** @type {number} */
     var count;
+    /** @type {number} */
+    var savedPackageHashStart;
 
     // Check file is uasset
     this.uasset.header.EPackageFileTag = this.uint32("EPackageFileTag");
@@ -423,10 +425,14 @@ ReaderUasset.prototype.readHeader = function readHeader() {
     }
 
     if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_PACKAGE_SAVED_HASH.value) {
+        savedPackageHashStart = this.currentIdx;
+
         /* eslint-disable-next-line no-magic-numbers */
         this.uasset.header.SavedPackageHash = this.readCountBytes(20).map(function iter(byte) {
             return byte.toString(16).padStart(2, "0");
         }).join("");
+        this.addHexView("SavedPackageHash", "data", this.uasset.header.SavedPackageHash, savedPackageHashStart, this.currentIdx - 1);
+
         this.uasset.header.TotalHeaderSize = this.int32("TotalHeaderSize");
     }
 
@@ -470,6 +476,13 @@ ReaderUasset.prototype.readHeader = function readHeader() {
     this.uasset.header.ImportCount = this.int32("ImportCount");
     this.uasset.header.ImportOffset = this.int32("ImportOffset");
 
+    if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_VERSE_CELLS.value) {
+        this.uasset.header.CellExportCount = this.int32("CellExportCount");
+        this.uasset.header.CellExportOffset = this.int32("CellExportOffset");
+        this.uasset.header.CellImportCount = this.int32("CellImportCount");
+        this.uasset.header.CellImportOffset = this.int32("CellImportOffset");
+    }
+
     if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_METADATA_SERIALIZATION_OFFSET.value) {
         this.uasset.header.MetadataOffset = this.int32("MetadataOffset");
     }
@@ -491,12 +504,14 @@ ReaderUasset.prototype.readHeader = function readHeader() {
 
     this.uasset.header.ThumbnailTableOffset = this.int32("ThumbnailTableOffset");
 
-    if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_IMPORT_TYPE_HIERARCHIES) {
+    if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_IMPORT_TYPE_HIERARCHIES.value) {
         this.uasset.header.ImportTypeHierarchiesCount = this.int32("ImportTypeHierarchiesCount");
         this.uasset.header.ImportTypeHierarchiesOffset = this.int32("ImportTypeHierarchiesOffset");
     }
 
-    this.uasset.header.Guid = this.fguidString("Guid");
+    if (this.uasset.header.FileVersionUE5 < EUnrealEngineObjectUE5Version.VER_UE5_PACKAGE_SAVED_HASH.value) {
+        this.uasset.header.Guid = this.fguidString("Guid");
+    }
 
     if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_ADDED_PACKAGE_OWNER.value) {
         this.uasset.header.PersistentGuid = this.fguidString("PersistentGuid");
@@ -629,6 +644,116 @@ ReaderUasset.prototype.readNames = function readNames() {
                 Name: this.fstring("Name #" + (idx + 1) + ": string")
             });
         }
+    }
+};
+
+/**
+ * Read the package's soft object path table.
+ *
+ * @function readSoftObjectPaths
+ * @returns {undefined}
+ * @private
+ */
+ReaderUasset.prototype.readSoftObjectPaths = function readSoftObjectPaths() {
+    /** @type {number} */
+    var idx = 0;
+    /** @type {number} */
+    var count = this.uasset.header.SoftObjectPathsOffset || 0;
+    /** @type {number} */
+    var packageName;
+    /** @type {number} */
+    var assetName;
+    /** @type {number} */
+    var assetPathName;
+    /** @type {string} */
+    var subPathString;
+
+    this.uasset.softObjectPaths = [];
+    if (count <= 0) {
+        return;
+    }
+
+    this.currentIdx = this.uasset.header.SoftObjectPathsOffset;
+
+    for (; idx < count; ++idx) {
+        if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_FSOFTOBJECTPATH_REMOVE_ASSET_PATH_FNAMES.value) {
+            packageName = this.uint64("SoftObjectPaths #" + (idx + 1) + ": packageName");
+            assetName = this.uint64("SoftObjectPaths #" + (idx + 1) + ": assetName");
+        } else {
+            assetPathName = this.uint64("SoftObjectPaths #" + (idx + 1) + ": assetPathName");
+        }
+
+        subPathString = this.fstring("SoftObjectPaths #" + (idx + 1) + ": subPathString");
+
+        this.uasset.softObjectPaths.push({
+            assetPathName: assetPathName,
+            packageName  : packageName,
+            assetName    : assetName,
+            subPathString: subPathString
+        });
+    }
+};
+
+/**
+ * Read Metadata for the hexView.
+ *
+ * @function ReaderUasset#readMetadata
+ * @returns {undefined}
+ * @private
+ */
+ReaderUasset.prototype.readMetadataForHexView = function readMetadataForHexView() {
+    /** @type {number} */
+    var start = this.uasset.header.MetadataOffset;
+    /** @type {number} */
+    var stop = this.bytes.length;
+    /** @type {Array} */
+    var offsets = [
+        this.uasset.header.NameOffset,
+        this.uasset.header.SoftObjectPathsOffset,
+        this.uasset.header.GatherableTextDataOffset,
+        this.uasset.header.ExportOffset,
+        this.uasset.header.ImportOffset,
+        this.uasset.header.DependsOffset,
+        this.uasset.header.SoftPackageReferencesOffset,
+        this.uasset.header.SearchableNamesOffset,
+        this.uasset.header.ThumbnailTableOffset,
+        this.uasset.header.AssetRegistryDataOffset,
+        this.uasset.header.PreloadDependencyOffset,
+        Number(this.uasset.header.BulkDataStartOffset)
+    ];
+    /** @type {number} */
+    var idx = 0;
+    /** @type {number} */
+    var count = offsets.length;
+    /** @type {number} */
+    var offset;
+
+    if (this.saveHexView === false) {
+        return;
+    }
+
+    if (!Number.isInteger(start) || start <= 0 || start >= this.bytes.length) {
+        return;
+    }
+
+    for (; idx < count; ++idx) {
+        offset = offsets[idx];
+        if (Number(offset) && offset > start && offset < stop) {
+            stop = offset;
+        }
+    }
+
+    if (stop > start) {
+        this.addHexView("Package metadata", "data", (stop - start) + " bytes", start, stop - 1);
+    }
+
+    /* eslint-disable-next-line no-magic-numbers */
+    if (start >= 4 && this.bytes[start - 4] === 0 && this.bytes[start - 3] === 0 && this.bytes[start - 2] === 0 && this.bytes[start - 1] === 0 &&
+        !this.uasset.hexView.some(function someHexView(entry) {
+            return entry.start <= start - 1 && entry.stop >= start - 4;
+        })
+    ) {
+        this.addHexView("Package metadata alignment", "data", "4 bytes", start - 4, start - 1);
     }
 };
 
@@ -828,6 +953,8 @@ ReaderUasset.prototype.readExports = function readExports() {
     var scriptSerializationStartOffset = 0;
     /** @type {bigint} */
     var scriptSerializationStopOffset = 0;
+    /** @type {number} */
+    var serialDataEnd;
 
     this.currentIdx = this.uasset.header.ExportOffset;
 
@@ -935,6 +1062,11 @@ ReaderUasset.prototype.readExports = function readExports() {
         nodeNameRef = this.uint64("Exports #" + (idx + 1) + ": data");
         this.uasset.exports[idx].data.push(this.resolveFName(nodeNameRef));
         this.uasset.exports[idx].data.push(this.uint32("flags"));
+
+        serialDataEnd = Number(this.uasset.exports[idx].serialOffset) + Number(this.uasset.exports[idx].serialSize);
+        if (this.currentIdx < serialDataEnd) {
+            this.addHexView("Export #" + (idx + 1) + ": serialized object data", "data", (serialDataEnd - this.currentIdx) + "bytes", this.currentIdx, serialDataEnd - 1);
+        }
     }
 };
 
@@ -947,18 +1079,32 @@ ReaderUasset.prototype.readExports = function readExports() {
  */
 ReaderUasset.prototype.readDepends = function readDepends() {
     /** @type {number} */
-    var idx = 0;
+    var idxExport = 0;
     /** @type {number} */
-    var count;
+    var countExport;
+    /** @type {number} */
+    var idxDepends = 0;
+    /** @type {number} */
+    var countDepends;
+
+    this.uasset.depends.Depends = [];
+
+    if (this.uasset.header.DependsOffset <= 0) {
+        return;
+    }
 
     this.currentIdx = this.uasset.header.DependsOffset;
 
-    count = this.int32("Depends Count");
-    this.uasset.depends.Depends = [];
-    for (; idx < count; ++idx) {
-        this.uasset.depends.Depends.push({
-            FPackageIndex: this.int32("Depend #" + (idx + 1) + ": FPackageIndex")
-        });
+    countExport = this.uasset.header.ExportCount;
+
+    for (; idxExport < countExport; ++idxExport) {
+        countDepends = this.int32("Depends #" + (idxExport + 1) + ": Count");
+
+        for (; idxDepends < countDepends; ++idxDepends) {
+            this.uasset.depends.Depends.push({
+                FPackageIndex: this.int32("Depends #" + (idxExport + 1) + ": FPackageIndex #" + (idxDepends + 1))
+            });
+        }
     }
 };
 
@@ -997,6 +1143,17 @@ ReaderUasset.prototype.readSoftPackageReferences = function readSoftPackageRefer
  * @private
  */
 ReaderUasset.prototype.readSearchableNames = function readSearchableNames() {
+    /** @type {number} */
+    var idx = 0;
+    /** @type {number} */
+    var count;
+    /** @type {number} */
+    var collectionIndex;
+    /** @type {number} */
+    var countNames;
+    /** @type {number} */
+    var idxNames;
+
     this.uasset.searchableNames = [];
 
     if (this.uasset.header.FileVersionUE4 < EUnrealEngineObjectUE4Version.VER_UE4_ADDED_SEARCHABLE_NAMES.value) {
@@ -1005,7 +1162,21 @@ ReaderUasset.prototype.readSearchableNames = function readSearchableNames() {
 
     this.currentIdx = this.uasset.header.SearchableNamesOffset;
 
-    this.int32("CountSearchableNames");
+    count = this.int32("CountSearchableNames");
+
+    for (; idx < count; ++idx) {
+        collectionIndex = this.int32("SearchableNames #" + (idx + 1) + ": Collection Index");
+        countNames = this.int32("SearchableNames #" + (idx + 1) + ": Names Count");
+
+        this.uasset.searchableNames.push({
+            CollectionIndex: collectionIndex,
+            Names          : []
+        });
+
+        for (idxNames = 0; idxNames < countNames; ++idxNames) {
+            this.uasset.searchableNames[idx].Names.push(this.uint64("SearchableNames #" + (idx + 1) + ": Name #" + (idxNames + 1)));
+        }
+    }
 };
 
 /**
@@ -1138,6 +1309,107 @@ ReaderUasset.prototype.readAssetRegistryData = function readAssetRegistryData() 
 };
 
 /**
+ * Read Import Type Hierarchies.
+ *
+ * @function ReaderUasset#readImportTypeHierarchies
+ * @returns {undefined}
+ * @private
+ */
+ReaderUasset.prototype.readImportTypeHierarchies = function readImportTypeHierarchies() {
+    /** @type {number} */
+    var idx = 0;
+    /** @type {number} */
+    var idxType;
+    /** @type {number} */
+    var count;
+    /** @type {number} */
+    var superTypeCount;
+    /** @type {number} */
+    var packageIndex;
+    /** @type {Array} */
+    var superTypes;
+
+    this.uasset.importTypeHierarchies = [];
+
+    if (!Number.isInteger(this.uasset.header.ImportTypeHierarchiesOffset) || this.uasset.header.ImportTypeHierarchiesOffset <= 0) {
+        return;
+    }
+
+    this.currentIdx = this.uasset.header.ImportTypeHierarchiesOffset;
+
+    count = this.int32("ImportTypeHierarchiesCount");
+
+    if (count < 0 || count !== this.uasset.header.ImportTypeHierarchiesCount || count > this.uasset.header.ImportCount) {
+        return;
+    }
+
+    for (; idx < count; ++idx) {
+        packageIndex = this.int32("Import Type Hierarchy #" + (idx + 1) + ": package index");
+        superTypeCount = this.int32("Import Type Hierarchy #" + (idx + 1) + ": super type count");
+
+        /* eslint-disable-next-line no-magic-numbers */
+        if (superTypeCount < 0 || superTypeCount > Math.floor((this.bytes.length - this.currentIdx) / 32)) {
+            return;
+        }
+
+        superTypes = [];
+
+        for (idxType = 0; idxType < superTypeCount; ++idxType) {
+            superTypes.push({
+                ClassName       : this.uint64("Import Type Hierarchy #" + (idx + 1) + ": super type #" + (idxType + 1) + ": class name"),
+                ClassPackageName: this.uint64("Import Type Hierarchy #" + (idx + 1) + ": super type #" + (idxType + 1) + ": class package name"),
+                PackageName     : this.uint64("Import Type Hierarchy #" + (idx + 1) + ": super type #" + (idxType + 1) + ": package name"),
+                TypeName        : this.uint64("Import Type Hierarchy #" + (idx + 1) + ": super type #" + (idxType + 1) + ": type name")
+            });
+        }
+
+        this.uasset.importTypeHierarchies.push({
+            PackageIndex: packageIndex,
+            SuperTypes  : superTypes
+        });
+    }
+};
+
+/**
+ * Read Asset Registry Dependency for Hex View.
+ *
+ * @function ReaderUasset#readAssetRegistryDependencyDataForHexView
+ * @returns {undefined}
+ * @private
+ */
+ReaderUasset.prototype.readAssetRegistryDependencyDataForHexView = function readAssetRegistryDependencyDataForHexView() {
+    /** @type {number} */
+    var start = Number(this.uasset.assetRegistryData.DependencyDataOffset || 0);
+    /** @type {number} */
+    var stop = this.bytes.length;
+    /** @type {number} */
+    var idx = 0;
+    /** @type {Array} */
+    var offsets = [Number(this.uasset.header.BulkDataStartOffset), Number(this.uasset.header.PayloadTocOffset)];
+
+    if (this.saveHexView === false) {
+        return;
+    }
+
+    this.uasset.exports.forEach(function eachExport(exp) {
+        var offset = Number(exp.serialOffset);
+        if (offset > start && offset < stop) {
+            stop = offset;
+        }
+    });
+
+    for (; idx < offsets.length; ++idx) {
+        if (offsets[idx] > start && offsets[idx] < stop) {
+            stop = offsets[idx];
+        }
+    }
+
+    if (start > 0 && start < stop) {
+        this.addHexView("Asset Registry Dependency Data", "data", (stop - start) + " bytes", start, stop - 1);
+    }
+};
+
+/**
  * Read Preload Dependency.
  *
  * @function ReaderUasset#readPreloadDependency
@@ -1145,7 +1417,22 @@ ReaderUasset.prototype.readAssetRegistryData = function readAssetRegistryData() 
  * @private
  */
 ReaderUasset.prototype.readPreloadDependency = function readPreloadDependency() {
+    /** @type {number} */
+    var idx = 0;
+    /** @type {number} */
+    var count = this.uasset.header.PreloadDependencyCount;
+
+    this.uasset.preloadDependency.data = [];
+
+    if (count <= 0 || this.uasset.header.PreloadDependencyOffset <= 0) {
+        return;
+    }
+
     this.currentIdx = this.uasset.header.PreloadDependencyOffset;
+
+    for (; idx < count; ++idx) {
+        this.uasset.preloadDependency.data.push(this.int32("PreloadDependency #" + (idx + 1)));
+    }
 };
 
 /**
@@ -1156,7 +1443,26 @@ ReaderUasset.prototype.readPreloadDependency = function readPreloadDependency() 
  * @private
  */
 ReaderUasset.prototype.readBulkDataStart = function readBulkDataStart() {
-    this.currentIdx = Number(this.uasset.header.BulkDataStartOffset);
+    /** @type {number} */
+    var start = Number(this.uasset.header.BulkDataStartOffset);
+    /** @type {number} */
+    var payloadTocOffset = Number(this.uasset.header.PayloadTocOffset);
+    /** @type {number} */
+    var stop = this.bytes.length;
+
+    if (payloadTocOffset > start && payloadTocOffset < stop) {
+        stop = payloadTocOffset;
+    }
+
+    if (start > 0 && start < stop) {
+        this.addHexView("Bulk Data", "data", (stop - start) + " bytes", start, stop - 1);
+    }
+
+    if (payloadTocOffset > 0 && payloadTocOffset < this.bytes.length) {
+        this.addHexView("Payload table of contents", "data", (this.bytes.length - payloadTocOffset) + " bytes", payloadTocOffset, this.bytes.length - 1);
+    }
+
+    this.currentIdx = start;
 };
 
 /**
@@ -1183,6 +1489,8 @@ ReaderUasset.prototype.analyze = function analyze(bytes, saveHexView) {
     }
 
     this.readNames();
+    this.readSoftObjectPaths();
+    this.readMetadataForHexView();
 
     err = this.readGatherableTextData();
     if (err !== undefined) {
@@ -1196,6 +1504,8 @@ ReaderUasset.prototype.analyze = function analyze(bytes, saveHexView) {
     this.readSearchableNames();
     this.readThumbnails();
     this.readAssetRegistryData();
+    this.readImportTypeHierarchies();
+    this.readAssetRegistryDependencyDataForHexView();
     this.readPreloadDependency();
     this.readBulkDataStart();
 
