@@ -890,6 +890,8 @@ ReaderUasset.prototype.readExports = function readExports() {
     var scriptSerializationStartOffset = 0;
     /** @type {bigint} */
     var scriptSerializationStopOffset = 0;
+    /** @type {number} */
+    var serialDataEnd;
 
     this.currentIdx = this.uasset.header.ExportOffset;
 
@@ -997,6 +999,11 @@ ReaderUasset.prototype.readExports = function readExports() {
         nodeNameRef = this.uint64("Exports #" + (idx + 1) + ": data");
         this.uasset.exports[idx].data.push(this.resolveFName(nodeNameRef));
         this.uasset.exports[idx].data.push(this.uint32("flags"));
+
+        serialDataEnd = Number(this.uasset.exports[idx].serialOffset) + Number(this.uasset.exports[idx].serialSize);
+        if (this.currentIdx < serialDataEnd) {
+            this.addHexView("Export #" + (idx + 1) + ": serialized object data", "data", (serialDataEnd - this.currentIdx) + "bytes", this.currentIdx, serialDataEnd - 1);
+        }
     }
 };
 
