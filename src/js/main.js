@@ -1319,7 +1319,26 @@ ReaderUasset.prototype.readPreloadDependency = function readPreloadDependency() 
  * @private
  */
 ReaderUasset.prototype.readBulkDataStart = function readBulkDataStart() {
-    this.currentIdx = Number(this.uasset.header.BulkDataStartOffset);
+    /** @type {number} */
+    var start = Number(this.uasset.header.BulkDataStartOffset);
+    /** @type {number} */
+    var payloadTocOffset = Number(this.uasset.header.PayloadTocOffset);
+    /** @type {number} */
+    var stop = this.bytes.length;
+
+    if (payloadTocOffset > start && payloadTocOffset < stop) {
+        stop = payloadTocOffset;
+    }
+
+    if (start > 0 && start < stop) {
+        this.addHexView("Bulk Data", "data", (stop - start) + " bytes", start, stop - 1);
+    }
+
+    if (payloadTocOffset > 0 && payloadTocOffset < this.bytes.length) {
+        this.addHexView("Payload table of contents", "data", (this.bytes.length - payloadTocOffset) + " bytes", payloadTocOffset, this.bytes.length - 1);
+    }
+
+    this.currentIdx = start;
 };
 
 /**
