@@ -1308,7 +1308,22 @@ ReaderUasset.prototype.readImportTypeHierarchies = function readImportTypeHierar
  * @private
  */
 ReaderUasset.prototype.readPreloadDependency = function readPreloadDependency() {
+    /** @type {number} */
+    var idx = 0;
+    /** @type {number} */
+    var count = this.uasset.header.PreloadDependencyCount;
+
+    this.uasset.preloadDependency.data = [];
+
+    if (count <= 0 || this.uasset.header.PreloadDependencyOffset <= 0) {
+        return;
+    }
+
     this.currentIdx = this.uasset.header.PreloadDependencyOffset;
+
+    for (; idx < count; ++idx) {
+        this.uasset.preloadDependency.data.push(this.int32("PreloadDependency #" + (idx + 1)));
+    }
 };
 
 /**
