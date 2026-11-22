@@ -1019,6 +1019,13 @@
     this.uasset.header.ImportCount = this.int32("ImportCount");
     this.uasset.header.ImportOffset = this.int32("ImportOffset");
 
+    if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_VERSE_CELLS.value) {
+      this.uasset.header.CellExportCount = this.int32("CellExportCount");
+      this.uasset.header.CellExportOffset = this.int32("CellExportOffset");
+      this.uasset.header.CellImportCount = this.int32("CellImportCount");
+      this.uasset.header.CellImportOffset = this.int32("CellImportOffset");
+    }
+
     if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_METADATA_SERIALIZATION_OFFSET.value) {
       this.uasset.header.MetadataOffset = this.int32("MetadataOffset");
     }
@@ -1040,12 +1047,14 @@
 
     this.uasset.header.ThumbnailTableOffset = this.int32("ThumbnailTableOffset");
 
-    if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_IMPORT_TYPE_HIERARCHIES) {
+    if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_IMPORT_TYPE_HIERARCHIES.value) {
       this.uasset.header.ImportTypeHierarchiesCount = this.int32("ImportTypeHierarchiesCount");
       this.uasset.header.ImportTypeHierarchiesOffset = this.int32("ImportTypeHierarchiesOffset");
     }
 
-    this.uasset.header.Guid = this.fguidString("Guid");
+    if (this.uasset.header.FileVersionUE5 < EUnrealEngineObjectUE5Version.VER_UE5_PACKAGE_SAVED_HASH.value) {
+      this.uasset.header.Guid = this.fguidString("Guid");
+    }
 
     if (this.uasset.header.FileVersionUE4 >= EUnrealEngineObjectUE4Version.VER_UE4_ADDED_PACKAGE_OWNER.value) {
       this.uasset.header.PersistentGuid = this.fguidString("PersistentGuid");
@@ -1178,6 +1187,53 @@
           Name: this.fstring("Name #" + (idx + 1) + ": string")
         });
       }
+    }
+  };
+
+  /**
+   * Read the package's soft object path table.
+   *
+   * @function readSoftObjectPaths
+   * @returns {undefined}
+   * @private
+   */
+  ReaderUasset.prototype.readSoftObjectPaths = function readSoftObjectPaths() {
+    /** @type {number} */
+    var idx = 0;
+    /** @type {number} */
+    var count = this.uasset.header.SoftObjectPathsOffset || 0;
+    /** @type {number} */
+    var packageName;
+    /** @type {number} */
+    var assetName;
+    /** @type {number} */
+    var assetPathName;
+    /** @type {string} */
+    var subPathString;
+
+    this.uasset.softObjectPaths = [];
+    if (count <= 0) {
+      return;
+    }
+
+    this.currentIdx = this.uasset.header.SoftObjectPathsOffset;
+
+    for (; idx < count; ++idx) {
+      if (this.uasset.header.FileVersionUE5 >= EUnrealEngineObjectUE5Version.VER_UE5_FSOFTOBJECTPATH_REMOVE_ASSET_PATH_FNAMES.value) {
+        packageName = this.uint64("SoftObjectPaths #" + (idx + 1) + ": packageName");
+        assetName = this.uint64("SoftObjectPaths #" + (idx + 1) + ": assetName");
+      } else {
+        assetPathName = this.uint64("SoftObjectPaths #" + (idx + 1) + ": assetPathName");
+      }
+
+      subPathString = this.fstring("SoftObjectPaths #" + (idx + 1) + ": subPathString");
+
+      this.uasset.softObjectPaths.push({
+        assetPathName: assetPathName,
+        packageName: packageName,
+        assetName: assetName,
+        subPathString: subPathString
+      });
     }
   };
 
@@ -1560,6 +1616,17 @@
    * @private
    */
   ReaderUasset.prototype.readSearchableNames = function readSearchableNames() {
+    /** @type {number} */
+    var idx = 0;
+    /** @type {number} */
+    var count;
+    /** @type {number} */
+    var collectionIndex;
+    /** @type {number} */
+    var countNames;
+    /** @type {number} */
+    var idxNames;
+
     this.uasset.searchableNames = [];
 
     if (this.uasset.header.FileVersionUE4 < EUnrealEngineObjectUE4Version.VER_UE4_ADDED_SEARCHABLE_NAMES.value) {
@@ -1568,7 +1635,21 @@
 
     this.currentIdx = this.uasset.header.SearchableNamesOffset;
 
-    this.int32("CountSearchableNames");
+    count = this.int32("CountSearchableNames");
+
+    for (; idx < count; ++idx) {
+      collectionIndex = this.int32("SearchableNames #" + (idx + 1) + ": Collection Index");
+      countNames = this.int32("SearchableNames #" + (idx + 1) + ": Names Count");
+
+      this.uasset.searchableNames.push({
+        CollectionIndex: collectionIndex,
+        Names: []
+      });
+
+      for (idxNames = 0; idxNames < countNames; ++idxNames) {
+        this.uasset.searchableNames[idx].Names.push(this.uint64("SearchableNames #" + (idx + 1) + ": Name #" + (idxNames + 1)));
+      }
+    }
   };
 
   /**
@@ -1701,6 +1782,68 @@
   };
 
   /**
+   * Read Import Type Hierarchies.
+   *
+   * @function ReaderUasset#readImportTypeHierarchies
+   * @returns {undefined}
+   * @private
+   */
+  ReaderUasset.prototype.readImportTypeHierarchies = function readImportTypeHierarchies() {
+    /** @type {number} */
+    var idx = 0;
+    /** @type {number} */
+    var idxType;
+    /** @type {number} */
+    var count;
+    /** @type {number} */
+    var superTypeCount;
+    /** @type {number} */
+    var packageIndex;
+    /** @type {Array} */
+    var superTypes;
+
+    this.uasset.importTypeHierarchies = [];
+
+    if (!Number.isInteger(this.uasset.header.ImportTypeHierarchiesOffset) || this.uasset.header.ImportTypeHierarchiesOffset <= 0) {
+      return;
+    }
+
+    this.currentIdx = this.uasset.header.ImportTypeHierarchiesOffset;
+
+    count = this.int32("ImportTypeHierarchiesCount");
+
+    if (count < 0 || count !== this.uasset.header.ImportTypeHierarchiesCount || count > this.uasset.header.ImportCount) {
+      return;
+    }
+
+    for (; idx < count; ++idx) {
+      packageIndex = this.int32("Import Type Hierarchy #" + (idx + 1) + ": package index");
+      superTypeCount = this.int32("Import Type Hierarchy #" + (idx + 1) + ": super type count");
+
+      /* eslint-disable-next-line no-magic-numbers */
+      if (superTypeCount < 0 || superTypeCount > Math.floor((this.bytes.length - this.currentIdx) / 32)) {
+        return;
+      }
+
+      superTypes = [];
+
+      for (idxType = 0; idxType < superTypeCount; ++idxType) {
+        superTypes.push({
+          ClassName: this.uint64("Import Type Hierarchy #" + (idx + 1) + ": super type #" + (idxType + 1) + ": class name"),
+          ClassPackageName: this.uint64("Import Type Hierarchy #" + (idx + 1) + ": super type #" + (idxType + 1) + ": class package name"),
+          PackageName: this.uint64("Import Type Hierarchy #" + (idx + 1) + ": super type #" + (idxType + 1) + ": package name"),
+          TypeName: this.uint64("Import Type Hierarchy #" + (idx + 1) + ": super type #" + (idxType + 1) + ": type name")
+        });
+      }
+
+      this.uasset.importTypeHierarchies.push({
+        PackageIndex: packageIndex,
+        SuperTypes: superTypes
+      });
+    }
+  };
+
+  /**
    * Read Preload Dependency.
    *
    * @function ReaderUasset#readPreloadDependency
@@ -1746,6 +1889,7 @@
     }
 
     this.readNames();
+    this.readSoftObjectPaths();
 
     err = this.readGatherableTextData();
     if (err !== undefined) {
@@ -1759,6 +1903,7 @@
     this.readSearchableNames();
     this.readThumbnails();
     this.readAssetRegistryData();
+    this.readImportTypeHierarchies();
     this.readPreloadDependency();
     this.readBulkDataStart();
 
