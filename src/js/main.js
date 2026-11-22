@@ -1371,6 +1371,45 @@ ReaderUasset.prototype.readImportTypeHierarchies = function readImportTypeHierar
 };
 
 /**
+ * Read Asset Registry Dependency for Hex View.
+ *
+ * @function ReaderUasset#readAssetRegistryDependencyDataForHexView
+ * @returns {undefined}
+ * @private
+ */
+ReaderUasset.prototype.readAssetRegistryDependencyDataForHexView = function readAssetRegistryDependencyDataForHexView() {
+    /** @type {number} */
+    var start = Number(this.uasset.assetRegistryData.DependencyDataOffset || 0);
+    /** @type {number} */
+    var stop = this.bytes.length;
+    /** @type {number} */
+    var idx = 0;
+    /** @type {Array} */
+    var offsets = [Number(this.uasset.header.BulkDataStartOffset), Number(this.uasset.header.PayloadTocOffset)];
+
+    if (this.saveHexView === false) {
+        return;
+    }
+
+    this.uasset.exports.forEach(function eachExport(exp) {
+        var offset = Number(exp.serialOffset);
+        if (offset > start && offset < stop) {
+            stop = offset;
+        }
+    });
+
+    for (; idx < offsets.length; ++idx) {
+        if (offsets[idx] > start && offsets[idx] < stop) {
+            stop = offsets[idx];
+        }
+    }
+
+    if (start > 0 && start < stop) {
+        this.addHexView("Asset Registry Dependency Data", "data", (stop - start) + " bytes", start, stop - 1);
+    }
+};
+
+/**
  * Read Preload Dependency.
  *
  * @function ReaderUasset#readPreloadDependency
@@ -1466,6 +1505,7 @@ ReaderUasset.prototype.analyze = function analyze(bytes, saveHexView) {
     this.readThumbnails();
     this.readAssetRegistryData();
     this.readImportTypeHierarchies();
+    this.readAssetRegistryDependencyDataForHexView();
     this.readPreloadDependency();
     this.readBulkDataStart();
 
