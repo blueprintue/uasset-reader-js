@@ -1201,7 +1201,7 @@
     /** @type {number} */
     var idx = 0;
     /** @type {number} */
-    var count = this.uasset.header.SoftObjectPathsOffset || 0;
+    var count = this.uasset.header.SoftObjectPathsCount || 0;
     /** @type {number} */
     var packageName;
     /** @type {number} */
@@ -1626,7 +1626,7 @@
     /** @type {number} */
     var countExport;
     /** @type {number} */
-    var idxDepends = 0;
+    var idxDepends;
     /** @type {number} */
     var countDepends;
 
@@ -1643,7 +1643,7 @@
     for (; idxExport < countExport; ++idxExport) {
       countDepends = this.int32("Depends #" + (idxExport + 1) + ": Count");
 
-      for (; idxDepends < countDepends; ++idxDepends) {
+      for (idxDepends = 0; idxDepends < countDepends; ++idxDepends) {
         this.uasset.depends.Depends.push({
           FPackageIndex: this.int32("Depends #" + (idxExport + 1) + ": FPackageIndex #" + (idxDepends + 1))
         });
